@@ -90,14 +90,10 @@ As more people and circumstances enter your life, it becomes difficult to rememb
 * Profile
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
 
 ![](https://i.imgur.com/NzGesIM.jpg)
 
 
-### [BONUS] Digital Wireframes & Mockups
-
-### [BONUS] Interactive Prototype
 
 ## Schema 
 ### Models
