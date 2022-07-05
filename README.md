@@ -11,7 +11,7 @@
 As more people and circumstances enter your life, it becomes difficult to remember dates such as birthdays, anniversaries, holidays, etc. Cue is a reminder app that auto-suggests and helps book gifts/restaraunts/etc for any important date a user enters.
 
 ### App Evaluation
-[Evaluation of your app across the following attributes]
+
 - **Category:** Productivity / Lifestyle
 - **Mobile:** Location services / Notification alerts
 - **Story:** Anyone who is need of keeping track of important dates or events, especially ones that need prior preparation e.g. restaurant reservations, flower orders, children's toys, etc, obtains immense value from Cue's services.
