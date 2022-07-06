@@ -28,7 +28,6 @@ As more people and circumstances enter your life, it becomes difficult to rememb
 * User can sign in with authentication
 * User can log in and log out of their account
 * The current signed in user is persisted across app restarts
-* User can see a calendar of their upcoming events
 * The home page calendar is auto-populated with holidays
 * User can add an event name, date, and category which appears on the home calendar
 * User can update their profile settings
@@ -40,6 +39,7 @@ As more people and circumstances enter your life, it becomes difficult to rememb
 
 **Optional Nice-to-have Stories**
 
+* User can see a calendar view (rather than table view) of their upcoming events
 * Event service suggestions based on user location
 * Each upcoming event has gift/restaurant suggestions depending on the category
 * User can login via Facebook/Gmail
