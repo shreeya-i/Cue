@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CC17E72800391734ED96F89 /* Pods_Cue_CueUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381F8C34AA5B43015E63A6EA /* Pods_Cue_CueUITests.framework */; };
+		35962B66FC04D079057943C0 /* Pods_CueTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1924470FCB191FA67DA31E93 /* Pods_CueTests.framework */; };
 		6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174C2874AF5500729470 /* AppDelegate.m */; };
 		6EE217502874AF5500729470 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174F2874AF5500729470 /* SceneDelegate.m */; };
-		6EE217532874AF5500729470 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217522874AF5500729470 /* ViewController.m */; };
 		6EE217562874AF5500729470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217542874AF5500729470 /* Main.storyboard */; };
 		6EE217582874AF5700729470 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217572874AF5700729470 /* Assets.xcassets */; };
 		6EE2175B2874AF5700729470 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217592874AF5700729470 /* LaunchScreen.storyboard */; };
@@ -17,6 +18,11 @@
 		6EE217682874AF5700729470 /* CueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217672874AF5700729470 /* CueTests.m */; };
 		6EE217722874AF5700729470 /* CueUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217712874AF5700729470 /* CueUITests.m */; };
 		6EE217742874AF5700729470 /* CueUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217732874AF5700729470 /* CueUITestsLaunchTests.m */; };
+		6EE217832875FAE300729470 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217822875FAE300729470 /* LoginViewController.m */; };
+		6EE2178728760B3900729470 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2178628760B3900729470 /* ProfileViewController.m */; };
+		6EE2178A28760D9900729470 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2178928760D9900729470 /* SignUpViewController.m */; };
+		6EE2178D2876119F00729470 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2178C2876119F00729470 /* HomeViewController.m */; };
+		BC525BC1669439F8C67CA526 /* Pods_Cue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8DEBA59AADBE0E3A0AECDD /* Pods_Cue.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,13 +43,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1924470FCB191FA67DA31E93 /* Pods_CueTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CueTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29C46E782F67670DD93A5A15 /* Pods-Cue-CueUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cue-CueUITests.debug.xcconfig"; path = "Target Support Files/Pods-Cue-CueUITests/Pods-Cue-CueUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		381F8C34AA5B43015E63A6EA /* Pods_Cue_CueUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cue_CueUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A98A45579EC29EB0F5E4262 /* Pods-Cue-CueUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cue-CueUITests.release.xcconfig"; path = "Target Support Files/Pods-Cue-CueUITests/Pods-Cue-CueUITests.release.xcconfig"; sourceTree = "<group>"; };
+		6BB9BE1DD2A75AB8C3C7233B /* Pods-Cue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cue.release.xcconfig"; path = "Target Support Files/Pods-Cue/Pods-Cue.release.xcconfig"; sourceTree = "<group>"; };
+		6CE2EAA1E71F18F3FB8A34FA /* Pods-CueTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CueTests.debug.xcconfig"; path = "Target Support Files/Pods-CueTests/Pods-CueTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6EE217482874AF5500729470 /* Cue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE2174B2874AF5500729470 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6EE2174C2874AF5500729470 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6EE2174E2874AF5500729470 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		6EE2174F2874AF5500729470 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		6EE217512874AF5500729470 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		6EE217522874AF5500729470 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		6EE217552874AF5500729470 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6EE217572874AF5700729470 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6EE2175A2874AF5700729470 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -54,6 +64,17 @@
 		6EE2176D2874AF5700729470 /* CueUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CueUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE217712874AF5700729470 /* CueUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CueUITests.m; sourceTree = "<group>"; };
 		6EE217732874AF5700729470 /* CueUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CueUITestsLaunchTests.m; sourceTree = "<group>"; };
+		6EE217812875FAE300729470 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		6EE217822875FAE300729470 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		6EE2178528760B3900729470 /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = Cue/ProfileViewController.h; sourceTree = SOURCE_ROOT; };
+		6EE2178628760B3900729470 /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = Cue/ProfileViewController.m; sourceTree = SOURCE_ROOT; };
+		6EE2178828760D9900729470 /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = Cue/SignUpViewController.h; sourceTree = SOURCE_ROOT; };
+		6EE2178928760D9900729470 /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = Cue/SignUpViewController.m; sourceTree = SOURCE_ROOT; };
+		6EE2178B2876119F00729470 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeViewController.h; path = Cue/HomeViewController.h; sourceTree = SOURCE_ROOT; };
+		6EE2178C2876119F00729470 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = Cue/HomeViewController.m; sourceTree = SOURCE_ROOT; };
+		C5DC950E4D4189F8BD70CC2C /* Pods-Cue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cue.debug.xcconfig"; path = "Target Support Files/Pods-Cue/Pods-Cue.debug.xcconfig"; sourceTree = "<group>"; };
+		DC8DEBA59AADBE0E3A0AECDD /* Pods_Cue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCD5910D41051358BDCAEC15 /* Pods-CueTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CueTests.release.xcconfig"; path = "Target Support Files/Pods-CueTests/Pods-CueTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC525BC1669439F8C67CA526 /* Pods_Cue.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35962B66FC04D079057943C0 /* Pods_CueTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,12 +98,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CC17E72800391734ED96F89 /* Pods_Cue_CueUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		617D2C120A998592D41F09F2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC8DEBA59AADBE0E3A0AECDD /* Pods_Cue.framework */,
+				381F8C34AA5B43015E63A6EA /* Pods_Cue_CueUITests.framework */,
+				1924470FCB191FA67DA31E93 /* Pods_CueTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6EE2173F2874AF5500729470 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +122,8 @@
 				6EE217662874AF5700729470 /* CueTests */,
 				6EE217702874AF5700729470 /* CueUITests */,
 				6EE217492874AF5500729470 /* Products */,
+				C992D4B5FC93D7E61DA9CDB2 /* Pods */,
+				617D2C120A998592D41F09F2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,12 +140,11 @@
 		6EE2174A2874AF5500729470 /* Cue */ = {
 			isa = PBXGroup;
 			children = (
+				6EE217802875FAD200729470 /* ViewControllers */,
 				6EE2174B2874AF5500729470 /* AppDelegate.h */,
 				6EE2174C2874AF5500729470 /* AppDelegate.m */,
 				6EE2174E2874AF5500729470 /* SceneDelegate.h */,
 				6EE2174F2874AF5500729470 /* SceneDelegate.m */,
-				6EE217512874AF5500729470 /* ViewController.h */,
-				6EE217522874AF5500729470 /* ViewController.m */,
 				6EE217542874AF5500729470 /* Main.storyboard */,
 				6EE217572874AF5700729470 /* Assets.xcassets */,
 				6EE217592874AF5700729470 /* LaunchScreen.storyboard */,
@@ -136,6 +171,34 @@
 			path = CueUITests;
 			sourceTree = "<group>";
 		};
+		6EE217802875FAD200729470 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				6EE2178B2876119F00729470 /* HomeViewController.h */,
+				6EE2178C2876119F00729470 /* HomeViewController.m */,
+				6EE2178828760D9900729470 /* SignUpViewController.h */,
+				6EE2178928760D9900729470 /* SignUpViewController.m */,
+				6EE2178528760B3900729470 /* ProfileViewController.h */,
+				6EE2178628760B3900729470 /* ProfileViewController.m */,
+				6EE217812875FAE300729470 /* LoginViewController.h */,
+				6EE217822875FAE300729470 /* LoginViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C992D4B5FC93D7E61DA9CDB2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C5DC950E4D4189F8BD70CC2C /* Pods-Cue.debug.xcconfig */,
+				6BB9BE1DD2A75AB8C3C7233B /* Pods-Cue.release.xcconfig */,
+				29C46E782F67670DD93A5A15 /* Pods-Cue-CueUITests.debug.xcconfig */,
+				6A98A45579EC29EB0F5E4262 /* Pods-Cue-CueUITests.release.xcconfig */,
+				6CE2EAA1E71F18F3FB8A34FA /* Pods-CueTests.debug.xcconfig */,
+				FCD5910D41051358BDCAEC15 /* Pods-CueTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,9 +206,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6EE217772874AF5700729470 /* Build configuration list for PBXNativeTarget "Cue" */;
 			buildPhases = (
+				DACEBFB15EC3DCE8A245551F /* [CP] Check Pods Manifest.lock */,
 				6EE217442874AF5500729470 /* Sources */,
 				6EE217452874AF5500729470 /* Frameworks */,
 				6EE217462874AF5500729470 /* Resources */,
+				BE26B645BCC39B3EB7C2DFE3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -160,6 +225,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6EE2177A2874AF5700729470 /* Build configuration list for PBXNativeTarget "CueTests" */;
 			buildPhases = (
+				86FFD8A1B888804A3DEB903F /* [CP] Check Pods Manifest.lock */,
 				6EE2175F2874AF5700729470 /* Sources */,
 				6EE217602874AF5700729470 /* Frameworks */,
 				6EE217612874AF5700729470 /* Resources */,
@@ -178,9 +244,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6EE2177D2874AF5700729470 /* Build configuration list for PBXNativeTarget "CueUITests" */;
 			buildPhases = (
+				D6E9ECDC7F4C090E25C73D28 /* [CP] Check Pods Manifest.lock */,
 				6EE217692874AF5700729470 /* Sources */,
 				6EE2176A2874AF5700729470 /* Frameworks */,
 				6EE2176B2874AF5700729470 /* Resources */,
+				280B3EDED6DB83BA2ABC8F0A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -261,15 +329,121 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		280B3EDED6DB83BA2ABC8F0A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Cue-CueUITests/Pods-Cue-CueUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Cue-CueUITests/Pods-Cue-CueUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cue-CueUITests/Pods-Cue-CueUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		86FFD8A1B888804A3DEB903F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CueTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BE26B645BCC39B3EB7C2DFE3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Cue/Pods-Cue-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Cue/Pods-Cue-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cue/Pods-Cue-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D6E9ECDC7F4C090E25C73D28 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Cue-CueUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DACEBFB15EC3DCE8A245551F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Cue-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6EE217442874AF5500729470 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EE217532874AF5500729470 /* ViewController.m in Sources */,
+				6EE217832875FAE300729470 /* LoginViewController.m in Sources */,
 				6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */,
+				6EE2178A28760D9900729470 /* SignUpViewController.m in Sources */,
 				6EE2175E2874AF5700729470 /* main.m in Sources */,
 				6EE217502874AF5500729470 /* SceneDelegate.m in Sources */,
+				6EE2178D2876119F00729470 /* HomeViewController.m in Sources */,
+				6EE2178728760B3900729470 /* ProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +611,7 @@
 		};
 		6EE217782874AF5700729470 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5DC950E4D4189F8BD70CC2C /* Pods-Cue.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -448,8 +623,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -464,6 +640,7 @@
 		};
 		6EE217792874AF5700729470 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6BB9BE1DD2A75AB8C3C7233B /* Pods-Cue.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -475,8 +652,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -491,6 +669,7 @@
 		};
 		6EE2177B2874AF5700729470 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6CE2EAA1E71F18F3FB8A34FA /* Pods-CueTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -509,6 +688,7 @@
 		};
 		6EE2177C2874AF5700729470 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FCD5910D41051358BDCAEC15 /* Pods-CueTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -527,6 +707,7 @@
 		};
 		6EE2177E2874AF5700729470 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 29C46E782F67670DD93A5A15 /* Pods-Cue-CueUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -543,6 +724,7 @@
 		};
 		6EE2177F2874AF5700729470 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A98A45579EC29EB0F5E4262 /* Pods-Cue-CueUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

@@ -1,0 +1,6 @@
+framework module Pods_Cue_CueUITests {
+  umbrella header "Pods-Cue-CueUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

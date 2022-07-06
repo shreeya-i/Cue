@@ -1,0 +1,6 @@
+framework module Pods_Cue {
+  umbrella header "Pods-Cue-umbrella.h"
+
+  export *
+  module * { export * }
+}
