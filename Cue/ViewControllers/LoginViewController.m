@@ -27,7 +27,6 @@
 
 
 - (IBAction)didTapLogin:(id)sender {
-    
     NSString *username = self.usernameField.text;
     NSString *password = self.passwordField.text;
     

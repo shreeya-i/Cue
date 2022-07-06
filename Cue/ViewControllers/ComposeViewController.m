@@ -1,30 +1,22 @@
 //
-//  HomeViewController.m
+//  ComposeViewController.m
 //  Cue
 //
 //  Created by Shreeya Indap on 7/6/22.
 //
 
-#import "HomeViewController.h"
 #import "ComposeViewController.h"
 
-@interface HomeViewController ()
+@interface ComposeViewController ()
 
 @end
 
-@implementation HomeViewController
+@implementation ComposeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
-
-- (IBAction)didTapCompose:(id)sender {
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ComposeViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"ComposeViewController"];
-    [self.navigationController pushViewController:controller animated:YES];
-}
-
 
 /*
 #pragma mark - Navigation
