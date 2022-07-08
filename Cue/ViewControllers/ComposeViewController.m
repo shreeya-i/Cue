@@ -6,8 +6,11 @@
 //
 
 #import "ComposeViewController.h"
+#import "Event.h"
 
 @interface ComposeViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *nameField;
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 
 @end
 
@@ -15,8 +18,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
+
+- (IBAction)didTapCreate:(id)sender {
+    NSString *eventName = self.nameField.text;
+    
+    [Event postEvent:eventName withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+       if (error){
+            NSLog(@"Error creating event");
+        }
+        else{
+            [self.navigationController popViewControllerAnimated:YES];
+            NSLog(@"Successfully created event");
+        }
+    }];
+    
+}
+
 
 /*
 #pragma mark - Navigation
