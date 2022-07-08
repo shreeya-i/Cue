@@ -10,6 +10,7 @@
 @import Parse;
 
 @interface SignUpViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 
@@ -25,10 +26,12 @@
 - (IBAction)didTapSignUp:(id)sender {
     PFUser *newUser = [PFUser user];
     
+    newUser[@"name"] = self.nameField.text;
     newUser.username = self.usernameField.text;
     newUser.password = self.passwordField.text;
     
-    if([self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""]) {
+    if([self.nameField.text isEqual:@""] ||
+       [self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""]) {
     }
     else{
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {

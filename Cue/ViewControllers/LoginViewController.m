@@ -23,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.passwordField.secureTextEntry = true;
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *ivc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     [ivc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];

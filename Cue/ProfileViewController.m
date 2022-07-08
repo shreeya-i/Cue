@@ -8,7 +8,6 @@
 #import "ProfileViewController.h"
 #import "SceneDelegate.h"
 #import "LoginViewController.h"
-@import Parse;
 
 @interface ProfileViewController ()
 
@@ -18,7 +17,57 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self fetchDetails];
+}
+
+- (void) fetchDetails {
+    self.currentName.text = [PFUser currentUser][@"name"];
+    self.currentUsername.text = [PFUser currentUser].username;
+    
+    self.profilePicture.layer.cornerRadius  = self.profilePicture.frame.size.width/2;
+    self.profilePicture.clipsToBounds = YES;
+    self.profilePicture.layer.borderWidth = 0.5f;
+    self.profilePicture.layer.borderColor = [UIColor lightGrayColor].CGColor;
+}
+
+- (IBAction)didTapSave:(id)sender {
+    
+    NSString *nameData;
+    NSString *usernameData;
+    NSString *passwordData;
+    
+    PFUser *user = [PFUser currentUser];
+    if(![self.nameField.text isEqual: @""]){
+        nameData = self.nameField.text;
+        user[@"name"] = nameData;
+    } else{
+        nameData = user[@"name"];
+    }
+    if(![self.usernameField.text isEqual: @""]){
+        usernameData = self.usernameField.text;
+        user[@"username"] = usernameData;
+    } else{
+        usernameData = user[@"username"];
+    }
+    if(![passwordData isEqual: @""]){
+        passwordData = self.passwordField.text;
+        user[@"password"] = passwordData;
+    }
+    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if(error){
+            NSLog(@"Error saving: %@", error.localizedDescription);
+        }
+        else{
+            [self.delegate didSaveEdits: nameData :usernameData :passwordData];
+
+            self.nameField.text = @"";
+            self.usernameField.text = @"";
+            self.passwordField.text = @"";
+            [self fetchDetails];
+            NSLog(@"Successfully saved");
+        }
+    }];
 }
 
 
