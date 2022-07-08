@@ -22,7 +22,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *ivc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    [ivc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
 }
 
 

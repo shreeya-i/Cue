@@ -12,6 +12,7 @@
 
 @interface HomeViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSMutableArray *eventsArray;
+@property (weak, nonatomic) IBOutlet UILabel *noEventsLabel;
 
 @end
 
@@ -20,6 +21,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    self.tabBarController.tabBar.hidden = NO;
     [self.eventsTableView reloadData];
     [self fetchEvents];
 }
@@ -32,18 +34,20 @@
 
 - (void) setUpViews {
     
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(fetchEvents) forControlEvents:UIControlEventValueChanged];
-    [self.eventsTableView insertSubview:self.refreshControl atIndex:0];
+//    self.refreshControl = [[UIRefreshControl alloc] init];
+//    [self.refreshControl addTarget:self action:@selector(fetchEvents) forControlEvents:UIControlEventValueChanged];
+//    [self.eventsTableView insertSubview:self.refreshControl atIndex:0];
     
     self.eventsTableView.delegate = self;
     self.eventsTableView.dataSource = self;
     self.eventsTableView.rowHeight = 225;
+    
+    self.noEventsLabel.hidden = YES;
 }
 
 - (void)fetchEvents {
     PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
-    [eventQuery orderByDescending:@"createdAt"];
+    [eventQuery orderByDescending:@"eventDate"];
     [eventQuery whereKey:@"author" equalTo: [PFUser currentUser]];
     eventQuery.limit = 20;
 
@@ -51,7 +55,11 @@
         if (events != nil) {
             self.eventsArray = [NSMutableArray arrayWithArray:events];
             [self.eventsTableView reloadData];
-            [self.refreshControl endRefreshing];
+            
+            if(self.eventsArray.count == 0){
+                self.noEventsLabel.hidden = NO;
+            }
+            //[self.refreshControl endRefreshing];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
@@ -71,6 +79,12 @@
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EventCell" forIndexPath:indexPath];
     cell.event = self.eventsArray[indexPath.row];
     cell.nameLabel.text = cell.event.eventName;
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"h:mm a MMM d"];
+    NSString *stringFromDate = [formatter stringFromDate:cell.event.eventDate];
+    cell.dateLabel.text = stringFromDate;
+    
     return cell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

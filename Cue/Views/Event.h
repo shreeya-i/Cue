@@ -14,8 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *eventID;
 @property (nonatomic, strong) PFUser *author;
 @property (nonatomic, strong) NSString *eventName;
+@property (nonatomic, strong) NSDate *eventDate;
 
-+ (void) postEvent: ( NSString * _Nullable )name withCompletion: (PFBooleanResultBlock  _Nullable)completion;
++ (void) postEvent: ( NSString * _Nullable )name withDate: ( NSDate * _Nullable )date withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end
 
