@@ -58,12 +58,15 @@ bool isGrantedNotificationAccess;
                 UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
                 UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
                 content.title = @"Cue";
-                content.body = @"An important date is coming up";
+                content.body = [NSString stringWithFormat:@"%@ is coming up", eventName];
                 content.sound = [UNNotificationSound defaultSound];
                 
-                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:5 repeats:NO];
+                NSDate *curDate = [NSDate date];
+                NSTimeInterval diff = [selectedDate timeIntervalSinceDate:curDate];
                 
-                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"TestNotification" content:content trigger:trigger];
+                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:diff repeats:NO];
+                
+                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:eventName content:content trigger:trigger];
                 
                 [center addNotificationRequest:request withCompletionHandler:nil];
             }
