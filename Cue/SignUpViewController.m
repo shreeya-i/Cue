@@ -32,11 +32,19 @@
     
     if([self.nameField.text isEqual:@""] ||
        [self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"All fields are required" preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:^{}];
     }
     else{
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
             if (error != nil) {
                 NSLog(@"Error: %@", error.localizedDescription);
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to sign up" preferredStyle:(UIAlertControllerStyleAlert)];
+                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+                [alert addAction:okAction];
+                [self presentViewController:alert animated:YES completion:^{}];
             } else {
                 NSLog(@"User registered successfully");
                 SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;

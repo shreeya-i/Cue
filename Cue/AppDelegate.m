@@ -14,6 +14,12 @@
 
 @implementation AppDelegate
 
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
+    
+    UNNotificationPresentationOptions presentationOptions = UNNotificationPresentationOptionAlert+UNNotificationPresentationOptionSound;
+    completionHandler(presentationOptions);
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     ParseClientConfiguration *config = [ParseClientConfiguration  configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
@@ -24,6 +30,10 @@
         }];
 
         [Parse initializeWithConfiguration:config];
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    center.delegate = self;
+    
     return YES;
 }
 

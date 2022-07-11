@@ -14,10 +14,21 @@
 
 @end
 
+bool isGrantedNotificationAccess;
+
 @implementation ComposeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    isGrantedNotificationAccess = false;
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    UNAuthorizationOptions options = UNAuthorizationOptionAlert+UNAuthorizationOptionSound;
+    
+    [center requestAuthorizationWithOptions:options completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        isGrantedNotificationAccess = granted;
+    }];
     
     //Might want to add this but causes delay going back to home page:
     //self.tabBarController.tabBar.hidden = YES;
@@ -29,19 +40,34 @@
     
     if([eventName isEqual:@""]) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"Event must have a name" preferredStyle:(UIAlertControllerStyleAlert)];
-
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
-        
         [alert addAction:okAction];
-
         [self presentViewController:alert animated:YES completion:^{}];
     }
     else{
     [Event postEvent:eventName withDate:selectedDate withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
        if (error){
-            NSLog(@"Error creating event");
+           NSLog(@"Error creating event");
+           UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];
+           UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
+           [alert addAction:okAction];
+           [self presentViewController:alert animated:YES completion:^{}];
         }
         else{
+            if(isGrantedNotificationAccess){
+                UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+                UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+                content.title = @"Cue";
+                content.body = @"An important date is coming up";
+                content.sound = [UNNotificationSound defaultSound];
+                
+                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:5 repeats:NO];
+                
+                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"TestNotification" content:content trigger:trigger];
+                
+                [center addNotificationRequest:request withCompletionHandler:nil];
+            }
+            
             [self.navigationController popViewControllerAnimated:YES];
             NSLog(@"Successfully created event");
         }

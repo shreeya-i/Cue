@@ -21,6 +21,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    self.noEventsLabel.hidden = YES;
     self.tabBarController.tabBar.hidden = NO;
     [self.eventsTableView reloadData];
     [self fetchEvents];
@@ -40,14 +41,12 @@
     
     self.eventsTableView.delegate = self;
     self.eventsTableView.dataSource = self;
-    self.eventsTableView.rowHeight = 225;
-    
-    self.noEventsLabel.hidden = YES;
+    self.eventsTableView.rowHeight = 200;
 }
 
 - (void)fetchEvents {
     PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
-    [eventQuery orderByDescending:@"eventDate"];
+    [eventQuery orderByAscending: @"eventDate"];
     [eventQuery whereKey:@"author" equalTo: [PFUser currentUser]];
     eventQuery.limit = 20;
 
@@ -81,7 +80,8 @@
     cell.nameLabel.text = cell.event.eventName;
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"h:mm a MMM d"];
+    //[formatter setDateFormat:@"h:mm a MMM d"];
+    [formatter setDateFormat:@"MMM d"];
     NSString *stringFromDate = [formatter stringFromDate:cell.event.eventDate];
     cell.dateLabel.text = stringFromDate;
     
