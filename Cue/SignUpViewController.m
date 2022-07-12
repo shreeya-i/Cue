@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UITextField *addressField;
 
 @end
 
@@ -29,9 +30,10 @@
     newUser[@"name"] = self.nameField.text;
     newUser.username = self.usernameField.text;
     newUser.password = self.passwordField.text;
+    newUser[@"address"] = self.addressField.text;
     
     if([self.nameField.text isEqual:@""] ||
-       [self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""]) {
+       [self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""] || [self.addressField.text isEqual:@""]) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"All fields are required" preferredStyle:(UIAlertControllerStyleAlert)];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
         [alert addAction:okAction];

@@ -8,11 +8,14 @@
 #import "HomeViewController.h"
 #import "ComposeViewController.h"
 #import "EventCell.h"
+#import "DetailsViewController.h"
 @import Parse;
 
 @interface HomeViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSMutableArray *eventsArray;
 @property (weak, nonatomic) IBOutlet UILabel *noEventsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *todaysDay;
+@property (weak, nonatomic) IBOutlet UILabel *todaysDate;
 
 @end
 
@@ -42,6 +45,18 @@
     self.eventsTableView.delegate = self;
     self.eventsTableView.dataSource = self;
     self.eventsTableView.rowHeight = 200;
+    
+    NSDate *curDate = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMM d, yyyy"];
+    NSString *stringFromDate = [formatter stringFromDate:curDate];
+    self.todaysDate.text = stringFromDate;
+    
+    NSDate *curDate2 = [NSDate date];
+    NSDateFormatter *formatter2 = [[NSDateFormatter alloc] init];
+    [formatter2 setDateFormat:@"EEEE"];
+    NSString *stringFromDate2 = [formatter2 stringFromDate:curDate2];
+    self.todaysDay.text = stringFromDate2;
 }
 
 - (void)fetchEvents {
@@ -84,6 +99,18 @@
     [formatter setDateFormat:@"MMM d"];
     NSString *stringFromDate = [formatter stringFromDate:cell.event.eventDate];
     cell.dateLabel.text = stringFromDate;
+
+
+//    CAGradientLayer *gradient = [CAGradientLayer layer];
+//    gradient.frame = cell.colorView.bounds;
+//    gradient.colors = @[(id)[UIColor lightGrayColor].CGColor, (id)[UIColor darkGrayColor].CGColor];
+//    [cell.colorView.layer insertSublayer:gradient atIndex:0];
+    
+    cell.colorView.layer.cornerRadius = 20.0;
+    cell.colorView.layer.shadowOffset = CGSizeMake(1, 0);
+    cell.colorView.layer.shadowColor = [[UIColor blackColor] CGColor];
+    cell.colorView.layer.shadowRadius = 5;
+    cell.colorView.layer.shadowOpacity = .25;
     
     return cell;
 }
@@ -95,14 +122,14 @@
 }
 
 
-/*
-#pragma mark - Navigation
-
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"detailSegue"]){
+        NSIndexPath *myIndexPath = [self.eventsTableView indexPathForCell:sender];
+        Event *dataToPass = self.eventsArray[myIndexPath.row];
+        DetailsViewController *detailVC = [segue destinationViewController];
+        detailVC.detailEvent = dataToPass;
+    }
 }
-*/
 
 @end

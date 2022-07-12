@@ -55,19 +55,23 @@ bool isGrantedNotificationAccess;
         }
         else{
             if(isGrantedNotificationAccess){
+                
+                // Notification for one week prior: DOES NOT account for current user which needs to be fixed.
+                
                 UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-                UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
-                content.title = @"Cue";
-                content.body = [NSString stringWithFormat:@"%@ is coming up", eventName];
-                content.sound = [UNNotificationSound defaultSound];
+                UNMutableNotificationContent *weekContent = [[UNMutableNotificationContent alloc] init];
+                weekContent.title = @"Cue";
+                weekContent.body = [NSString stringWithFormat:@"%@ is happening in one week", eventName];
+                weekContent.sound = [UNNotificationSound defaultSound];
                 
                 NSDate *curDate = [NSDate date];
-                NSTimeInterval diff = [selectedDate timeIntervalSinceDate:curDate];
+                NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+                [dateComponents setDay:+7];
+                NSDate *sevenDays = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:curDate options:0];
+                NSTimeInterval diff = [selectedDate timeIntervalSinceDate:sevenDays];
                 
                 UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:diff repeats:NO];
-                
-                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:eventName content:content trigger:trigger];
-                
+                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:eventName content:weekContent trigger:trigger];
                 [center addNotificationRequest:request withCompletionHandler:nil];
             }
             

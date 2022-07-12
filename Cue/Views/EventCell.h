@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface EventCell : UITableViewCell
 
 @property (nonatomic, strong) Event *event;
+@property (weak, nonatomic) IBOutlet UIView *colorView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 

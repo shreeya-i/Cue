@@ -50,7 +50,7 @@
     } else{
         usernameData = user[@"username"];
     }
-    if(![passwordData isEqual: @""]){
+    if(![self.passwordField.text isEqual: @""]){
         passwordData = self.passwordField.text;
         user[@"password"] = passwordData;
     }

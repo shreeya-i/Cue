@@ -26,6 +26,10 @@
 		6EE21797287651BE00729470 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE21796287651BE00729470 /* EventCell.m */; };
 		6EE2179D2877A4B800729470 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2179C2877A4B800729470 /* Event.m */; };
 		6EE217A6287CA1AB00729470 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE217A5287CA1AB00729470 /* UserNotifications.framework */; };
+		6EE217A9287CE6C600729470 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217A8287CE6C600729470 /* DetailsViewController.m */; };
+		6EE217AC287CEBBF00729470 /* SuggestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217AB287CEBBF00729470 /* SuggestionCell.m */; };
+		6EE217B5287E12EF00729470 /* Suggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217B4287E12EF00729470 /* Suggestion.m */; };
+		6EE217B8287E1BBD00729470 /* YelpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217B7287E1BBD00729470 /* YelpClient.m */; };
 		BC525BC1669439F8C67CA526 /* Pods_Cue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8DEBA59AADBE0E3A0AECDD /* Pods_Cue.framework */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +87,14 @@
 		6EE2179B2877A4B800729470 /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		6EE2179C2877A4B800729470 /* Event.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		6EE217A5287CA1AB00729470 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		6EE217A7287CE6C600729470 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		6EE217A8287CE6C600729470 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		6EE217AA287CEBBF00729470 /* SuggestionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SuggestionCell.h; path = Cue/ViewControllers/SuggestionCell.h; sourceTree = SOURCE_ROOT; };
+		6EE217AB287CEBBF00729470 /* SuggestionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SuggestionCell.m; path = Cue/ViewControllers/SuggestionCell.m; sourceTree = SOURCE_ROOT; };
+		6EE217B3287E12EF00729470 /* Suggestion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Suggestion.h; sourceTree = "<group>"; };
+		6EE217B4287E12EF00729470 /* Suggestion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Suggestion.m; sourceTree = "<group>"; };
+		6EE217B6287E1BBD00729470 /* YelpClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YelpClient.h; sourceTree = "<group>"; };
+		6EE217B7287E1BBD00729470 /* YelpClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YelpClient.m; sourceTree = "<group>"; };
 		C5DC950E4D4189F8BD70CC2C /* Pods-Cue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cue.debug.xcconfig"; path = "Target Support Files/Pods-Cue/Pods-Cue.debug.xcconfig"; sourceTree = "<group>"; };
 		DC8DEBA59AADBE0E3A0AECDD /* Pods_Cue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD5910D41051358BDCAEC15 /* Pods-CueTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CueTests.release.xcconfig"; path = "Target Support Files/Pods-CueTests/Pods-CueTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -191,6 +203,8 @@
 			children = (
 				6EE2178B2876119F00729470 /* HomeViewController.h */,
 				6EE2178C2876119F00729470 /* HomeViewController.m */,
+				6EE217A7287CE6C600729470 /* DetailsViewController.h */,
+				6EE217A8287CE6C600729470 /* DetailsViewController.m */,
 				6EE2178E28762E5F00729470 /* ComposeViewController.h */,
 				6EE2178F28762E5F00729470 /* ComposeViewController.m */,
 				6EE2178828760D9900729470 /* SignUpViewController.h */,
@@ -206,10 +220,14 @@
 		6EE217912876518100729470 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6EE217AA287CEBBF00729470 /* SuggestionCell.h */,
+				6EE217AB287CEBBF00729470 /* SuggestionCell.m */,
 				6EE21795287651BE00729470 /* EventCell.h */,
 				6EE21796287651BE00729470 /* EventCell.m */,
 				6EE2179B2877A4B800729470 /* Event.h */,
 				6EE2179C2877A4B800729470 /* Event.m */,
+				6EE217B3287E12EF00729470 /* Suggestion.h */,
+				6EE217B4287E12EF00729470 /* Suggestion.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -217,6 +235,8 @@
 		6EE2179E2878E68900729470 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				6EE217B6287E1BBD00729470 /* YelpClient.h */,
+				6EE217B7287E1BBD00729470 /* YelpClient.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -474,14 +494,18 @@
 			files = (
 				6EE217832875FAE300729470 /* LoginViewController.m in Sources */,
 				6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */,
+				6EE217A9287CE6C600729470 /* DetailsViewController.m in Sources */,
 				6EE2179D2877A4B800729470 /* Event.m in Sources */,
 				6EE2178A28760D9900729470 /* SignUpViewController.m in Sources */,
+				6EE217B5287E12EF00729470 /* Suggestion.m in Sources */,
 				6EE2175E2874AF5700729470 /* main.m in Sources */,
 				6EE217502874AF5500729470 /* SceneDelegate.m in Sources */,
+				6EE217B8287E1BBD00729470 /* YelpClient.m in Sources */,
 				6EE2178D2876119F00729470 /* HomeViewController.m in Sources */,
 				6EE2178728760B3900729470 /* ProfileViewController.m in Sources */,
 				6EE21797287651BE00729470 /* EventCell.m in Sources */,
 				6EE2179028762E5F00729470 /* ComposeViewController.m in Sources */,
+				6EE217AC287CEBBF00729470 /* SuggestionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

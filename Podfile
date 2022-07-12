@@ -9,6 +9,8 @@ target 'Cue' do
   
   pod 'Parse'
   pod 'Parse/UI'
+  pod "AFNetworking", "~> 2.0"
+  pod 'BDBOAuth1Manager'
 
   target 'CueTests' do
     inherit! :search_paths
