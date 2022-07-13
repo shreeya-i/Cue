@@ -74,12 +74,12 @@
 		6EE217732874AF5700729470 /* CueUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CueUITestsLaunchTests.m; sourceTree = "<group>"; };
 		6EE217812875FAE300729470 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		6EE217822875FAE300729470 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		6EE2178528760B3900729470 /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = Cue/ProfileViewController.h; sourceTree = SOURCE_ROOT; };
-		6EE2178628760B3900729470 /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = Cue/ProfileViewController.m; sourceTree = SOURCE_ROOT; };
-		6EE2178828760D9900729470 /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = Cue/SignUpViewController.h; sourceTree = SOURCE_ROOT; };
-		6EE2178928760D9900729470 /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = Cue/SignUpViewController.m; sourceTree = SOURCE_ROOT; };
-		6EE2178B2876119F00729470 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeViewController.h; path = Cue/HomeViewController.h; sourceTree = SOURCE_ROOT; };
-		6EE2178C2876119F00729470 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = Cue/HomeViewController.m; sourceTree = SOURCE_ROOT; };
+		6EE2178528760B3900729470 /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = Cue/ViewControllers/ProfileViewController.h; sourceTree = SOURCE_ROOT; };
+		6EE2178628760B3900729470 /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = Cue/ViewControllers/ProfileViewController.m; sourceTree = SOURCE_ROOT; };
+		6EE2178828760D9900729470 /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = Cue/ViewControllers/SignUpViewController.h; sourceTree = SOURCE_ROOT; };
+		6EE2178928760D9900729470 /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = Cue/ViewControllers/SignUpViewController.m; sourceTree = SOURCE_ROOT; };
+		6EE2178B2876119F00729470 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeViewController.h; path = Cue/ViewControllers/HomeViewController.h; sourceTree = SOURCE_ROOT; };
+		6EE2178C2876119F00729470 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = Cue/ViewControllers/HomeViewController.m; sourceTree = SOURCE_ROOT; };
 		6EE2178E28762E5F00729470 /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
 		6EE2178F28762E5F00729470 /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		6EE21795287651BE00729470 /* EventCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };

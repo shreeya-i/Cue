@@ -39,6 +39,36 @@
     NSString *timeFromDate = [timeFormatter stringFromDate:self.detailEvent.eventDate];
     self.timeLabel.text = timeFromDate;
     
+    [self fetchData];
+    
+}
+
+- (void) fetchData{
+//    NSURL *url = [NSURL URLWithString:@"http://api.yelp.com/v3/businesses/search"];
+//    NSMutableURLRequest *request = [NSURLRequest requestWithURL:url];
+////    [request setValue:@"Bearer APIKEY" forKey:@"Authorization"];
+//    [request setValue:@"Bearer APIKEY" forHTTPHeaderField:@"Authorization"];
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//
+//
+//    NSURLSessionDataTask *task = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+//
+//        if(error) {
+//
+//        } else {
+//            NSLog(@"%@", responseObject);
+//        }
+//    }];
+//
+//    [task resume];
+//
+////    [manager GET:@"http://api.yelp.com/v3/businesses/search" parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+////
+////    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+////
+////    }];
+    
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -38,9 +38,18 @@ bool isGrantedNotificationAccess;
     NSString *eventName = self.nameField.text;
     NSDate *selectedDate = self.datePicker.date;
     
+    NSDate *curDate = [NSDate date];
+    NSTimeInterval diff = [selectedDate timeIntervalSinceDate:curDate];
+    
     if([eventName isEqual:@""]) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"Event must have a name" preferredStyle:(UIAlertControllerStyleAlert)];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:^{}];
+    }
+    else if(diff <= 0){
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Date has already passed" preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
         [alert addAction:okAction];
         [self presentViewController:alert animated:YES completion:^{}];
     }
@@ -56,23 +65,45 @@ bool isGrantedNotificationAccess;
         else{
             if(isGrantedNotificationAccess){
                 
-                // Notification for one week prior: DOES NOT account for current user which needs to be fixed.
-                
                 UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-                UNMutableNotificationContent *weekContent = [[UNMutableNotificationContent alloc] init];
-                weekContent.title = @"Cue";
-                weekContent.body = [NSString stringWithFormat:@"%@ is happening in one week", eventName];
-                weekContent.sound = [UNNotificationSound defaultSound];
                 
-                NSDate *curDate = [NSDate date];
+                /// Notifications: DO NOT account for current user which needs to be fixed.
+                
+                //Week before notification
+                
                 NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
                 [dateComponents setDay:+7];
                 NSDate *sevenDays = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:curDate options:0];
-                NSTimeInterval diff = [selectedDate timeIntervalSinceDate:sevenDays];
+                NSTimeInterval weekDiff = [selectedDate timeIntervalSinceDate:sevenDays];
                 
-                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:diff repeats:NO];
-                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:eventName content:weekContent trigger:trigger];
-                [center addNotificationRequest:request withCompletionHandler:nil];
+                if(weekDiff > 0){
+                    UNMutableNotificationContent *weekContent = [[UNMutableNotificationContent alloc] init];
+                    weekContent.title = @"Cue";
+                    weekContent.body = [NSString stringWithFormat:@"%@ is happening in one week", eventName];
+                    weekContent.sound = [UNNotificationSound defaultSound];
+                    
+                    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:weekDiff repeats:NO];
+                    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:eventName content:weekContent trigger:trigger];
+                    [center addNotificationRequest:request withCompletionHandler:nil];
+                }
+                
+                //Day before notification:
+                
+                NSDateComponents *dateComponents1 = [[NSDateComponents alloc] init];
+                [dateComponents1 setDay:+1];
+                NSDate *oneDay = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents1 toDate:curDate options:0];
+                NSTimeInterval dayDiff = [selectedDate timeIntervalSinceDate:oneDay];
+                
+                if(dayDiff > 0){
+                    UNMutableNotificationContent *dayContent = [[UNMutableNotificationContent alloc] init];
+                    dayContent.title = @"Cue";
+                    dayContent.body = [NSString stringWithFormat:@"%@ is happening in one day", eventName];
+                    dayContent.sound = [UNNotificationSound defaultSound];
+                    
+                    UNTimeIntervalNotificationTrigger *trigger1 = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:dayDiff repeats:NO];
+                    UNNotificationRequest *request1 = [UNNotificationRequest requestWithIdentifier:eventName content:dayContent trigger:trigger1];
+                    [center addNotificationRequest:request1 withCompletionHandler:nil];
+                }
             }
             
             [self.navigationController popViewControllerAnimated:YES];
