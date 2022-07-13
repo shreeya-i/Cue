@@ -63,6 +63,7 @@
     PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
     [eventQuery orderByAscending: @"eventDate"];
     [eventQuery whereKey:@"author" equalTo: [PFUser currentUser]];
+    
     eventQuery.limit = 20;
 
     [eventQuery findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error) {

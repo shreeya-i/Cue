@@ -44,24 +44,31 @@
 }
 
 - (void) fetchData{
-//    NSURL *url = [NSURL URLWithString:@"http://api.yelp.com/v3/businesses/search"];
-//    NSMutableURLRequest *request = [NSURLRequest requestWithURL:url];
-////    [request setValue:@"Bearer APIKEY" forKey:@"Authorization"];
-//    [request setValue:@"Bearer APIKEY" forHTTPHeaderField:@"Authorization"];
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//
-//
-//    NSURLSessionDataTask *task = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-//
-//        if(error) {
-//
-//        } else {
-//            NSLog(@"%@", responseObject);
+    //NSDictionary *params = @{@"location": @"1950 Wyatt Drive Santa Clara", @"radius": @5};
+    NSDictionary *params = @{@"location": @"1950 Wyatt Drive Santa Clara"};
+    NSURL *url = [NSURL URLWithString:@"http://api.yelp.com/v3/businesses/search"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:@"Bearer -6gxlh-YL2hv7LKyoKlsrSqgX57X8tVjBkTsX6OrH4880frnWozN81uVtyMB6QSErNqSW9EmzcbTnT2DvQXzuhRuREkDZiwSxCoKy7KHhWbPIANXsIbrwfnrca7IYnYx" forHTTPHeaderField:@"Authorization"];
+    [request setHTTPBody:[self httpBodyForParameters:params]];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSURLSessionDataTask *task = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        if(error) {
+            NSLog(@"error");
+        } else {
+            NSLog(@"%@", responseObject);
+        }
+    }];
+    
+//    NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//        if (error) {
+//            NSLog(@"dataTaskWithRequest error: %@", error);
+//        }
+//        else{
+//            NSLog(@"%@", response);
 //        }
 //    }];
-//
-//    [task resume];
-//
+   [task resume];
+
 ////    [manager GET:@"http://api.yelp.com/v3/businesses/search" parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
 ////
 ////    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -69,6 +76,23 @@
 ////    }];
     
     
+}
+
+- (NSData *)httpBodyForParameters:(NSDictionary *)parameters {
+    NSMutableArray *parameterArray = [NSMutableArray array];
+
+    [parameters enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL *stop) {
+        NSString *param = [NSString stringWithFormat:@"%@=%@", [self percentEscapeString:key], [self percentEscapeString:obj]];
+        [parameterArray addObject:param];
+    }];
+
+    NSString *string = [parameterArray componentsJoinedByString:@"&"];
+    return [string dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)percentEscapeString:(NSString *)string {
+    NSCharacterSet *allowed = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~"];
+    return [string stringByAddingPercentEncodingWithAllowedCharacters:allowed];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

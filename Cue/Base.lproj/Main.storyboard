@@ -327,6 +327,9 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-vi-Csp">
                                 <rect key="frame" x="331" y="301" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="switchPressed:" destination="4ga-QJ-ll1" eventType="valueChanged" id="BK8-Ih-xwt"/>
+                                </connections>
                             </switch>
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="jPD-l1-Pwp">
                                 <rect key="frame" x="34" y="240" width="346" height="41"/>
@@ -351,6 +354,7 @@
                     <connections>
                         <outlet property="datePicker" destination="jPD-l1-Pwp" id="KHx-JA-9bH"/>
                         <outlet property="nameField" destination="IjL-lz-j9O" id="yFK-jv-7Ay"/>
+                        <outlet property="notificationSwitch" destination="WTo-vi-Csp" id="0ye-Di-qAW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BsR-Gy-0CD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
