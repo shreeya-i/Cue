@@ -44,11 +44,16 @@
 }
 
 - (void) fetchData{
+    
+    NSString *apiKey = [[NSUserDefaults standardUserDefaults]
+        stringForKey:@"apiKey"];
+    NSString *header = [NSString stringWithFormat:@"Bearer %@", apiKey];
+    
     //NSDictionary *params = @{@"location": @"1950 Wyatt Drive Santa Clara", @"radius": @5};
     NSDictionary *params = @{@"location": @"1950 Wyatt Drive Santa Clara"};
     NSURL *url = [NSURL URLWithString:@"http://api.yelp.com/v3/businesses/search"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:@"Bearer -6gxlh-YL2hv7LKyoKlsrSqgX57X8tVjBkTsX6OrH4880frnWozN81uVtyMB6QSErNqSW9EmzcbTnT2DvQXzuhRuREkDZiwSxCoKy7KHhWbPIANXsIbrwfnrca7IYnYx" forHTTPHeaderField:@"Authorization"];
+    [request setValue:header forHTTPHeaderField:@"Authorization"];
     [request setHTTPBody:[self httpBodyForParameters:params]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSURLSessionDataTask *task = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {

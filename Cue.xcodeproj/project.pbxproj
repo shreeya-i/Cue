@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1CC17E72800391734ED96F89 /* Pods_Cue_CueUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381F8C34AA5B43015E63A6EA /* Pods_Cue_CueUITests.framework */; };
 		35962B66FC04D079057943C0 /* Pods_CueTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1924470FCB191FA67DA31E93 /* Pods_CueTests.framework */; };
+		6E9B464E28808CFD00B491C2 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B464D28808CFD00B491C2 /* Keys.plist */; };
 		6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174C2874AF5500729470 /* AppDelegate.m */; };
 		6EE217502874AF5500729470 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174F2874AF5500729470 /* SceneDelegate.m */; };
 		6EE217562874AF5500729470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217542874AF5500729470 /* Main.storyboard */; };
@@ -57,6 +58,7 @@
 		6A98A45579EC29EB0F5E4262 /* Pods-Cue-CueUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cue-CueUITests.release.xcconfig"; path = "Target Support Files/Pods-Cue-CueUITests/Pods-Cue-CueUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6BB9BE1DD2A75AB8C3C7233B /* Pods-Cue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cue.release.xcconfig"; path = "Target Support Files/Pods-Cue/Pods-Cue.release.xcconfig"; sourceTree = "<group>"; };
 		6CE2EAA1E71F18F3FB8A34FA /* Pods-CueTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CueTests.debug.xcconfig"; path = "Target Support Files/Pods-CueTests/Pods-CueTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6E9B464D28808CFD00B491C2 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		6EE217482874AF5500729470 /* Cue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE2174B2874AF5500729470 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6EE2174C2874AF5500729470 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				6EE2174C2874AF5500729470 /* AppDelegate.m */,
 				6EE2174E2874AF5500729470 /* SceneDelegate.h */,
 				6EE2174F2874AF5500729470 /* SceneDelegate.m */,
+				6E9B464D28808CFD00B491C2 /* Keys.plist */,
 				6EE217542874AF5500729470 /* Main.storyboard */,
 				6EE217572874AF5700729470 /* Assets.xcassets */,
 				6EE217592874AF5700729470 /* LaunchScreen.storyboard */,
@@ -364,6 +367,7 @@
 			files = (
 				6EE2175B2874AF5700729470 /* LaunchScreen.storyboard in Resources */,
 				6EE217582874AF5700729470 /* Assets.xcassets in Resources */,
+				6E9B464E28808CFD00B491C2 /* Keys.plist in Resources */,
 				6EE217562874AF5500729470 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -25,9 +25,21 @@
     
     self.passwordField.secureTextEntry = true;
     
+    [self initAPI];
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *ivc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     [ivc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+}
+
+- (void) initAPI {
+    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
+
+        NSString *apiKey = [dict objectForKey: @"API_Key"];
+    
+        [[NSUserDefaults standardUserDefaults] setObject:apiKey forKey:@"apiKey"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
