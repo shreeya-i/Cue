@@ -38,6 +38,8 @@ bool isGrantedNotificationAccess;
     self.cuesTableView.delegate = self;
     self.cuesTableView.rowHeight = 50;
     
+    self.selectedCues = [NSMutableArray array];
+    
     self.center = [UNUserNotificationCenter currentNotificationCenter];
     UNAuthorizationOptions options = UNAuthorizationOptionAlert+UNAuthorizationOptionSound;
     
@@ -62,12 +64,15 @@ bool isGrantedNotificationAccess;
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     CueCell *cell = [self.cuesTableView cellForRowAtIndexPath:indexPath];
+    NSString *cueName = cell.cueLabel.text;
     UIImage *unselected = [UIImage systemImageNamed:@"checkmark.circle"];
     UIImage *selected = [UIImage systemImageNamed:@"checkmark.circle.fill"];
     if(cell.isSelected){
         [cell.selectButton setImage:unselected forState:UIControlStateNormal];
+        [self.selectedCues removeObject:cueName];
     } else {
         [cell.selectButton setImage:selected forState:UIControlStateNormal];
+        [self.selectedCues addObject:cueName];
     }
     cell.isSelected = !(cell.isSelected);
 }
@@ -75,6 +80,7 @@ bool isGrantedNotificationAccess;
 - (IBAction)didTapCreate:(id)sender {
     NSString *eventName = self.nameField.text;
     NSDate *selectedDate = self.datePicker.date;
+    NSArray *cuesArray = self.selectedCues;
     NSDate *curDate = [NSDate date];
     NSTimeInterval diff = [selectedDate timeIntervalSinceDate:curDate];
     
@@ -91,7 +97,7 @@ bool isGrantedNotificationAccess;
         [self presentViewController:alert animated:YES completion:^{}];
     }
     else{
-    [Event postEvent:eventName withDate:selectedDate withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+        [Event postEvent:eventName withDate:selectedDate withCues:cuesArray withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
        if (error){
            NSLog(@"Error creating event");
            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];
