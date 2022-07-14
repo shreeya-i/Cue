@@ -7,11 +7,16 @@
 
 #import "ComposeViewController.h"
 #import "Event.h"
+#import "CueCell.h"
 
-@interface ComposeViewController ()
+@interface ComposeViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *cuesButton;
+@property (weak, nonatomic) IBOutlet UITableView *cuesTableView;
+@property (strong, nonatomic) NSArray *cues;
+@property (strong, nonatomic) NSMutableArray *selectedCues;
 @property (strong, nonatomic) UNUserNotificationCenter *center;
 @property (nonatomic) BOOL notifsOn;
 
@@ -27,6 +32,12 @@ bool isGrantedNotificationAccess;
     isGrantedNotificationAccess = false;
     self.notifsOn = true;
     
+    self.cues = [[NSArray alloc]initWithObjects: @"Restaurant Reservation", @"Activity Booking", @"Play Gift Purchase", @"Practical Gift Purchase", nil];
+    
+    self.cuesTableView.dataSource = self;
+    self.cuesTableView.delegate = self;
+    self.cuesTableView.rowHeight = 50;
+    
     self.center = [UNUserNotificationCenter currentNotificationCenter];
     UNAuthorizationOptions options = UNAuthorizationOptionAlert+UNAuthorizationOptionSound;
     
@@ -36,6 +47,29 @@ bool isGrantedNotificationAccess;
     
     //Might want to add this but causes delay going back to home page:
     //self.tabBarController.tabBar.hidden = YES;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.cues.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    CueCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CueCell" forIndexPath:indexPath];
+    cell.isSelected = NO;
+    cell.cueLabel.text = self.cues[indexPath.row];
+    return cell;
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    CueCell *cell = [self.cuesTableView cellForRowAtIndexPath:indexPath];
+    UIImage *unselected = [UIImage systemImageNamed:@"checkmark.circle"];
+    UIImage *selected = [UIImage systemImageNamed:@"checkmark.circle.fill"];
+    if(cell.isSelected){
+        [cell.selectButton setImage:unselected forState:UIControlStateNormal];
+    } else {
+        [cell.selectButton setImage:selected forState:UIControlStateNormal];
+    }
+    cell.isSelected = !(cell.isSelected);
 }
 
 - (IBAction)didTapCreate:(id)sender {

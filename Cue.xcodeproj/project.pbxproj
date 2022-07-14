@@ -10,6 +10,7 @@
 		1CC17E72800391734ED96F89 /* Pods_Cue_CueUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381F8C34AA5B43015E63A6EA /* Pods_Cue_CueUITests.framework */; };
 		35962B66FC04D079057943C0 /* Pods_CueTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1924470FCB191FA67DA31E93 /* Pods_CueTests.framework */; };
 		6E9B464E28808CFD00B491C2 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B464D28808CFD00B491C2 /* Keys.plist */; };
+		6E9B46512880ABF000B491C2 /* CueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46502880ABF000B491C2 /* CueCell.m */; };
 		6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174C2874AF5500729470 /* AppDelegate.m */; };
 		6EE217502874AF5500729470 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174F2874AF5500729470 /* SceneDelegate.m */; };
 		6EE217562874AF5500729470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217542874AF5500729470 /* Main.storyboard */; };
@@ -59,6 +60,8 @@
 		6BB9BE1DD2A75AB8C3C7233B /* Pods-Cue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cue.release.xcconfig"; path = "Target Support Files/Pods-Cue/Pods-Cue.release.xcconfig"; sourceTree = "<group>"; };
 		6CE2EAA1E71F18F3FB8A34FA /* Pods-CueTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CueTests.debug.xcconfig"; path = "Target Support Files/Pods-CueTests/Pods-CueTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6E9B464D28808CFD00B491C2 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		6E9B464F2880ABF000B491C2 /* CueCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CueCell.h; sourceTree = "<group>"; };
+		6E9B46502880ABF000B491C2 /* CueCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CueCell.m; sourceTree = "<group>"; };
 		6EE217482874AF5500729470 /* Cue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE2174B2874AF5500729470 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6EE2174C2874AF5500729470 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -231,6 +234,8 @@
 				6EE2179C2877A4B800729470 /* Event.m */,
 				6EE217B3287E12EF00729470 /* Suggestion.h */,
 				6EE217B4287E12EF00729470 /* Suggestion.m */,
+				6E9B464F2880ABF000B491C2 /* CueCell.h */,
+				6E9B46502880ABF000B491C2 /* CueCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -500,6 +505,7 @@
 				6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */,
 				6EE217A9287CE6C600729470 /* DetailsViewController.m in Sources */,
 				6EE2179D2877A4B800729470 /* Event.m in Sources */,
+				6E9B46512880ABF000B491C2 /* CueCell.m in Sources */,
 				6EE2178A28760D9900729470 /* SignUpViewController.m in Sources */,
 				6EE217B5287E12EF00729470 /* Suggestion.m in Sources */,
 				6EE2175E2874AF5700729470 /* main.m in Sources */,

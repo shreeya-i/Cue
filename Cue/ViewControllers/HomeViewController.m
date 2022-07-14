@@ -119,9 +119,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.eventsArray.count;
 }
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell
- *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-}
 
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
