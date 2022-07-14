@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UILabel *businessName;
 @property (weak, nonatomic) IBOutlet UIView *colorView;
-
+@property (nonatomic) BOOL isSelected;
 @property (nonatomic, strong) Suggestion *suggestion;
 
 @end
