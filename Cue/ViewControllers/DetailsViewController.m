@@ -24,6 +24,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setUpViews];
+    //[self fetchData];
+}
+
+- (void) setUpViews {
     self.suggestionsTableView.delegate = self;
     self.suggestionsTableView.dataSource = self;
     self.suggestionsTableView.rowHeight = 170;
@@ -41,9 +46,6 @@
     [timeFormatter setDateFormat:@"h:mm a"];
     NSString *timeFromDate = [timeFormatter stringFromDate:self.detailEvent.eventDate];
     self.timeLabel.text = timeFromDate;
-    
-    //[self fetchData];
-    
 }
 
 //- (void) fetchData{

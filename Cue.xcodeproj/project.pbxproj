@@ -94,8 +94,8 @@
 		6EE217A5287CA1AB00729470 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		6EE217A7287CE6C600729470 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		6EE217A8287CE6C600729470 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
-		6EE217AA287CEBBF00729470 /* SuggestionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SuggestionCell.h; path = Cue/ViewControllers/SuggestionCell.h; sourceTree = SOURCE_ROOT; };
-		6EE217AB287CEBBF00729470 /* SuggestionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SuggestionCell.m; path = Cue/ViewControllers/SuggestionCell.m; sourceTree = SOURCE_ROOT; };
+		6EE217AA287CEBBF00729470 /* SuggestionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SuggestionCell.h; path = Cue/Views/SuggestionCell.h; sourceTree = SOURCE_ROOT; };
+		6EE217AB287CEBBF00729470 /* SuggestionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SuggestionCell.m; path = Cue/Views/SuggestionCell.m; sourceTree = SOURCE_ROOT; };
 		6EE217B3287E12EF00729470 /* Suggestion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Suggestion.h; sourceTree = "<group>"; };
 		6EE217B4287E12EF00729470 /* Suggestion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Suggestion.m; sourceTree = "<group>"; };
 		6EE217B6287E1BBD00729470 /* YelpClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YelpClient.h; sourceTree = "<group>"; };
@@ -145,6 +145,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6E9B46522881DAD500B491C2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6EE2179B2877A4B800729470 /* Event.h */,
+				6EE2179C2877A4B800729470 /* Event.m */,
+				6EE217B3287E12EF00729470 /* Suggestion.h */,
+				6EE217B4287E12EF00729470 /* Suggestion.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		6EE2173F2874AF5500729470 = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +181,7 @@
 		6EE2174A2874AF5500729470 /* Cue */ = {
 			isa = PBXGroup;
 			children = (
+				6E9B46522881DAD500B491C2 /* Models */,
 				6EE2179E2878E68900729470 /* API */,
 				6EE217912876518100729470 /* Views */,
 				6EE217802875FAD200729470 /* ViewControllers */,
@@ -230,10 +242,6 @@
 				6EE217AB287CEBBF00729470 /* SuggestionCell.m */,
 				6EE21795287651BE00729470 /* EventCell.h */,
 				6EE21796287651BE00729470 /* EventCell.m */,
-				6EE2179B2877A4B800729470 /* Event.h */,
-				6EE2179C2877A4B800729470 /* Event.m */,
-				6EE217B3287E12EF00729470 /* Suggestion.h */,
-				6EE217B4287E12EF00729470 /* Suggestion.m */,
 				6E9B464F2880ABF000B491C2 /* CueCell.h */,
 				6E9B46502880ABF000B491C2 /* CueCell.m */,
 			);

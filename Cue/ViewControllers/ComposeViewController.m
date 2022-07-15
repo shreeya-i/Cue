@@ -85,16 +85,10 @@ bool isGrantedNotificationAccess;
     NSTimeInterval diff = [selectedDate timeIntervalSinceDate:curDate];
     
     if([eventName isEqual:@""]) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"Event must have a name" preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
-        [alert addAction:okAction];
-        [self presentViewController:alert animated:YES completion:^{}];
+        [self emptyFieldAlert];
     }
     else if(diff <= 0){
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Date has already passed" preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
-        [alert addAction:okAction];
-        [self presentViewController:alert animated:YES completion:^{}];
+        [self pastDateAlert];
     }
     else{
         [Event postEvent:eventName withDate:selectedDate withCues:cuesArray withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
@@ -118,6 +112,20 @@ bool isGrantedNotificationAccess;
     }];
     }
     
+}
+
+- (void) emptyFieldAlert{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"Event must have a name" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:^{}];
+}
+
+- (void) pastDateAlert{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Date has already passed" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:^{}];
 }
 
 //Week before notification

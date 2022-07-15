@@ -17,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDate *eventDate;
 @property (nonatomic, strong) NSArray *selectedCues;
 
+
+// Param name: Name of event
+// Param date: Date of event
+// Param cues: Array of cues the user has requested e.g. Restaurant reservation or activity booking
 + (void) postEvent: ( NSString * _Nullable )name withDate: ( NSDate * _Nullable )date withCues: ( NSArray * _Nullable )cues withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end
