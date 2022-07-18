@@ -11,6 +11,7 @@
 		35962B66FC04D079057943C0 /* Pods_CueTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1924470FCB191FA67DA31E93 /* Pods_CueTests.framework */; };
 		6E9B464E28808CFD00B491C2 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B464D28808CFD00B491C2 /* Keys.plist */; };
 		6E9B46512880ABF000B491C2 /* CueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46502880ABF000B491C2 /* CueCell.m */; };
+		6E9B46552886168C00B491C2 /* MyAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46542886168C00B491C2 /* MyAuth.m */; };
 		6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174C2874AF5500729470 /* AppDelegate.m */; };
 		6EE217502874AF5500729470 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174F2874AF5500729470 /* SceneDelegate.m */; };
 		6EE217562874AF5500729470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217542874AF5500729470 /* Main.storyboard */; };
@@ -62,6 +63,8 @@
 		6E9B464D28808CFD00B491C2 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		6E9B464F2880ABF000B491C2 /* CueCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CueCell.h; sourceTree = "<group>"; };
 		6E9B46502880ABF000B491C2 /* CueCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CueCell.m; sourceTree = "<group>"; };
+		6E9B46532886168C00B491C2 /* MyAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAuth.h; sourceTree = "<group>"; };
+		6E9B46542886168C00B491C2 /* MyAuth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAuth.m; sourceTree = "<group>"; };
 		6EE217482874AF5500729470 /* Cue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE2174B2874AF5500729470 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6EE2174C2874AF5500729470 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -84,7 +87,7 @@
 		6EE2178828760D9900729470 /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = Cue/ViewControllers/SignUpViewController.h; sourceTree = SOURCE_ROOT; };
 		6EE2178928760D9900729470 /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = Cue/ViewControllers/SignUpViewController.m; sourceTree = SOURCE_ROOT; };
 		6EE2178B2876119F00729470 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeViewController.h; path = Cue/ViewControllers/HomeViewController.h; sourceTree = SOURCE_ROOT; };
-		6EE2178C2876119F00729470 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = Cue/ViewControllers/HomeViewController.m; sourceTree = SOURCE_ROOT; };
+		6EE2178C2876119F00729470 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = Cue/ViewControllers/HomeViewController.m; sourceTree = SOURCE_ROOT; wrapsLines = 0; };
 		6EE2178E28762E5F00729470 /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
 		6EE2178F28762E5F00729470 /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		6EE21795287651BE00729470 /* EventCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
@@ -148,6 +151,8 @@
 		6E9B46522881DAD500B491C2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6E9B46532886168C00B491C2 /* MyAuth.h */,
+				6E9B46542886168C00B491C2 /* MyAuth.m */,
 				6EE2179B2877A4B800729470 /* Event.h */,
 				6EE2179C2877A4B800729470 /* Event.m */,
 				6EE217B3287E12EF00729470 /* Suggestion.h */,
@@ -520,6 +525,7 @@
 				6EE217502874AF5500729470 /* SceneDelegate.m in Sources */,
 				6EE217B8287E1BBD00729470 /* YelpClient.m in Sources */,
 				6EE2178D2876119F00729470 /* HomeViewController.m in Sources */,
+				6E9B46552886168C00B491C2 /* MyAuth.m in Sources */,
 				6EE2178728760B3900729470 /* ProfileViewController.m in Sources */,
 				6EE21797287651BE00729470 /* EventCell.m in Sources */,
 				6EE2179028762E5F00729470 /* ComposeViewController.m in Sources */,

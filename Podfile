@@ -11,6 +11,10 @@ target 'Cue' do
   pod 'Parse/UI'
   pod "AFNetworking", "~> 2.0"
   pod 'BDBOAuth1Manager'
+  pod 'GoogleAPIClientForREST/Calendar'
+  pod 'GoogleAPIClientForREST'
+  pod 'GTMAppAuth'
+  pod 'AppAuth'
 
   target 'CueTests' do
     inherit! :search_paths

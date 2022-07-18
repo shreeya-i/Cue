@@ -6,6 +6,8 @@
 //
 
 #import "AppDelegate.h"
+#import "GTMAppAuth/GTMAppAuth.h"
+#import "HomeViewController.h"
 @import Parse;
 
 @interface AppDelegate ()
@@ -22,6 +24,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    self.configuration =
+        [GTMAppAuthFetcherAuthorization configurationForGoogle];
+    
     ParseClientConfiguration *config = [ParseClientConfiguration  configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
 
             configuration.applicationId = @"QszpZQcjSbj1mEKpSbCcf7UauYdjNhe4D0Jt3M1E";
@@ -35,6 +41,24 @@
     center.delegate = self;
     
     return YES;
+}
+
+/*! @brief Handles inbound URLs. Checks if the URL matches the redirect URI for a pending
+        AppAuth authorization request.
+ */
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<NSString *, id> *)options {
+  // Sends the URL to the current authorization flow (if any) which will process it if it relates to
+  // an authorization response.
+  if ([_currentAuthorizationFlow resumeExternalUserAgentFlowWithURL:url]) {
+    _currentAuthorizationFlow = nil;
+    return YES;
+  }
+
+  // Your additional URL handling (if any) goes here.
+
+  return NO;
 }
 
 

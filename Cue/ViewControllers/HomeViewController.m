@@ -9,13 +9,28 @@
 #import "ComposeViewController.h"
 #import "EventCell.h"
 #import "DetailsViewController.h"
+#import "GoogleAPIClientForREST/GTLRCalendar.h"
+#import "GTMAppAuth/GTMAppAuth.h"
+#import "OIDAuthorizationRequest.h"
+#import "OIDAuthorizationService.h"
+#import "AppDelegate.h"
+#import "OIDAuthState+IOS.h"
+#import "OIDTokenResponse.h"
+#import "MyAuth.h"
 @import Parse;
+
+static NSString *const kIssuer = @"https://accounts.google.com";
+static NSString *const kExampleAuthorizerKey = @"authorization";
+static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_token";
 
 @interface HomeViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSMutableArray *eventsArray;
 @property (weak, nonatomic) IBOutlet UILabel *noEventsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *todaysDay;
 @property (weak, nonatomic) IBOutlet UILabel *todaysDate;
+@property (strong, nonatomic) NSString *kClientID;
+@property (strong, nonatomic) NSString *kRedirectURI;
+@property (strong, nonatomic) NSString *kAccessToken;
 
 @end
 
@@ -27,16 +42,34 @@
     self.noEventsLabel.hidden = YES;
     self.tabBarController.tabBar.hidden = NO;
     [self.eventsTableView reloadData];
-    [self fetchEvents];
+    [self _fetchEvents];
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setUpViews];
-    [self fetchEvents];
+    [self _setUpViews];
+    [self _fetchEvents];
+    [self _setUpConstants];
 }
 
-- (void) setUpViews {
+- (void) _setUpConstants {
+    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
+        NSString *GTMClientID = [dict objectForKey: @"kGoogleAPIClientID"];
+        [[NSUserDefaults standardUserDefaults] setObject:GTMClientID forKey:@"GTMClientID"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSString *baseID = [[NSUserDefaults standardUserDefaults]
+                                  stringForKey:@"GTMClientID"];
+    self.kClientID = [NSString stringWithFormat:@"%@.apps.googleusercontent.com", baseID];
+    self.kRedirectURI = [NSString stringWithFormat: @"com.googleusercontent.apps.%@:/oauthredirect", baseID];
+    NSLog(@"%@", baseID);
+    NSLog(@"%@", self.kClientID);
+    NSLog(@"%@", self.kRedirectURI);
+}
+
+- (void) _setUpViews {
     
 //    self.refreshControl = [[UIRefreshControl alloc] init];
 //    [self.refreshControl addTarget:self action:@selector(fetchEvents) forControlEvents:UIControlEventValueChanged];
@@ -59,7 +92,7 @@
     self.todaysDay.text = stringFromDate2;
 }
 
-- (void)fetchEvents {
+- (void)_fetchEvents {
     PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
     [eventQuery orderByAscending: @"eventDate"];
     [eventQuery whereKey:@"author" equalTo: [PFUser currentUser]];
@@ -81,6 +114,137 @@
         }
     }];
 }
+
+- (void)setGtmAuthorization:(GTMAppAuthFetcherAuthorization*)authorization {
+  if ([_authorization isEqual:authorization]) {
+    return;
+  }
+  _authorization = authorization;
+  [self stateChanged];
+}
+
+- (void)stateChanged {
+  [self saveState];
+  [self updateUI];
+}
+
+- (void)saveState {
+  if (_authorization.canAuthorize) {
+    [GTMAppAuthFetcherAuthorization saveAuthorization:_authorization
+                                    toKeychainForName:kExampleAuthorizerKey];
+  } else {
+    [GTMAppAuthFetcherAuthorization removeAuthorizationFromKeychainForName:kExampleAuthorizerKey];
+  }
+}
+
+- (void)updateUI {
+    self.userInfoButton.enabled = _authorization.canAuthorize;
+    // dynamically changes authorize button text depending on authorized state
+    if (!_authorization.canAuthorize) {
+      [self.userInfoButton setTitle:@"Nothing" forState:UIControlStateNormal];
+    } else {
+        [self _getUserInfo];
+    }
+}
+
+- (void ) _getUserInfo {
+  NSLog(@"Performing userinfo request");
+
+  // Creates a GTMSessionFetcherService with the authorization.
+  // Normally you would save this service object and re-use it for all REST API calls.
+    GTMSessionFetcherService *fetcherService = [[GTMSessionFetcherService alloc] init];
+//    MyAuth *auth = [[MyAuth alloc] initWithAccessToken: self.kAccessToken];
+//    fetcherService.authorizer = auth;
+    fetcherService.authorizer = self.authorization;
+
+  // Creates a fetcher for the API call.
+    NSURL *userinfoEndpoint = [NSURL URLWithString:@"https://www.googleapis.com/calendar/v3/calendars/primary"];
+    GTMSessionFetcher *fetcher = [fetcherService fetcherWithURL:userinfoEndpoint];
+
+    [fetcher beginFetchWithCompletionHandler:^(NSData *data, NSError *error) {
+    // Checks for an error.
+    if (error) {
+      // OIDOAuthTokenErrorDomain indicates an issue with the authorization.
+      if ([error.domain isEqual:OIDOAuthTokenErrorDomain]) {
+        [self setGtmAuthorization:nil];
+        NSLog(@"Authorization error during token refresh, clearing state. %@", error);
+      // Other errors are assumed transient.
+      } else {
+        NSLog(@"Transient error during token refresh. %@", error);
+      }
+      return;
+    }
+
+    // Parses the JSON response.
+    NSError *jsonError = nil;
+    id jsonDictionaryOrArray =
+        [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+
+    // JSON error.
+    if (jsonError) {
+      NSLog(@"JSON decoding error %@", jsonError);
+      return;
+    }
+
+    // Success response!
+    NSLog(@"Success: %@", jsonDictionaryOrArray);
+    NSString *name = jsonDictionaryOrArray[@"name"];
+    [self.userInfoButton setTitle:name forState:UIControlStateNormal];
+  }];
+}
+
+
+- (IBAction)didTapImport:(id)sender {
+    NSURL *issuer = [NSURL URLWithString:kIssuer];
+    NSURL *redirectURI = [NSURL URLWithString:self.kRedirectURI];
+
+    NSLog(@"Fetching configuration for issuer: %@", issuer);
+
+    // discovers endpoints
+    [OIDAuthorizationService discoverServiceConfigurationForIssuer:issuer
+        completion:^(OIDServiceConfiguration *_Nullable configuration, NSError *_Nullable error) {
+
+      if (!configuration) {
+        NSLog(@"Error retrieving discovery document: %@", [error localizedDescription]);
+        [self setGtmAuthorization:nil];
+        return;
+      }
+
+      NSLog(@"Got configuration: %@", configuration);
+
+      // builds authentication request
+      OIDAuthorizationRequest *request =
+          [[OIDAuthorizationRequest alloc] initWithConfiguration:configuration
+                                                        clientId:self.kClientID
+                                                          scopes:@[OIDScopeOpenID, OIDScopeProfile]
+                                                     redirectURL:redirectURI
+                                                    responseType:OIDResponseTypeCode
+                                            additionalParameters:nil];
+      // performs authentication request
+      AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+      NSLog(@"Initiating authorization request with scope: %@", request.scope);
+
+      appDelegate.currentAuthorizationFlow =
+          [OIDAuthState authStateByPresentingAuthorizationRequest:request
+              presentingViewController:self
+                              callback:^(OIDAuthState *_Nullable authState,
+                                         NSError *_Nullable error) {
+        if (authState) {
+          GTMAppAuthFetcherAuthorization *authorization =
+              [[GTMAppAuthFetcherAuthorization alloc] initWithAuthState:authState];
+
+          [self setGtmAuthorization:authorization];
+          NSLog(@"Got authorization tokens. Access token: %@",
+                           authState.lastTokenResponse.accessToken);
+            self.kAccessToken = authState.lastTokenResponse.accessToken;
+        } else {
+          [self setGtmAuthorization:nil];
+          NSLog(@"Authorization error: %@", [error localizedDescription]);
+        }
+      }];
+    }];
+}
+
 
 - (IBAction)didTapCompose:(id)sender {
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

@@ -22,10 +22,10 @@
     [self.profilePicture addGestureRecognizer:postTapGestureRecognizer];
     [self.profilePicture setUserInteractionEnabled:YES];
     
-    [self fetchDetails];
+    [self _fetchDetails];
 }
 
-- (void) fetchDetails {
+- (void) _fetchDetails {
     self.currentName.text = [PFUser currentUser][@"name"];
     self.currentUsername.text = [PFUser currentUser].username;
     
@@ -139,7 +139,7 @@
             self.usernameField.text = @"";
             self.passwordField.text = @"";
             self.addressField.text = @"";
-            [self fetchDetails];
+            [self _fetchDetails];
             NSLog(@"Successfully saved");
         }
     }];

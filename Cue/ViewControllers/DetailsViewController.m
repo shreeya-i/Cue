@@ -24,11 +24,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setUpViews];
+    [self _setUpViews];
     //[self fetchData];
 }
 
-- (void) setUpViews {
+- (void) _setUpViews {
     self.suggestionsTableView.delegate = self;
     self.suggestionsTableView.dataSource = self;
     self.suggestionsTableView.rowHeight = 170;
@@ -48,62 +48,62 @@
     self.timeLabel.text = timeFromDate;
 }
 
-//- (void) fetchData{
-//
-//    NSString *apiKey = [[NSUserDefaults standardUserDefaults]
-//        stringForKey:@"apiKey"];
-//    NSString *header = [NSString stringWithFormat:@"Bearer %@", apiKey];
-//
-//    //NSDictionary *params = @{@"location": @"1950 Wyatt Drive Santa Clara", @"radius": @5};
-//    NSDictionary *params = @{@"location": @"1950 Wyatt Drive Santa Clara"};
-//    NSURL *url = [NSURL URLWithString:@"http://api.yelp.com/v3/businesses/search"];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setValue:header forHTTPHeaderField:@"Authorization"];
-//    [request setHTTPBody:[self httpBodyForParameters:params]];
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    NSURLSessionDataTask *task = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-//        if(error) {
-//            NSLog(@"error");
-//        } else {
-//            NSLog(@"%@", responseObject);
+- (void) fetchData{
+
+    NSString *apiKey = [[NSUserDefaults standardUserDefaults]
+        stringForKey:@"apiKey"];
+    NSString *header = [NSString stringWithFormat:@"Bearer %@", apiKey];
+
+    //NSDictionary *params = @{@"location": @"1950 Wyatt Drive Santa Clara", @"radius": @5};
+    NSDictionary *params = @{@"location": @"1950 Wyatt Drive Santa Clara"};
+    NSURL *url = [NSURL URLWithString:@"http://api.yelp.com/v3/businesses/search"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:header forHTTPHeaderField:@"Authorization"];
+    [request setHTTPBody:[self httpBodyForParameters:params]];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSURLSessionDataTask *task = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        if(error) {
+            NSLog(@"error");
+        } else {
+            NSLog(@"%@", responseObject);
+        }
+    }];
+
+//    NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//        if (error) {
+//            NSLog(@"dataTaskWithRequest error: %@", error);
+//        }
+//        else{
+//            NSLog(@"%@", response);
 //        }
 //    }];
-//
-////    NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-////        if (error) {
-////            NSLog(@"dataTaskWithRequest error: %@", error);
-////        }
-////        else{
-////            NSLog(@"%@", response);
-////        }
+   [task resume];
+
+////    [manager GET:@"http://api.yelp.com/v3/businesses/search" parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+////
+////    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+////
 ////    }];
-//   [task resume];
-//
-//////    [manager GET:@"http://api.yelp.com/v3/businesses/search" parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-//////
-//////    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//////
-//////    }];
-//
-//
-//}
-//
-//- (NSData *)httpBodyForParameters:(NSDictionary *)parameters {
-//    NSMutableArray *parameterArray = [NSMutableArray array];
-//
-//    [parameters enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL *stop) {
-//        NSString *param = [NSString stringWithFormat:@"%@=%@", [self percentEscapeString:key], [self percentEscapeString:obj]];
-//        [parameterArray addObject:param];
-//    }];
-//
-//    NSString *string = [parameterArray componentsJoinedByString:@"&"];
-//    return [string dataUsingEncoding:NSUTF8StringEncoding];
-//}
-//
-//- (NSString *)percentEscapeString:(NSString *)string {
-//    NSCharacterSet *allowed = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~"];
-//    return [string stringByAddingPercentEncodingWithAllowedCharacters:allowed];
-//}
+
+
+}
+
+- (NSData *)httpBodyForParameters:(NSDictionary *)parameters {
+    NSMutableArray *parameterArray = [NSMutableArray array];
+
+    [parameters enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL *stop) {
+        NSString *param = [NSString stringWithFormat:@"%@=%@", [self percentEscapeString:key], [self percentEscapeString:obj]];
+        [parameterArray addObject:param];
+    }];
+
+    NSString *string = [parameterArray componentsJoinedByString:@"&"];
+    return [string dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)percentEscapeString:(NSString *)string {
+    NSCharacterSet *allowed = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~"];
+    return [string stringByAddingPercentEncodingWithAllowedCharacters:allowed];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SuggestionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SuggestionCell" forIndexPath:indexPath];

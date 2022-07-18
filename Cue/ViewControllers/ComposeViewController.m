@@ -85,10 +85,10 @@ bool isGrantedNotificationAccess;
     NSTimeInterval diff = [selectedDate timeIntervalSinceDate:curDate];
     
     if([eventName isEqual:@""]) {
-        [self emptyFieldAlert];
+        [self _emptyFieldAlert];
     }
     else if(diff <= 0){
-        [self pastDateAlert];
+        [self _pastDateAlert];
     }
     else{
         [Event postEvent:eventName withDate:selectedDate withCues:cuesArray withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
@@ -102,8 +102,8 @@ bool isGrantedNotificationAccess;
         else{
             if(isGrantedNotificationAccess && self.notifsOn){
                 /// Notifications: DO NOT account for current user which needs to be fixed.
-                [self weekNotif];
-                [self dayNotif];
+                [self _weekNotif];
+                [self _dayNotif];
             }
             
             [self.navigationController popViewControllerAnimated:YES];
@@ -114,14 +114,14 @@ bool isGrantedNotificationAccess;
     
 }
 
-- (void) emptyFieldAlert{
+- (void) _emptyFieldAlert{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"Event must have a name" preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
     [alert addAction:okAction];
     [self presentViewController:alert animated:YES completion:^{}];
 }
 
-- (void) pastDateAlert{
+- (void) _pastDateAlert{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Date has already passed" preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
     [alert addAction:okAction];
@@ -129,7 +129,7 @@ bool isGrantedNotificationAccess;
 }
 
 //Week before notification
-- (void) weekNotif {
+- (void) _weekNotif {
     NSDate *selectedDate = self.datePicker.date;
     NSString *eventName = self.nameField.text;
     NSDate *curDate = [NSDate date];
@@ -151,7 +151,7 @@ bool isGrantedNotificationAccess;
 }
 
 //Day before notification:
-- (void) dayNotif {
+- (void) _dayNotif {
     NSDate *selectedDate = self.datePicker.date;
     NSString *eventName = self.nameField.text;
     NSDate *curDate = [NSDate date];

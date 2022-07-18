@@ -7,10 +7,15 @@
 
 #import <UIKit/UIKit.h>
 #import <UserNotifications/UserNotifications.h>
+#import "GTMAppAuth/GTMAppAuth.h"
+#import "OIDServiceConfiguration.h"
+#import "OIDExternalUserAgentSession.h"
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UNUserNotificationCenterDelegate>
 
+@property (strong, nonatomic) OIDServiceConfiguration * _Nonnull configuration;
+@property(nonatomic, nullable)
+    id<OIDExternalUserAgentSession> currentAuthorizationFlow;
 
 @end
-

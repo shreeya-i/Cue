@@ -6,12 +6,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GTMAppAuthFetcherAuthorization.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *eventsTableView;
+@property (weak, nonatomic) IBOutlet UIButton *userInfoButton;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property(nonatomic, nullable) GTMAppAuthFetcherAuthorization *authorization;
 
 @end
 
