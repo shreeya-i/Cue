@@ -196,7 +196,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="J89-0K-f6U">
-                                <rect key="frame" x="0.0" y="193" width="414" height="495"/>
+                                <rect key="frame" x="0.0" y="193" width="414" height="620"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -265,24 +265,6 @@
                                 <color key="tintColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
-                                <connections>
-                                    <action selector="didTapCompose:" destination="08f-7b-IZ5" eventType="touchUpInside" id="Gnn-0U-QQp"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CNK-lb-RS4">
-                                <rect key="frame" x="11" y="745" width="179" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Google Sign In"/>
-                                <connections>
-                                    <action selector="didTapImport:" destination="08f-7b-IZ5" eventType="touchUpInside" id="Zn9-eF-vUM"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eO1-2j-xcI">
-                                <rect key="frame" x="246" y="745" width="123" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sy4-EE-dVj"/>
@@ -294,11 +276,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="WZJ-Bc-10x"/>
                     <connections>
+                        <outlet property="composeButton" destination="WdF-Mu-scH" id="J4i-aQ-UUb"/>
                         <outlet property="eventsTableView" destination="J89-0K-f6U" id="gbP-MF-RbA"/>
                         <outlet property="noEventsLabel" destination="lv9-1r-fCP" id="YM6-dc-V8y"/>
                         <outlet property="todaysDate" destination="AQG-6r-jf0" id="mzp-qa-4wn"/>
                         <outlet property="todaysDay" destination="jmf-hD-jXz" id="EzK-za-HRj"/>
-                        <outlet property="userInfoButton" destination="eO1-2j-xcI" id="Fmh-gF-h8I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n5p-gH-BYj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

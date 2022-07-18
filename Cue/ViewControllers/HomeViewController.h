@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *eventsTableView;
-@property (weak, nonatomic) IBOutlet UIButton *userInfoButton;
+@property (weak, nonatomic) IBOutlet UIButton *composeButton;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property(nonatomic, nullable) GTMAppAuthFetcherAuthorization *authorization;
 

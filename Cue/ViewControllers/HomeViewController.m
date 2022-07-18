@@ -75,6 +75,23 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 //    [self.refreshControl addTarget:self action:@selector(fetchEvents) forControlEvents:UIControlEventValueChanged];
 //    [self.eventsTableView insertSubview:self.refreshControl atIndex:0];
     
+    NSMutableArray* actions = [[NSMutableArray alloc] init];
+    [actions addObject:[UIAction actionWithTitle:@"Compose New" image:nil identifier:nil
+                        handler:^(__kindof UIAction* _Nonnull action) {
+            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            ComposeViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"ComposeViewController"];
+            [self.navigationController pushViewController:controller animated:YES];
+    }]];
+    [actions addObject:[UIAction actionWithTitle:@"Import GCal" image:nil identifier:nil
+                        handler:^(__kindof UIAction* _Nonnull action) {
+        [self _didTapImport];
+    }]];
+
+    UIMenu* menu = [UIMenu menuWithTitle:@"" children:actions];
+    
+    self.composeButton.menu = menu;
+    self.composeButton.showsMenuAsPrimaryAction = TRUE;
+    
     self.eventsTableView.delegate = self;
     self.eventsTableView.dataSource = self;
     self.eventsTableView.rowHeight = 200;
@@ -138,12 +155,9 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 }
 
 - (void)updateUI {
-    self.userInfoButton.enabled = _authorization.canAuthorize;
-    // dynamically changes authorize button text depending on authorized state
     if (!_authorization.canAuthorize) {
-      [self.userInfoButton setTitle:@"Nothing" forState:UIControlStateNormal];
     } else {
-        [self _getUserInfo];
+        //[self _getUserInfo];
     }
 }
 
@@ -188,13 +202,10 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 
     // Success response!
     NSLog(@"Success: %@", jsonDictionaryOrArray);
-    NSString *name = jsonDictionaryOrArray[@"name"];
-    [self.userInfoButton setTitle:name forState:UIControlStateNormal];
   }];
 }
 
-
-- (IBAction)didTapImport:(id)sender {
+- (void) _didTapImport {
     NSURL *issuer = [NSURL URLWithString:kIssuer];
     NSURL *redirectURI = [NSURL URLWithString:self.kRedirectURI];
 
@@ -243,13 +254,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
         }
       }];
     }];
-}
-
-
-- (IBAction)didTapCompose:(id)sender {
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ComposeViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"ComposeViewController"];
-    [self.navigationController pushViewController:controller animated:YES];
 }
 
 
