@@ -21,7 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 // Param name: Name of event
 // Param date: Date of event
 // Param cues: Array of cues the user has requested e.g. Restaurant reservation or activity booking
-+ (void) postEvent: ( NSString * _Nullable )name withDate: ( NSDate * _Nullable )date withCues: ( NSArray * _Nullable )cues withCompletion: (PFBooleanResultBlock  _Nullable)completion;
++ (void) postEvent: ( NSString * _Nullable )name
+          withDate: ( NSDate * _Nullable )date
+          withCues: ( NSArray * _Nullable )cues
+    withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end
 

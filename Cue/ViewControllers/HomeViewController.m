@@ -82,7 +82,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
             ComposeViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"ComposeViewController"];
             [self.navigationController pushViewController:controller animated:YES];
     }]];
-    [actions addObject:[UIAction actionWithTitle:@"Import GCal" image:nil identifier:nil
+    [actions addObject:[UIAction actionWithTitle:@"Import from Google" image:nil identifier:nil
                         handler:^(__kindof UIAction* _Nonnull action) {
         [self _didTapImport];
     }]];
@@ -157,7 +157,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 - (void)updateUI {
     if (!_authorization.canAuthorize) {
     } else {
-        //[self _getUserInfo];
+        [self _getUserInfo];
     }
 }
 
@@ -172,7 +172,8 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     fetcherService.authorizer = self.authorization;
 
   // Creates a fetcher for the API call.
-    NSURL *userinfoEndpoint = [NSURL URLWithString:@"https://www.googleapis.com/calendar/v3/calendars/primary"];
+    NSString *endpoint = [NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/primary?access_token=%@", self.kAccessToken];
+    NSURL *userinfoEndpoint = [NSURL URLWithString:endpoint];
     GTMSessionFetcher *fetcher = [fetcherService fetcherWithURL:userinfoEndpoint];
 
     [fetcher beginFetchWithCompletionHandler:^(NSData *data, NSError *error) {
@@ -227,7 +228,9 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
       OIDAuthorizationRequest *request =
           [[OIDAuthorizationRequest alloc] initWithConfiguration:configuration
                                                         clientId:self.kClientID
-                                                          scopes:@[OIDScopeOpenID, OIDScopeProfile]
+                                                          scopes:@[OIDScopeOpenID, OIDScopeProfile,
+                                                                   @"https://www.googleapis.com/auth/calendar",
+                                                                   @"https://www.googleapis.com/auth/calendar.events"]
                                                      redirectURL:redirectURI
                                                     responseType:OIDResponseTypeCode
                                             additionalParameters:nil];

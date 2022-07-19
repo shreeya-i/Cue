@@ -12,6 +12,7 @@
 		6E9B464E28808CFD00B491C2 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B464D28808CFD00B491C2 /* Keys.plist */; };
 		6E9B46512880ABF000B491C2 /* CueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46502880ABF000B491C2 /* CueCell.m */; };
 		6E9B46552886168C00B491C2 /* MyAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46542886168C00B491C2 /* MyAuth.m */; };
+		6E9B46582886250800B491C2 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46572886250800B491C2 /* Notification.m */; };
 		6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174C2874AF5500729470 /* AppDelegate.m */; };
 		6EE217502874AF5500729470 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174F2874AF5500729470 /* SceneDelegate.m */; };
 		6EE217562874AF5500729470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217542874AF5500729470 /* Main.storyboard */; };
@@ -65,6 +66,8 @@
 		6E9B46502880ABF000B491C2 /* CueCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CueCell.m; sourceTree = "<group>"; };
 		6E9B46532886168C00B491C2 /* MyAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAuth.h; sourceTree = "<group>"; };
 		6E9B46542886168C00B491C2 /* MyAuth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAuth.m; sourceTree = "<group>"; };
+		6E9B46562886250800B491C2 /* Notification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		6E9B46572886250800B491C2 /* Notification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
 		6EE217482874AF5500729470 /* Cue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE2174B2874AF5500729470 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6EE2174C2874AF5500729470 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -155,6 +158,8 @@
 				6E9B46542886168C00B491C2 /* MyAuth.m */,
 				6EE2179B2877A4B800729470 /* Event.h */,
 				6EE2179C2877A4B800729470 /* Event.m */,
+				6E9B46562886250800B491C2 /* Notification.h */,
+				6E9B46572886250800B491C2 /* Notification.m */,
 				6EE217B3287E12EF00729470 /* Suggestion.h */,
 				6EE217B4287E12EF00729470 /* Suggestion.m */,
 			);
@@ -525,6 +530,7 @@
 				6EE217502874AF5500729470 /* SceneDelegate.m in Sources */,
 				6EE217B8287E1BBD00729470 /* YelpClient.m in Sources */,
 				6EE2178D2876119F00729470 /* HomeViewController.m in Sources */,
+				6E9B46582886250800B491C2 /* Notification.m in Sources */,
 				6E9B46552886168C00B491C2 /* MyAuth.m in Sources */,
 				6EE2178728760B3900729470 /* ProfileViewController.m in Sources */,
 				6EE21797287651BE00729470 /* EventCell.m in Sources */,

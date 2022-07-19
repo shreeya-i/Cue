@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MyAuth : NSObject <GTMFetcherAuthorizationProtocol>
 
-+ (MyAuth *)initWithAccessToken:(NSString *)accessToken;
+- (instancetype)initWithAccessToken:(NSString *)accessToken;
 
 @end
 
