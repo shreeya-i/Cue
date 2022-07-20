@@ -17,14 +17,12 @@
 @implementation AppDelegate
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
-    
     UNNotificationPresentationOptions presentationOptions = UNNotificationPresentationOptionAlert+UNNotificationPresentationOptionSound;
     completionHandler(presentationOptions);
 }
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
     self.configuration =
         [GTMAppAuthFetcherAuthorization configurationForGoogle];
     
@@ -55,9 +53,7 @@
     _currentAuthorizationFlow = nil;
     return YES;
   }
-
   // Your additional URL handling (if any) goes here.
-
   return NO;
 }
 

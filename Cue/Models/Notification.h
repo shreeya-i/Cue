@@ -22,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (void) createNotification: ( NSString * _Nullable )text
           withDate: ( NSDate * _Nullable )date
           withCompletion: (PFBooleanResultBlock  _Nullable)completion;
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -20,7 +20,6 @@
 + (void) createNotification:(NSString *)text
                    withDate:(NSDate *)date
              withCompletion:(PFBooleanResultBlock)completion {
-
 Notification *newNotif = [Notification new];
     newNotif.text = text;
     newNotif.user = [PFUser currentUser];

@@ -13,6 +13,9 @@
 		6E9B46512880ABF000B491C2 /* CueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46502880ABF000B491C2 /* CueCell.m */; };
 		6E9B46552886168C00B491C2 /* MyAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46542886168C00B491C2 /* MyAuth.m */; };
 		6E9B46582886250800B491C2 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46572886250800B491C2 /* Notification.m */; };
+		6E9B465B2887474000B491C2 /* GoogleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B465A2887474000B491C2 /* GoogleViewController.m */; };
+		6E9B465E2887477A00B491C2 /* GoogleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B465D2887477A00B491C2 /* GoogleCell.m */; };
+		6E9B466128874C5200B491C2 /* GCAEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B466028874C5200B491C2 /* GCAEvent.m */; };
 		6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174C2874AF5500729470 /* AppDelegate.m */; };
 		6EE217502874AF5500729470 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174F2874AF5500729470 /* SceneDelegate.m */; };
 		6EE217562874AF5500729470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217542874AF5500729470 /* Main.storyboard */; };
@@ -33,7 +36,6 @@
 		6EE217A9287CE6C600729470 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217A8287CE6C600729470 /* DetailsViewController.m */; };
 		6EE217AC287CEBBF00729470 /* SuggestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217AB287CEBBF00729470 /* SuggestionCell.m */; };
 		6EE217B5287E12EF00729470 /* Suggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217B4287E12EF00729470 /* Suggestion.m */; };
-		6EE217B8287E1BBD00729470 /* YelpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE217B7287E1BBD00729470 /* YelpClient.m */; };
 		BC525BC1669439F8C67CA526 /* Pods_Cue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8DEBA59AADBE0E3A0AECDD /* Pods_Cue.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +70,12 @@
 		6E9B46542886168C00B491C2 /* MyAuth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAuth.m; sourceTree = "<group>"; };
 		6E9B46562886250800B491C2 /* Notification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
 		6E9B46572886250800B491C2 /* Notification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
+		6E9B46592887474000B491C2 /* GoogleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoogleViewController.h; sourceTree = "<group>"; };
+		6E9B465A2887474000B491C2 /* GoogleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoogleViewController.m; sourceTree = "<group>"; };
+		6E9B465C2887477A00B491C2 /* GoogleCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoogleCell.h; sourceTree = "<group>"; };
+		6E9B465D2887477A00B491C2 /* GoogleCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoogleCell.m; sourceTree = "<group>"; };
+		6E9B465F28874C5200B491C2 /* GCAEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCAEvent.h; sourceTree = "<group>"; };
+		6E9B466028874C5200B491C2 /* GCAEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCAEvent.m; sourceTree = "<group>"; };
 		6EE217482874AF5500729470 /* Cue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE2174B2874AF5500729470 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6EE2174C2874AF5500729470 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -104,8 +112,6 @@
 		6EE217AB287CEBBF00729470 /* SuggestionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SuggestionCell.m; path = Cue/Views/SuggestionCell.m; sourceTree = SOURCE_ROOT; };
 		6EE217B3287E12EF00729470 /* Suggestion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Suggestion.h; sourceTree = "<group>"; };
 		6EE217B4287E12EF00729470 /* Suggestion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Suggestion.m; sourceTree = "<group>"; };
-		6EE217B6287E1BBD00729470 /* YelpClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YelpClient.h; sourceTree = "<group>"; };
-		6EE217B7287E1BBD00729470 /* YelpClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YelpClient.m; sourceTree = "<group>"; };
 		C5DC950E4D4189F8BD70CC2C /* Pods-Cue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cue.debug.xcconfig"; path = "Target Support Files/Pods-Cue/Pods-Cue.debug.xcconfig"; sourceTree = "<group>"; };
 		DC8DEBA59AADBE0E3A0AECDD /* Pods_Cue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD5910D41051358BDCAEC15 /* Pods-CueTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CueTests.release.xcconfig"; path = "Target Support Files/Pods-CueTests/Pods-CueTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +168,8 @@
 				6E9B46572886250800B491C2 /* Notification.m */,
 				6EE217B3287E12EF00729470 /* Suggestion.h */,
 				6EE217B4287E12EF00729470 /* Suggestion.m */,
+				6E9B465F28874C5200B491C2 /* GCAEvent.h */,
+				6E9B466028874C5200B491C2 /* GCAEvent.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -241,6 +249,8 @@
 				6EE2178628760B3900729470 /* ProfileViewController.m */,
 				6EE217812875FAE300729470 /* LoginViewController.h */,
 				6EE217822875FAE300729470 /* LoginViewController.m */,
+				6E9B46592887474000B491C2 /* GoogleViewController.h */,
+				6E9B465A2887474000B491C2 /* GoogleViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -254,6 +264,8 @@
 				6EE21796287651BE00729470 /* EventCell.m */,
 				6E9B464F2880ABF000B491C2 /* CueCell.h */,
 				6E9B46502880ABF000B491C2 /* CueCell.m */,
+				6E9B465C2887477A00B491C2 /* GoogleCell.h */,
+				6E9B465D2887477A00B491C2 /* GoogleCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -261,8 +273,6 @@
 		6EE2179E2878E68900729470 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				6EE217B6287E1BBD00729470 /* YelpClient.h */,
-				6EE217B7287E1BBD00729470 /* YelpClient.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -523,17 +533,19 @@
 				6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */,
 				6EE217A9287CE6C600729470 /* DetailsViewController.m in Sources */,
 				6EE2179D2877A4B800729470 /* Event.m in Sources */,
+				6E9B465E2887477A00B491C2 /* GoogleCell.m in Sources */,
 				6E9B46512880ABF000B491C2 /* CueCell.m in Sources */,
 				6EE2178A28760D9900729470 /* SignUpViewController.m in Sources */,
 				6EE217B5287E12EF00729470 /* Suggestion.m in Sources */,
+				6E9B466128874C5200B491C2 /* GCAEvent.m in Sources */,
 				6EE2175E2874AF5700729470 /* main.m in Sources */,
 				6EE217502874AF5500729470 /* SceneDelegate.m in Sources */,
-				6EE217B8287E1BBD00729470 /* YelpClient.m in Sources */,
 				6EE2178D2876119F00729470 /* HomeViewController.m in Sources */,
 				6E9B46582886250800B491C2 /* Notification.m in Sources */,
 				6E9B46552886168C00B491C2 /* MyAuth.m in Sources */,
 				6EE2178728760B3900729470 /* ProfileViewController.m in Sources */,
 				6EE21797287651BE00729470 /* EventCell.m in Sources */,
+				6E9B465B2887474000B491C2 /* GoogleViewController.m in Sources */,
 				6EE2179028762E5F00729470 /* ComposeViewController.m in Sources */,
 				6EE217AC287CEBBF00729470 /* SuggestionCell.m in Sources */,
 			);

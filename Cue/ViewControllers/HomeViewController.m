@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "OIDAuthState+IOS.h"
 #import "OIDTokenResponse.h"
+#import "GoogleViewController.h"
 #import "MyAuth.h"
 @import Parse;
 
@@ -172,7 +173,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     fetcherService.authorizer = self.authorization;
 
   // Creates a fetcher for the API call.
-    NSString *endpoint = [NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/primary?access_token=%@", self.kAccessToken];
+    NSString *endpoint = [NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/primary/events?access_token=%@", self.kAccessToken];
     NSURL *userinfoEndpoint = [NSURL URLWithString:endpoint];
     GTMSessionFetcher *fetcher = [fetcherService fetcherWithURL:userinfoEndpoint];
 
@@ -203,6 +204,11 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 
     // Success response!
     NSLog(@"Success: %@", jsonDictionaryOrArray);
+        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        GoogleViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"GoogleViewController"];
+        controller.importedEvents = jsonDictionaryOrArray;
+        [self.navigationController pushViewController:controller animated:YES];
+        
   }];
 }
 
