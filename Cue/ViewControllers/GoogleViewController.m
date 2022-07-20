@@ -80,7 +80,7 @@
 - (IBAction)didTapImport:(id)sender {
     NSArray *cues = [NSArray array];
     for(GCAEvent *event in self.selectedEvents){
-        [Event postEvent:event.content withDate:event.startDate withCues:cues withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+        [Event postEvent:event.content withDate:event.startDate withCues:cues withRadius:@1000 withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
        if (error){
            NSLog(@"Error creating event");
            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];

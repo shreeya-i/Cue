@@ -17,7 +17,6 @@
 #import "OIDAuthState+IOS.h"
 #import "OIDTokenResponse.h"
 #import "GoogleViewController.h"
-#import "MyAuth.h"
 @import Parse;
 
 static NSString *const kIssuer = @"https://accounts.google.com";
@@ -168,8 +167,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
   // Creates a GTMSessionFetcherService with the authorization.
   // Normally you would save this service object and re-use it for all REST API calls.
     GTMSessionFetcherService *fetcherService = [[GTMSessionFetcherService alloc] init];
-//    MyAuth *auth = [[MyAuth alloc] initWithAccessToken: self.kAccessToken];
-//    fetcherService.authorizer = auth;
     fetcherService.authorizer = self.authorization;
 
   // Creates a fetcher for the API call.

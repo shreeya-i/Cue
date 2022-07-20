@@ -11,7 +11,6 @@
 		35962B66FC04D079057943C0 /* Pods_CueTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1924470FCB191FA67DA31E93 /* Pods_CueTests.framework */; };
 		6E9B464E28808CFD00B491C2 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B464D28808CFD00B491C2 /* Keys.plist */; };
 		6E9B46512880ABF000B491C2 /* CueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46502880ABF000B491C2 /* CueCell.m */; };
-		6E9B46552886168C00B491C2 /* MyAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46542886168C00B491C2 /* MyAuth.m */; };
 		6E9B46582886250800B491C2 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46572886250800B491C2 /* Notification.m */; };
 		6E9B465B2887474000B491C2 /* GoogleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B465A2887474000B491C2 /* GoogleViewController.m */; };
 		6E9B465E2887477A00B491C2 /* GoogleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B465D2887477A00B491C2 /* GoogleCell.m */; };
@@ -66,8 +65,6 @@
 		6E9B464D28808CFD00B491C2 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		6E9B464F2880ABF000B491C2 /* CueCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CueCell.h; sourceTree = "<group>"; };
 		6E9B46502880ABF000B491C2 /* CueCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CueCell.m; sourceTree = "<group>"; };
-		6E9B46532886168C00B491C2 /* MyAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAuth.h; sourceTree = "<group>"; };
-		6E9B46542886168C00B491C2 /* MyAuth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAuth.m; sourceTree = "<group>"; };
 		6E9B46562886250800B491C2 /* Notification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
 		6E9B46572886250800B491C2 /* Notification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
 		6E9B46592887474000B491C2 /* GoogleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoogleViewController.h; sourceTree = "<group>"; };
@@ -160,8 +157,6 @@
 		6E9B46522881DAD500B491C2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6E9B46532886168C00B491C2 /* MyAuth.h */,
-				6E9B46542886168C00B491C2 /* MyAuth.m */,
 				6EE2179B2877A4B800729470 /* Event.h */,
 				6EE2179C2877A4B800729470 /* Event.m */,
 				6E9B46562886250800B491C2 /* Notification.h */,
@@ -542,7 +537,6 @@
 				6EE217502874AF5500729470 /* SceneDelegate.m in Sources */,
 				6EE2178D2876119F00729470 /* HomeViewController.m in Sources */,
 				6E9B46582886250800B491C2 /* Notification.m in Sources */,
-				6E9B46552886168C00B491C2 /* MyAuth.m in Sources */,
 				6EE2178728760B3900729470 /* ProfileViewController.m in Sources */,
 				6EE21797287651BE00729470 /* EventCell.m in Sources */,
 				6E9B465B2887474000B491C2 /* GoogleViewController.m in Sources */,

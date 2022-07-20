@@ -15,10 +15,12 @@
 @property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *cuesButton;
 @property (weak, nonatomic) IBOutlet UITableView *cuesTableView;
+@property (weak, nonatomic) IBOutlet UISlider *distanceSlider;
 @property (strong, nonatomic) NSArray *cues;
 @property (strong, nonatomic) NSMutableArray *selectedCues;
 @property (strong, nonatomic) UNUserNotificationCenter *center;
 @property (nonatomic) BOOL notifsOn;
+@property (nonatomic, strong) NSNumber *selectedRadius;
 
 @end
 
@@ -77,6 +79,11 @@ bool isGrantedNotificationAccess;
     cell.isSelected = !(cell.isSelected);
 }
 
+- (IBAction)didChangeRadius:(id)sender {
+    NSNumber *newRadius = @((int) self.distanceSlider.value);
+    self.selectedRadius = newRadius;
+}
+
 - (IBAction)didTapCreate:(id)sender {
     NSString *eventName = self.nameField.text;
     NSDate *selectedDate = self.datePicker.date;
@@ -91,7 +98,7 @@ bool isGrantedNotificationAccess;
         [self _pastDateAlert];
     }
     else{
-       [Event postEvent:eventName withDate:selectedDate withCues:cuesArray withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+        [Event postEvent:eventName withDate:selectedDate withCues:cuesArray withRadius: self.selectedRadius withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
        if (error){
            NSLog(@"Error creating event");
            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];

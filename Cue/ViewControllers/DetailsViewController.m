@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (nonatomic, strong) NSMutableArray *suggestionsArray;
+@property (nonatomic, strong) NSMutableArray *suggestions;
 @property (strong, nonatomic) NSMutableArray *selectedSuggestions;
 
 @end
@@ -25,17 +26,15 @@
     [super viewDidLoad];
     
     [self _setUpViews];
-    [self fetchData];
+    [self _fetchData];
 }
 
 - (void) _setUpViews {
-    self.suggestionsTableView.delegate = self;
-    self.suggestionsTableView.dataSource = self;
-    self.suggestionsTableView.rowHeight = 170;
     
     self.nameLabel.text = self.detailEvent.eventName;
     
     self.selectedSuggestions = [NSMutableArray array];
+    self.suggestions = [NSMutableArray array];
     
     NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
     [dayFormatter setDateFormat:@"EEE, MMM d"];
@@ -48,12 +47,19 @@
     self.timeLabel.text = timeFromDate;
 }
 
-- (void) fetchData{
+- (void) _fetchData{
     NSString *apiKey = [[NSUserDefaults standardUserDefaults]
         stringForKey:@"apiKey"];
     NSString *header = [NSString stringWithFormat:@"Bearer %@", apiKey];
+    NSString *radius = [NSString stringWithFormat: @"%@", self.detailEvent.searchRadius];
+    NSString *address = [PFUser currentUser][@"address"];
+    NSString *location = [address stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *requestURL = [NSString stringWithFormat: @"http://api.yelp.com/v3/businesses/search?radius=%@&location=%@", radius, location];
 
-    NSURL *url = [NSURL URLWithString:@"http://api.yelp.com/v3/businesses/search?radius=200&location=1950wyattdrivesantaclara"];
+    //NSURL *url = [NSURL URLWithString:@"http://api.yelp.com/v3/businesses/search?radius=500&location=1950wyattdrivesantaclara"];
+    NSURL *url = [NSURL URLWithString:requestURL];
+    NSLog(@" IS THIS: %@", requestURL);
+    NSLog(@" WANTED: http://api.yelp.com/v3/businesses/search?radius=500&location=1950wyattdrivesantaclara");
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setValue:header forHTTPHeaderField:@"Authorization"];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -62,6 +68,16 @@
             NSLog(@"error");
         } else {
             NSLog(@"%@", responseObject);
+            self.suggestionsArray = responseObject[@"businesses"];
+            self.suggestionsTableView.delegate = self;
+            self.suggestionsTableView.dataSource = self;
+            self.suggestionsTableView.rowHeight = 115;
+            NSArray *suggestionDictionary = responseObject[@"businesses"];
+            self.suggestionsArray = [Suggestion SuggestionWithDictionary:suggestionDictionary];
+            if(self.suggestionsArray.count>0){
+                [self.suggestions addObjectsFromArray:self.suggestionsArray];
+            }
+            [self.suggestionsTableView reloadData];
         }
     }];
     [task resume];
@@ -71,9 +87,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SuggestionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SuggestionCell" forIndexPath:indexPath];
     cell.isSelected = NO;
-    //cell.suggestion = self.suggestionsArray[indexPath.row];
-    //cell.businessName.text = cell.suggestion.businessName;
-    cell.businessName.text = @"Sample Business";
+    
+    cell.suggestion = self.suggestions[indexPath.row];
+    cell.businessName.text = cell.suggestion.name;
     
     cell.colorView.layer.cornerRadius = 20.0;
     cell.colorView.layer.shadowOffset = CGSizeMake(1, 0);
@@ -85,18 +101,18 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    return self.suggestions.count;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SuggestionCell *cell = [self.suggestionsTableView cellForRowAtIndexPath:indexPath];
-    NSString *suggestion = cell.businessName.text;
-    if(cell.isSelected){
-        [self.selectedSuggestions removeObject:suggestion];
-    } else {
-        [self.selectedSuggestions addObject:suggestion];
-    }
-    cell.isSelected = !(cell.isSelected);
+//    SuggestionCell *cell = [self.suggestionsTableView cellForRowAtIndexPath:indexPath];
+//    Suggestion *suggestion = cell.suggestion;
+//    if(cell.isSelected){
+//        [self.selectedSuggestions removeObject:suggestion];
+//    } else {
+//        [self.selectedSuggestions addObject:suggestion];
+//    }
+//    cell.isSelected = !(cell.isSelected);
 }
 
 /*
