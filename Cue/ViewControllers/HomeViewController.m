@@ -31,6 +31,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 @property (strong, nonatomic) NSString *kClientID;
 @property (strong, nonatomic) NSString *kRedirectURI;
 @property (strong, nonatomic) NSString *kAccessToken;
+@property (nonatomic) BOOL isLoggedIn;
 
 @end
 
@@ -48,9 +49,20 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self _initAPI];
     [self _setUpViews];
     [self _fetchEvents];
     [self _setUpConstants];
+}
+
+- (void) _initAPI {
+    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
+
+        NSString *apiKey = [dict objectForKey: @"API_Key"];
+    
+        [[NSUserDefaults standardUserDefaults] setObject:apiKey forKey:@"apiKey"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void) _setUpConstants {
@@ -74,6 +86,8 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 //    self.refreshControl = [[UIRefreshControl alloc] init];
 //    [self.refreshControl addTarget:self action:@selector(fetchEvents) forControlEvents:UIControlEventValueChanged];
 //    [self.eventsTableView insertSubview:self.refreshControl atIndex:0];
+    
+    self.isLoggedIn = FALSE;
     
     NSMutableArray* actions = [[NSMutableArray alloc] init];
     [actions addObject:[UIAction actionWithTitle:@"Compose New" image:nil identifier:nil
@@ -152,6 +166,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
   } else {
     [GTMAppAuthFetcherAuthorization removeAuthorizationFromKeychainForName:kExampleAuthorizerKey];
   }
+    self.isLoggedIn = TRUE;
 }
 
 - (void)updateUI {
@@ -210,56 +225,61 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 }
 
 - (void) _didTapImport {
-    NSURL *issuer = [NSURL URLWithString:kIssuer];
-    NSURL *redirectURI = [NSURL URLWithString:self.kRedirectURI];
+    if(!self.isLoggedIn){
+        NSURL *issuer = [NSURL URLWithString:kIssuer];
+        NSURL *redirectURI = [NSURL URLWithString:self.kRedirectURI];
 
-    NSLog(@"Fetching configuration for issuer: %@", issuer);
+        NSLog(@"Fetching configuration for issuer: %@", issuer);
 
-    // discovers endpoints
-    [OIDAuthorizationService discoverServiceConfigurationForIssuer:issuer
-        completion:^(OIDServiceConfiguration *_Nullable configuration, NSError *_Nullable error) {
+        // discovers endpoints
+        [OIDAuthorizationService discoverServiceConfigurationForIssuer:issuer
+            completion:^(OIDServiceConfiguration *_Nullable configuration, NSError *_Nullable error) {
 
-      if (!configuration) {
-        NSLog(@"Error retrieving discovery document: %@", [error localizedDescription]);
-        [self setGtmAuthorization:nil];
-        return;
-      }
+          if (!configuration) {
+            NSLog(@"Error retrieving discovery document: %@", [error localizedDescription]);
+            [self setGtmAuthorization:nil];
+            return;
+          }
 
-      NSLog(@"Got configuration: %@", configuration);
+          NSLog(@"Got configuration: %@", configuration);
 
-      // builds authentication request
-      OIDAuthorizationRequest *request =
-          [[OIDAuthorizationRequest alloc] initWithConfiguration:configuration
-                                                        clientId:self.kClientID
-                                                          scopes:@[OIDScopeOpenID, OIDScopeProfile,
-                                                                   @"https://www.googleapis.com/auth/calendar",
-                                                                   @"https://www.googleapis.com/auth/calendar.events"]
-                                                     redirectURL:redirectURI
-                                                    responseType:OIDResponseTypeCode
-                                            additionalParameters:nil];
-      // performs authentication request
-      AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-      NSLog(@"Initiating authorization request with scope: %@", request.scope);
+          // builds authentication request
+          OIDAuthorizationRequest *request =
+              [[OIDAuthorizationRequest alloc] initWithConfiguration:configuration
+                                                            clientId:self.kClientID
+                                                              scopes:@[OIDScopeOpenID, OIDScopeProfile,
+                                                                       @"https://www.googleapis.com/auth/calendar",
+                                                                       @"https://www.googleapis.com/auth/calendar.events"]
+                                                         redirectURL:redirectURI
+                                                        responseType:OIDResponseTypeCode
+                                                additionalParameters:nil];
+          // performs authentication request
+          AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+          NSLog(@"Initiating authorization request with scope: %@", request.scope);
 
-      appDelegate.currentAuthorizationFlow =
-          [OIDAuthState authStateByPresentingAuthorizationRequest:request
-              presentingViewController:self
-                              callback:^(OIDAuthState *_Nullable authState,
-                                         NSError *_Nullable error) {
-        if (authState) {
-          GTMAppAuthFetcherAuthorization *authorization =
-              [[GTMAppAuthFetcherAuthorization alloc] initWithAuthState:authState];
+          appDelegate.currentAuthorizationFlow =
+              [OIDAuthState authStateByPresentingAuthorizationRequest:request
+                  presentingViewController:self
+                                  callback:^(OIDAuthState *_Nullable authState,
+                                             NSError *_Nullable error) {
+            if (authState) {
+              GTMAppAuthFetcherAuthorization *authorization =
+                  [[GTMAppAuthFetcherAuthorization alloc] initWithAuthState:authState];
 
-          [self setGtmAuthorization:authorization];
-          NSLog(@"Got authorization tokens. Access token: %@",
-                           authState.lastTokenResponse.accessToken);
-            self.kAccessToken = authState.lastTokenResponse.accessToken;
-        } else {
-          [self setGtmAuthorization:nil];
-          NSLog(@"Authorization error: %@", [error localizedDescription]);
-        }
-      }];
-    }];
+              [self setGtmAuthorization:authorization];
+              NSLog(@"Got authorization tokens. Access token: %@",
+                               authState.lastTokenResponse.accessToken);
+                self.kAccessToken = authState.lastTokenResponse.accessToken;
+            } else {
+              [self setGtmAuthorization:nil];
+              NSLog(@"Authorization error: %@", [error localizedDescription]);
+            }
+          }];
+        }];
+    }
+    else{
+        [self _getUserInfo];
+    }
 }
 
 

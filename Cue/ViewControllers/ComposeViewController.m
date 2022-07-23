@@ -34,7 +34,7 @@ bool isGrantedNotificationAccess;
     isGrantedNotificationAccess = false;
     self.notifsOn = true;
     
-    self.cues = [[NSArray alloc]initWithObjects: @"Restaurant Reservation", @"Activity Booking", @"Play Gift Purchase", @"Practical Gift Purchase", nil];
+    self.cues = [[NSArray alloc]initWithObjects: @"Active life", @"Restaurants", @"Arts and entertainment", @"Local flavor", @"Nightlife", @"Shopping", @"Beauty and spas", @"Tours", @"Event planning and services", nil];
     
     self.cuesTableView.dataSource = self;
     self.cuesTableView.delegate = self;
