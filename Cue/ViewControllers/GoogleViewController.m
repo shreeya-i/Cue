@@ -36,16 +36,17 @@
         event.content = anEvent[@"summary"];
 
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
 
         //TODO: check date vs datetime is null, if second then split the string
         
         NSString *startDate = anEvent[@"start"][@"date"];
         NSString *startDateTime = anEvent[@"start"][@"dateTime"];
         event.startDate = [dateFormatter dateFromString:startDate];
+        
         NSLog(@"1 %@", startDate);
         NSLog(@"2 %@", startDateTime);
-        NSLog(@"3 %@", event.startDate);
+        NSLog(@"3 %@", [dateFormatter stringFromDate:event.startDate]);
         
         NSDateComponents *comps = [[NSDateComponents alloc] init];
         [comps setDay:10];

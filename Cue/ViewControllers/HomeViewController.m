@@ -23,8 +23,10 @@ static NSString *const kIssuer = @"https://accounts.google.com";
 static NSString *const kExampleAuthorizerKey = @"authorization";
 static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_token";
 
-@interface HomeViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface HomeViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (nonatomic, strong) NSMutableArray *eventsArray;
+@property (strong, nonatomic) NSArray *filteredData;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UILabel *noEventsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *todaysDay;
 @property (weak, nonatomic) IBOutlet UILabel *todaysDate;
@@ -89,6 +91,9 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     
     self.isLoggedIn = FALSE;
     
+    self.searchBar.delegate = self;
+    self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    
     NSMutableArray* actions = [[NSMutableArray alloc] init];
     [actions addObject:[UIAction actionWithTitle:@"Compose New" image:nil identifier:nil
                         handler:^(__kindof UIAction* _Nonnull action) {
@@ -134,11 +139,14 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     [eventQuery findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error) {
         if (events != nil) {
             self.eventsArray = [NSMutableArray arrayWithArray:events];
+            NSLog(@"%@", self.eventsArray);
             [self.eventsTableView reloadData];
             
             if(self.eventsArray.count == 0){
                 self.noEventsLabel.hidden = NO;
             }
+            
+            self.filteredData = self.eventsArray;
             //[self.refreshControl endRefreshing];
         } else {
             NSLog(@"%@", error.localizedDescription);
@@ -287,7 +295,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EventCell" forIndexPath:indexPath];
-    cell.event = self.eventsArray[indexPath.row];
+    cell.event = self.filteredData[indexPath.row];
     cell.nameLabel.text = cell.event.eventName;
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -311,7 +319,38 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     return cell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.eventsArray.count;
+    return self.filteredData.count;
+    //return self.eventsArray.count;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (![searchText isEqualToString:@""]) {
+        PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
+        [eventQuery orderByAscending: @"eventDate"];
+        [eventQuery whereKey:@"eventName" containsString: searchText];
+        [eventQuery whereKey:@"author" equalTo: [PFUser currentUser]];
+        NSDate *curDate = [NSDate date];
+        [eventQuery whereKey:@"eventDate" greaterThanOrEqualTo:curDate];
+
+        [eventQuery findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error) {
+            if (events != nil) {
+                self.filteredData = [NSMutableArray arrayWithArray:events];
+                NSLog(@"%@", self.filteredData);
+                [self.eventsTableView reloadData];
+                
+//                if(self.filteredData.count == 0){
+//                    self.noEventsLabel.hidden = NO;
+//                }
+            } else {
+                self.filteredData = self.eventsArray;
+                NSLog(@"%@", error.localizedDescription);
+            }
+        }];
+    }
+    else{
+        self.filteredData = self.eventsArray;
+    }
+    [self.eventsTableView reloadData];
 }
 
 

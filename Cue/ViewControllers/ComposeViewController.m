@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cuesButton;
 @property (weak, nonatomic) IBOutlet UITableView *cuesTableView;
 @property (weak, nonatomic) IBOutlet UISlider *distanceSlider;
+@property (weak, nonatomic) IBOutlet UILabel *sliderValueLabel;
 @property (strong, nonatomic) NSArray *cues;
 @property (strong, nonatomic) NSMutableArray *selectedCues;
 @property (strong, nonatomic) UNUserNotificationCenter *center;
@@ -81,7 +82,9 @@ bool isGrantedNotificationAccess;
 
 - (IBAction)didChangeRadius:(id)sender {
     NSNumber *newRadius = @((int) self.distanceSlider.value);
+    NSString *stringValue = [newRadius stringValue];
     self.selectedRadius = newRadius;
+    self.sliderValueLabel.text = [NSString stringWithFormat:@"%@ meters", stringValue];
 }
 
 - (IBAction)didTapCreate:(id)sender {
