@@ -50,6 +50,7 @@ PODS:
     - Bolts/Tasks (= 1.9.1)
   - Parse/UI (1.19.3):
     - Parse/Core
+  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
@@ -60,6 +61,7 @@ DEPENDENCIES:
   - GTMAppAuth
   - Parse
   - Parse/UI
+  - SVProgressHUD
 
 SPEC REPOS:
   trunk:
@@ -71,6 +73,7 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - Parse
+    - SVProgressHUD
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
@@ -81,7 +84,8 @@ SPEC CHECKSUMS:
   GTMAppAuth: 4d8f864896f3646f0c33baf38a28362f4c601e15
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   Parse: 0abb63a0ff6fa34a3f64b81d595a294e2ece143a
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: a67e77d70fef7a4d27d0d1e6d017638be2b5fc91
+PODFILE CHECKSUM: bbe71a1db95322e1c9aa0bd856e5a3c04d2abf26
 
 COCOAPODS: 1.11.3

@@ -28,11 +28,44 @@ return @"Event";
           withRadius:(NSNumber * _Nullable)radius
         withCompletion: (PFBooleanResultBlock  _Nullable)completion {
     
+    NSMutableArray *yelpCategories = [[NSMutableArray alloc] init];
+    for (NSString *cue in cues) {
+        if([cue isEqual: @"Active life"]){
+            [yelpCategories addObject: @"active"];
+        }
+        if([cue isEqual: @"Restaurants"]){
+            [yelpCategories addObject: @"restaurants"];
+        }
+        if([cue isEqual: @"Arts and entertainment"]){
+            [yelpCategories addObject: @"arts"];
+        }
+        if([cue isEqual: @"Local flavor"]){
+            [yelpCategories addObject: @"localflavor"];
+        }
+        if([cue isEqual: @"Nightlife"]){
+            [yelpCategories addObject: @"nightlife"];
+        }
+        if([cue isEqual: @"Shopping"]){
+            [yelpCategories addObject: @"shopping"];
+        }
+        if([cue isEqual: @"Beauty and spas"]){
+            [yelpCategories addObject: @"beautysvc"];
+        }
+        if([cue isEqual: @"Tours"]){
+            [yelpCategories addObject: @"tours"];
+        }
+        if([cue isEqual: @"Event planning and services"]){
+            [yelpCategories addObject: @"eventservices"];
+        }
+    }
+    
+    NSArray *cuesArray = [yelpCategories copy];
+    
     Event *newEvent = [Event new];
     newEvent.eventName = name;
     newEvent.author = [PFUser currentUser];
     newEvent.eventDate = date;
-    newEvent.selectedCues = cues;
+    newEvent.selectedCues = cuesArray;
     newEvent.searchRadius = radius;
     
 [newEvent saveInBackgroundWithBlock: completion];

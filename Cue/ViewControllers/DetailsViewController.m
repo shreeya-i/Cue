@@ -9,13 +9,16 @@
 #import "SuggestionCell.h"
 #import "AFNetworking/AFNetworking.h"
 #import "Suggestion.h"
+#import "SVProgressHUD/SVProgressHUD.h"
+
 
 @interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noSuggestionsLabel;
 @property (nonatomic, strong) NSString *eventCategories;
-@property (nonatomic, strong) NSMutableArray *suggestionsArray;
+@property (nonatomic, strong) NSArray *suggestionsArray;
 @property (nonatomic, strong) NSMutableArray *suggestions;
 @property (strong, nonatomic) NSMutableArray *selectedSuggestions;
 
@@ -25,26 +28,25 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    //self.noSuggestionsLabel.hidden = YES;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self _setUpViews];
-    //[self _fetchData];
     [self _dispatchInfo];
 }
 
 - (void) _dispatchInfo {
+    [SVProgressHUD show];
     dispatch_queue_t getSuggestionsQueue = dispatch_queue_create("Get Yelp Events", NULL);
     dispatch_async(getSuggestionsQueue, ^{
-               [self _fetchData];
+        [self _fetchData];
     });
-    
 }
 
 - (void) _setUpViews {
+    
+    self.noSuggestionsLabel.hidden = YES;
     
     self.eventCategories = [self.detailEvent.selectedCues componentsJoinedByString:@","];
     self.eventCategories = [self.eventCategories stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -84,24 +86,29 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSURLSessionDataTask *task = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if(error) {
+            [SVProgressHUD dismiss];
+            self.noSuggestionsLabel.hidden = NO;
             NSLog(@"error");
-            //self.noSuggestionsLabel.hidden = NO;
         } else {
             NSLog(@"%@", responseObject);
             NSArray *suggestionDictionary = responseObject[@"businesses"];
             self.suggestionsArray = [Suggestion SuggestionWithDictionary:suggestionDictionary];
-            dispatch_async(dispatch_get_main_queue(), ^{
-            if(self.suggestionsArray.count>0){
-                [self.suggestions addObjectsFromArray:self.suggestionsArray];
-            }
-            else{
-                //self.noSuggestionsLabel.hidden = NO;
-            }
-            self.suggestionsTableView.delegate = self;
-            self.suggestionsTableView.dataSource = self;
-            self.suggestionsTableView.rowHeight = 115;
-            [self.suggestionsTableView reloadData];
-        });
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismiss];
+                if(self.suggestionsArray.count>0){
+                    [self.suggestions addObjectsFromArray:self.suggestionsArray];
+                }
+                else{
+                    self.noSuggestionsLabel.hidden = NO;
+                }
+                    self.suggestionsTableView.delegate = self;
+                    self.suggestionsTableView.dataSource = self;
+                    self.suggestionsTableView.rowHeight = 115;
+                    [self.suggestionsTableView reloadData];
+            });
+            // Use if removing the delay:
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//            });
         }
     }];
     [task resume];

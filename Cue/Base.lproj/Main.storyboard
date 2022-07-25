@@ -549,14 +549,25 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Suggestions Available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yv9-wh-L4G">
+                                <rect key="frame" x="86.5" y="434.5" width="241" height="27"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0PV-Qa-Vop"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Yv9-wh-L4G" firstAttribute="centerY" secondItem="hMa-sP-cDW" secondAttribute="centerY" id="DZi-OB-gPe"/>
+                            <constraint firstItem="Yv9-wh-L4G" firstAttribute="centerX" secondItem="hMa-sP-cDW" secondAttribute="centerX" id="gE0-88-iai"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="34D-5Z-zwt"/>
                     <connections>
                         <outlet property="dayLabel" destination="NLu-tA-Xdv" id="mQ5-QR-FOT"/>
                         <outlet property="nameLabel" destination="9HB-48-w3u" id="qoE-90-tc4"/>
+                        <outlet property="noSuggestionsLabel" destination="Yv9-wh-L4G" id="knm-PK-QVP"/>
                         <outlet property="suggestionsTableView" destination="lYx-HG-Q3M" id="KQQ-5T-hFt"/>
                         <outlet property="timeLabel" destination="Po2-TT-y8d" id="zK3-YZ-Flt"/>
                     </connections>

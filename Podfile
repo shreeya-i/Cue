@@ -15,6 +15,7 @@ target 'Cue' do
   pod 'GoogleAPIClientForREST'
   pod 'GTMAppAuth'
   pod 'AppAuth'
+  pod 'SVProgressHUD'
 
   target 'CueTests' do
     inherit! :search_paths
