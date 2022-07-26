@@ -36,7 +36,7 @@
         event.content = anEvent[@"summary"];
 
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+        [dateFormatter setDateFormat:@"EEE, MMM d"];
 
         //TODO: check date vs datetime is null, if second then split the string
         
@@ -48,12 +48,12 @@
         NSLog(@"2 %@", startDateTime);
         NSLog(@"3 %@", [dateFormatter stringFromDate:event.startDate]);
         
-        NSDateComponents *comps = [[NSDateComponents alloc] init];
-        [comps setDay:10];
-        [comps setMonth:10];
-        [comps setYear:2022];
-        NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:comps];
-        event.startDate = date;
+//        NSDateComponents *comps = [[NSDateComponents alloc] init];
+//        [comps setDay:10];
+//        [comps setMonth:10];
+//        [comps setYear:2022];
+//        NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:comps];
+//        event.startDate = date;
 
         [self.events addObject:event];
     }

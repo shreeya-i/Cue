@@ -43,7 +43,7 @@
         
         float milesPerMeter = 0.000621371;
         self.distance = [dictionary[@"distance"] integerValue] * milesPerMeter;
-        self.phone = dictionary[@"phone"];
+        self.phone = dictionary[@"display_phone"];
      
     }
     return self;
