@@ -593,6 +593,7 @@
                                         <connections>
                                             <outlet property="businessName" destination="yip-wQ-GdE" id="IeA-DL-mHl"/>
                                             <outlet property="colorView" destination="3JF-LM-9aF" id="1aN-qy-Qo5"/>
+                                            <segue destination="aQp-sZ-veR" kind="show" identifier="suggestionSegue" id="bMo-21-SNK"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -624,10 +625,10 @@
             </objects>
             <point key="canvasLocation" x="3915.9420289855075" y="1570.9821428571429"/>
         </scene>
-        <!--View Controller-->
+        <!--Suggestion View Controller-->
         <scene sceneID="Ykm-9M-haJ">
             <objects>
-                <viewController id="aQp-sZ-veR" sceneMemberID="viewController">
+                <viewController id="aQp-sZ-veR" customClass="SuggestionViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WbD-Je-WvT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -655,6 +656,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="nPd-aI-Rcd"/>
+                    <connections>
+                        <outlet property="businessImage" destination="n2S-VQ-Y96" id="qL5-km-9Rr"/>
+                        <outlet property="businessName" destination="Mul-Kj-477" id="ZUu-uy-VRL"/>
+                        <outlet property="businessPhone" destination="VZt-jh-rUM" id="MNl-4O-nlH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JTy-2t-7b6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -927,6 +933,9 @@
             <point key="canvasLocation" x="4922" y="1571"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="bMo-21-SNK"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="checkmark.circle" catalog="system" width="128" height="121"/>
         <image name="defaultpfp" width="360" height="360"/>
