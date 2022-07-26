@@ -11,6 +11,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *businessImage;
 @property (weak, nonatomic) IBOutlet UILabel *businessName;
 @property (weak, nonatomic) IBOutlet UILabel *businessPhone;
+@property (weak, nonatomic) IBOutlet UILabel *businessAddress;
+@property (weak, nonatomic) IBOutlet UILabel *businessRating;
+@property (weak, nonatomic) IBOutlet UILabel *businessDistance;
 
 @end
 
@@ -21,6 +24,10 @@
     
     self.businessName.text = self.detailSuggestion.name;
     self.businessPhone.text = self.detailSuggestion.phone;
+    self.businessAddress.text = self.detailSuggestion.displayAddress;
+    self.businessRating.text = self.detailSuggestion.rating;
+    self.businessDistance.text = [NSString stringWithFormat: @"%@ miles away", self.detailSuggestion.distance];
+    
     
     NSURL * url = [NSURL URLWithString: self.detailSuggestion.imageURL];
     NSData * data = [NSData dataWithContentsOfURL:url];

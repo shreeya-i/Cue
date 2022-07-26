@@ -13,11 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSString *categories;
-@property (nonatomic, assign) CGFloat distance;
+@property (nonatomic, strong) NSString *distance;
 @property (nonatomic, strong) NSString *displayAddress;
 @property (nonatomic, strong) NSString *phone;
+@property (nonatomic, strong) NSString *rating;
+
 
 +(NSArray*)SuggestionWithDictionary:(NSArray*)dictionaries;
 

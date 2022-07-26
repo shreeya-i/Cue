@@ -358,7 +358,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"detailSegue"]){
         NSIndexPath *myIndexPath = [self.eventsTableView indexPathForCell:sender];
-        Event *dataToPass = self.eventsArray[myIndexPath.row];
+        Event *dataToPass = self.filteredData[myIndexPath.row];
         DetailsViewController *detailVC = [segue destinationViewController];
         detailVC.detailEvent = dataToPass;
     }
