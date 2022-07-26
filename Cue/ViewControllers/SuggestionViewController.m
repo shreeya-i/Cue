@@ -25,6 +25,10 @@
     NSURL * url = [NSURL URLWithString: self.detailSuggestion.imageURL];
     NSData * data = [NSData dataWithContentsOfURL:url];
     self.businessImage.image = [UIImage imageWithData:data];
+    
+    UIView *overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.businessImage.frame.size.width, self.businessImage.frame.size.height)];
+    [overlay setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.3]];
+    [self.businessImage addSubview:overlay];
 }
 
 /*
