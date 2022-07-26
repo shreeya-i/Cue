@@ -297,7 +297,12 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EventCell" forIndexPath:indexPath];
     cell.event = self.filteredData[indexPath.row];
     cell.nameLabel.text = cell.event.eventName;
-    
+    if(!cell.event.cuesString){
+        cell.cuesLabel.text = @"No Cues Selected";
+    } else {
+        cell.cuesLabel.text = [NSString stringWithFormat: @"Cues: %@", cell.event.cuesString];
+    }
+
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     //[formatter setDateFormat:@"h:mm a MMM d"];
     [formatter setDateFormat:@"MMM d"];

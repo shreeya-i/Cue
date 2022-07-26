@@ -15,6 +15,7 @@
 @dynamic eventDate;
 @dynamic selectedCues;
 @dynamic searchRadius;
+@dynamic cuesString;
 
 + (nonnull NSString *)parseClassName {
 return @"Event";
@@ -67,6 +68,7 @@ return @"Event";
     newEvent.eventDate = date;
     newEvent.selectedCues = cuesArray;
     newEvent.searchRadius = radius;
+    newEvent.cuesString = [cues componentsJoinedByString:@", "];
     
 [newEvent saveInBackgroundWithBlock: completion];
 }

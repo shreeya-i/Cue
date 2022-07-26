@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *businessAddress;
 @property (weak, nonatomic) IBOutlet UILabel *businessRating;
 @property (weak, nonatomic) IBOutlet UILabel *businessDistance;
+@property (weak, nonatomic) IBOutlet UIButton *selectSuggestion;
 
 @end
 
@@ -36,6 +37,24 @@
     UIView *overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.businessImage.frame.size.width, self.businessImage.frame.size.height)];
     [overlay setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.3]];
     [self.businessImage addSubview:overlay];
+}
+
+- (IBAction)didTapSelect:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Confirm" message:@"Would you like to assign this cue to this event?" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:alert completion:^{}];
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:alert completion:^{}];
+        [self _didSelectCue];
+        }];
+    [alert addAction:cancelAction];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:^{}];
+}
+
+-(void) _didSelectCue {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*

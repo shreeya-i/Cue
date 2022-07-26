@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDate *eventDate;
 @property (nonatomic, strong) NSArray *selectedCues;
 @property (nonatomic, strong) NSNumber *searchRadius;
+@property (nonatomic, strong) NSString *cuesString;
 
 
 // Param name: Name of event
