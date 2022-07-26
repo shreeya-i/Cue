@@ -55,6 +55,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     [self _setUpViews];
     [self _fetchEvents];
     [self _setUpConstants];
+    [self _addressCheck];
 }
 
 - (void) _initAPI {
@@ -152,6 +153,36 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
             NSLog(@"%@", error.localizedDescription);
         }
     }];
+}
+
+- (void) _addressCheck {
+    NSString *address = [PFUser currentUser][@"address"];
+    if(!address){
+        UIAlertController * alertController = [UIAlertController alertControllerWithTitle: @"Address Required"
+                                                                                         message: @"Input an address to be associated with your Google account."
+                                                                                     preferredStyle:UIAlertControllerStyleAlert];
+           [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+               textField.placeholder = @"Address";
+               textField.textColor = [UIColor blackColor];
+               textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+               textField.borderStyle = UITextBorderStyleRoundedRect;
+           }];
+           [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+               NSArray * textfields = alertController.textFields;
+               UITextField * addressField = textfields[0];
+               PFUser *user = [PFUser currentUser];
+               user[@"address"] = addressField.text;
+               [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                   if(error){
+                       NSLog(@"Error saving: %@", error.localizedDescription);
+                   }
+                   else{
+                       NSLog(@"Successfully saved");
+                   }
+               }];
+           }]];
+           [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 - (void)setGtmAuthorization:(GTMAppAuthFetcherAuthorization*)authorization {

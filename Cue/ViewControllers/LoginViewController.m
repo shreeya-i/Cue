@@ -216,11 +216,11 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 
       // Success response!
       NSLog(@"Success: %@", jsonDictionaryOrArray);
-      [self _checkParseUser: jsonDictionaryOrArray];
+      [self _checkGoogleParseUser: jsonDictionaryOrArray];
     }];
 }
 
-- (void) _checkParseUser:(NSDictionary*) userInfo {
+- (void) _checkGoogleParseUser:(NSDictionary*) userInfo {
     NSLog(@"Checking parse user");
     PFQuery *userQuery = [PFUser query];
     [userQuery whereKey:@"username" equalTo: userInfo[@"email"]];
@@ -241,17 +241,17 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *user, NSError *error) {
         if (user){
-            [self _loginUser: userInfo];
+            [self _loginGoogleUser: userInfo];
             NSLog(@"logging in user");
         } else {
-            [self _createUser: userInfo];
+            [self _createGoogleUser: userInfo];
             NSLog(@"creating parse user");
         }
     }];
     
 }
 
-- (void) _loginUser: (NSDictionary*) userInfo {
+- (void) _loginGoogleUser: (NSDictionary*) userInfo {
     NSLog(@"what");
     NSString *username = userInfo[@"email"];
     NSString *password = @"google";
@@ -272,7 +272,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     }];
 }
 
-- (void) _createUser:(NSDictionary*) userInfo {
+- (void) _createGoogleUser:(NSDictionary*) userInfo {
     NSLog(@"Almost there");
     PFUser *newUser = [PFUser user];
     newUser[@"name"] = userInfo[@"name"];
