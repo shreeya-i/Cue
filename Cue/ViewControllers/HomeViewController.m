@@ -222,9 +222,14 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
   // Normally you would save this service object and re-use it for all REST API calls.
     GTMSessionFetcherService *fetcherService = [[GTMSessionFetcherService alloc] init];
     fetcherService.authorizer = self.authorization;
+    
+    NSDate *curDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    NSString *curDateString = [dateFormatter stringFromDate:curDate];
 
   // Creates a fetcher for the API call.
-    NSString *endpoint = [NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=2022-01-01T10:00:00-07:00&access_token=%@", self.kAccessToken];
+    NSString *endpoint = [NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=%@&access_token=%@", curDateString, self.kAccessToken];
     NSURL *userinfoEndpoint = [NSURL URLWithString:endpoint];
     GTMSessionFetcher *fetcher = [fetcherService fetcherWithURL:userinfoEndpoint];
 
@@ -264,7 +269,13 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 }
 
 - (void) _didTapImport {
-    if(!self.isLoggedIn){
+   if (self.isLoggedIn) {
+        [self _getUserInfo];
+   } else if([[NSUserDefaults standardUserDefaults] objectForKey:@"kAccessToken"] != nil) {
+       NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+       self.kAccessToken = [defaults objectForKey:@"kAccessToken"];
+       [self _getUserInfo];
+   } else {
         NSURL *issuer = [NSURL URLWithString:kIssuer];
         NSURL *redirectURI = [NSURL URLWithString:self.kRedirectURI];
 
@@ -315,9 +326,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
             }
           }];
         }];
-    }
-    else{
-        [self _getUserInfo];
     }
 }
 
@@ -371,7 +379,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
         [eventQuery findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error) {
             if (events != nil) {
                 self.filteredData = [NSMutableArray arrayWithArray:events];
-                NSLog(@"%@", self.filteredData);
+                //NSLog(@"%@", self.filteredData);
                 [self.eventsTableView reloadData];
                 
 //                if(self.filteredData.count == 0){

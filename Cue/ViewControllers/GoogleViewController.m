@@ -87,6 +87,11 @@
     GoogleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GoogleCell" forIndexPath:indexPath];
     cell.event = self.events[indexPath.row];
     cell.eventName.text = cell.event.content;
+    
+    NSDateFormatter *dateformatter =[[NSDateFormatter alloc]init];
+    [dateformatter setDateFormat:@"MMM d, yyyy"]; // Date formater
+     NSString *date = [dateformatter stringFromDate: cell.event.startDate];
+    cell.startDate.text = date;
     cell.isSelected = NO;
     return cell;
 }

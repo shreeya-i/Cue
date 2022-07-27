@@ -147,6 +147,9 @@
 
 
 - (IBAction)didTapLogout:(id)sender {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kAccessToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
            if (error) {
                NSLog(@"Cannot log out");

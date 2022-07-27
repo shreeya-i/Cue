@@ -126,6 +126,10 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
           NSLog(@"Got authorization tokens. Access token: %@",
                            authState.lastTokenResponse.accessToken);
             self.kAccessToken = authState.lastTokenResponse.accessToken;
+            
+            NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:authState.lastTokenResponse.accessToken forKey:@"kAccessToken"];
+            [defaults synchronize];
         } else {
           [self setGtmAuthorization:nil];
           NSLog(@"Authorization error: %@", [error localizedDescription]);
