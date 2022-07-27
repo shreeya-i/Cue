@@ -88,7 +88,8 @@
 - (IBAction)didTapImport:(id)sender {
     NSArray *cues = [NSArray array];
     for(GCAEvent *event in self.selectedEvents){
-        [Event postEvent:event.content withDate:event.startDate withCues:cues withRadius:@1000 withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+        NSString *address = [PFUser currentUser][@"address"];
+        [Event postEvent:event.content withDate:event.startDate withCues:cues withRadius:@1000 withAddress:address withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
        if (error){
            NSLog(@"Error creating event");
            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];

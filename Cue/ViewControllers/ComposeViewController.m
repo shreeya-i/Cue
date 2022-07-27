@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *addressSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *cuesButton;
 @property (weak, nonatomic) IBOutlet UITableView *cuesTableView;
 @property (weak, nonatomic) IBOutlet UISlider *distanceSlider;
@@ -22,6 +23,8 @@
 @property (strong, nonatomic) UNUserNotificationCenter *center;
 @property (nonatomic) BOOL notifsOn;
 @property (nonatomic, strong) NSNumber *selectedRadius;
+@property (nonatomic, strong) NSString *inputtedAddress;
+@property (nonatomic, strong) NSString *addressToUse;
 
 @end
 
@@ -98,7 +101,12 @@ bool isGrantedNotificationAccess;
         [self _pastDateAlert];
     }
     else{
-        [Event postEvent:eventName withDate:selectedDate withCues:cuesArray withRadius: self.selectedRadius withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+        if(self.inputtedAddress) {
+            self.addressToUse = self.inputtedAddress;
+        } else {
+            self.addressToUse = [PFUser currentUser][@"address"];
+        }
+        [Event postEvent:eventName withDate:selectedDate withCues:cuesArray withRadius: self.selectedRadius withAddress: self.addressToUse withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
        if (error){
            NSLog(@"Error creating event");
            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];
@@ -192,6 +200,25 @@ bool isGrantedNotificationAccess;
     
 }
 
+- (IBAction)addressSwitchPressed:(id)sender {
+    if(![self.addressSwitch isOn]){
+        UIAlertController * alertController = [UIAlertController alertControllerWithTitle: @"Input Address"
+                                                                                         message: @"Input location for this event."
+                                                                                     preferredStyle:UIAlertControllerStyleAlert];
+           [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+               textField.placeholder = @"Address";
+               textField.textColor = [UIColor blackColor];
+               textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+               textField.borderStyle = UITextBorderStyleRoundedRect;
+           }];
+           [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+               NSArray * textfields = alertController.textFields;
+               UITextField * addressField = textfields[0];
+               self.inputtedAddress = addressField.text;
+           }]];
+           [self presentViewController:alertController animated:YES completion:nil];
+    }
+}
 
 /*
 #pragma mark - Navigation

@@ -74,8 +74,7 @@
         stringForKey:@"apiKey"];
     NSString *header = [NSString stringWithFormat:@"Bearer %@", apiKey];
     NSString *radius = [NSString stringWithFormat: @"%@", self.detailEvent.searchRadius];
-    NSString *address = [PFUser currentUser][@"address"];
-    NSString *location = [address stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *location = [self.detailEvent.address stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString *requestURL = [NSString stringWithFormat: @"http://api.yelp.com/v3/businesses/search?radius=%@&location=%@&categories=%@", radius, location, self.eventCategories];
 
     NSURL *url = [NSURL URLWithString:requestURL];

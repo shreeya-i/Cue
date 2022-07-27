@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray *selectedCues;
 @property (nonatomic, strong) NSNumber *searchRadius;
 @property (nonatomic, strong) NSString *cuesString;
+@property (nonatomic, strong) NSString *address;
 
 
 // Param name: Name of event
@@ -27,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
           withDate: ( NSDate * _Nullable )date
           withCues: ( NSArray * _Nullable )cues
           withRadius: ( NSNumber * _Nullable)radius
+          withAddress: ( NSString * _Nullable)address
     withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end

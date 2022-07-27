@@ -16,6 +16,7 @@
 @dynamic selectedCues;
 @dynamic searchRadius;
 @dynamic cuesString;
+@dynamic address;
 
 + (nonnull NSString *)parseClassName {
 return @"Event";
@@ -27,6 +28,7 @@ return @"Event";
           withDate: (NSDate * _Nullable)date
           withCues: (NSArray * _Nullable)cues
           withRadius:(NSNumber * _Nullable)radius
+          withAddress:(NSString * _Nullable)address
         withCompletion: (PFBooleanResultBlock  _Nullable)completion {
     
     NSMutableArray *yelpCategories = [[NSMutableArray alloc] init];
@@ -68,6 +70,7 @@ return @"Event";
     newEvent.eventDate = date;
     newEvent.selectedCues = cuesArray;
     newEvent.searchRadius = radius;
+    newEvent.address = address;
     newEvent.cuesString = [cues componentsJoinedByString:@", "];
     
 [newEvent saveInBackgroundWithBlock: completion];

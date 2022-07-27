@@ -16,6 +16,7 @@
 		6E9B466128874C5200B491C2 /* GCAEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B466028874C5200B491C2 /* GCAEvent.m */; };
 		6E9B466E288C6F8F00B491C2 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B466D288C6F8F00B491C2 /* Keys.plist */; };
 		6E9B4674288F685F00B491C2 /* SuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B4673288F685F00B491C2 /* SuggestionViewController.m */; };
+		6E9B46772891E9F400B491C2 /* YelpSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46762891E9F400B491C2 /* YelpSelectionCell.m */; };
 		6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174C2874AF5500729470 /* AppDelegate.m */; };
 		6EE217502874AF5500729470 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174F2874AF5500729470 /* SceneDelegate.m */; };
 		6EE217562874AF5500729470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217542874AF5500729470 /* Main.storyboard */; };
@@ -76,6 +77,8 @@
 		6E9B466D288C6F8F00B491C2 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Keys.plist; sourceTree = SOURCE_ROOT; };
 		6E9B4672288F685F00B491C2 /* SuggestionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SuggestionViewController.h; sourceTree = "<group>"; };
 		6E9B4673288F685F00B491C2 /* SuggestionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuggestionViewController.m; sourceTree = "<group>"; };
+		6E9B46752891E9F400B491C2 /* YelpSelectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YelpSelectionCell.h; sourceTree = "<group>"; };
+		6E9B46762891E9F400B491C2 /* YelpSelectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YelpSelectionCell.m; sourceTree = "<group>"; };
 		6EE217482874AF5500729470 /* Cue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE2174B2874AF5500729470 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6EE2174C2874AF5500729470 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -265,6 +268,8 @@
 				6E9B46502880ABF000B491C2 /* CueCell.m */,
 				6E9B465C2887477A00B491C2 /* GoogleCell.h */,
 				6E9B465D2887477A00B491C2 /* GoogleCell.m */,
+				6E9B46752891E9F400B491C2 /* YelpSelectionCell.h */,
+				6E9B46762891E9F400B491C2 /* YelpSelectionCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -527,6 +532,7 @@
 				6EE217A9287CE6C600729470 /* DetailsViewController.m in Sources */,
 				6EE2179D2877A4B800729470 /* Event.m in Sources */,
 				6E9B465E2887477A00B491C2 /* GoogleCell.m in Sources */,
+				6E9B46772891E9F400B491C2 /* YelpSelectionCell.m in Sources */,
 				6E9B46512880ABF000B491C2 /* CueCell.m in Sources */,
 				6EE2178A28760D9900729470 /* SignUpViewController.m in Sources */,
 				6EE217B5287E12EF00729470 /* Suggestion.m in Sources */,
