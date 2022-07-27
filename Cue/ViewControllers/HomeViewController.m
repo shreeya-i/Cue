@@ -224,7 +224,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     fetcherService.authorizer = self.authorization;
 
   // Creates a fetcher for the API call.
-    NSString *endpoint = [NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/primary/events?access_token=%@", self.kAccessToken];
+    NSString *endpoint = [NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=2022-01-01T10:00:00-07:00&access_token=%@", self.kAccessToken];
     NSURL *userinfoEndpoint = [NSURL URLWithString:endpoint];
     GTMSessionFetcher *fetcher = [fetcherService fetcherWithURL:userinfoEndpoint];
 

@@ -5,6 +5,7 @@
 //  Created by Shreeya Indap on 7/19/22.
 //
 
+#import <Foundation/Foundation.h>
 #import "GoogleViewController.h"
 #import "GoogleCell.h"
 #import "GCAEvent.h"
@@ -35,18 +36,27 @@
 
         event.content = anEvent[@"summary"];
 
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"EEE, MMM d"];
+        NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
+        [dateFormatter1 setDateFormat:@"yyyy-MM-dd"];
+        
+        NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
+        [dateFormatter2 setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
 
         //TODO: check date vs datetime is null, if second then split the string
         
         NSString *startDate = anEvent[@"start"][@"date"];
         NSString *startDateTime = anEvent[@"start"][@"dateTime"];
-        event.startDate = [dateFormatter dateFromString:startDate];
         
-        NSLog(@"1 %@", startDate);
-        NSLog(@"2 %@", startDateTime);
-        NSLog(@"3 %@", [dateFormatter stringFromDate:event.startDate]);
+        //NSLog(@"1 %@", startDate);
+        //NSLog(@"2 %@", startDateTime);
+        
+        if(!startDate){
+            event.startDate = [dateFormatter2 dateFromString:startDateTime];
+            //NSLog(@"4 %@", [dateFormatter2 stringFromDate:event.startDate]);
+        } else {
+            event.startDate = [dateFormatter1 dateFromString:startDate];
+            //NSLog(@"3 %@", [dateFormatter1 stringFromDate:event.startDate]);
+        }
         
 //        NSDateComponents *comps = [[NSDateComponents alloc] init];
 //        [comps setDay:10];
@@ -54,15 +64,23 @@
 //        [comps setYear:2022];
 //        NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:comps];
 //        event.startDate = date;
-
+        
         [self.events addObject:event];
+        
+//        NSDate *curDate = [NSDate date];
+//        NSComparisonResult result = [event.startDate compare:curDate];
+//        if (result == NSOrderedDescending || result == NSOrderedSame) {
+//            NSLog(@"Added %@", event.content);
+//            [self.events addObject:event];
+//        }
     }
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-   // return self.importedEvents.count;
-    return 100;
+    NSLog(@"%lu", (unsigned long)self.events.count);
+    return self.events.count;
+    //return 100;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
