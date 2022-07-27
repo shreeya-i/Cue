@@ -78,10 +78,7 @@
     NSString *location = [address stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString *requestURL = [NSString stringWithFormat: @"http://api.yelp.com/v3/businesses/search?radius=%@&location=%@&categories=%@", radius, location, self.eventCategories];
 
-    //NSURL *url = [NSURL URLWithString:@"http://api.yelp.com/v3/businesses/search?radius=500&location=1950wyattdrivesantaclara"];
     NSURL *url = [NSURL URLWithString:requestURL];
-    NSLog(@" IS THIS: %@", requestURL);
-    NSLog(@" WANTED: http://api.yelp.com/v3/businesses/search?radius=500&location=1950wyattdrivesantaclara");
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setValue:header forHTTPHeaderField:@"Authorization"];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -107,9 +104,6 @@
                     self.suggestionsTableView.rowHeight = 115;
                     [self.suggestionsTableView reloadData];
             });
-            // Use if removing the delay:
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//            });
         }
     }];
     [task resume];
@@ -137,14 +131,6 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    SuggestionCell *cell = [self.suggestionsTableView cellForRowAtIndexPath:indexPath];
-//    Suggestion *suggestion = cell.suggestion;
-//    if(cell.isSelected){
-//        [self.selectedSuggestions removeObject:suggestion];
-//    } else {
-//        [self.selectedSuggestions addObject:suggestion];
-//    }
-//    cell.isSelected = !(cell.isSelected);
 }
 
 

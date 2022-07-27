@@ -41,38 +41,17 @@
         
         NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
         [dateFormatter2 setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
-
-        //TODO: check date vs datetime is null, if second then split the string
         
         NSString *startDate = anEvent[@"start"][@"date"];
         NSString *startDateTime = anEvent[@"start"][@"dateTime"];
         
-        //NSLog(@"1 %@", startDate);
-        //NSLog(@"2 %@", startDateTime);
-        
         if(!startDate){
             event.startDate = [dateFormatter2 dateFromString:startDateTime];
-            //NSLog(@"4 %@", [dateFormatter2 stringFromDate:event.startDate]);
         } else {
             event.startDate = [dateFormatter1 dateFromString:startDate];
-            //NSLog(@"3 %@", [dateFormatter1 stringFromDate:event.startDate]);
         }
-        
-//        NSDateComponents *comps = [[NSDateComponents alloc] init];
-//        [comps setDay:10];
-//        [comps setMonth:10];
-//        [comps setYear:2022];
-//        NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:comps];
-//        event.startDate = date;
-        
+
         [self.events addObject:event];
-        
-//        NSDate *curDate = [NSDate date];
-//        NSComparisonResult result = [event.startDate compare:curDate];
-//        if (result == NSOrderedDescending || result == NSOrderedSame) {
-//            NSLog(@"Added %@", event.content);
-//            [self.events addObject:event];
-//        }
     }
 }
 
@@ -80,7 +59,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSLog(@"%lu", (unsigned long)self.events.count);
     return self.events.count;
-    //return 100;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -89,7 +67,7 @@
     cell.eventName.text = cell.event.content;
     
     NSDateFormatter *dateformatter =[[NSDateFormatter alloc]init];
-    [dateformatter setDateFormat:@"MMM d, yyyy"]; // Date formater
+    [dateformatter setDateFormat:@"MMM d, yyyy"];
      NSString *date = [dateformatter stringFromDate: cell.event.startDate];
     cell.startDate.text = date;
     cell.isSelected = NO;

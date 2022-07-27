@@ -79,9 +79,6 @@
         PFFileObject *file = [self getPFFileFromImage: originalImage];
         [self.profilePicture setFile: file];
     }
-    
-    
-    // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

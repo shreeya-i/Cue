@@ -229,20 +229,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     PFQuery *userQuery = [PFUser query];
     [userQuery whereKey:@"username" equalTo: userInfo[@"email"]];
     
-    // TODO: HANDLE ADDRESS FIELD
-
-//    [userQuery findObjectsInBackgroundWithBlock:^(NSArray *user, NSError *error) {
-//        if (user.count > 0){
-//            [self _loginUser: userInfo];
-//            NSLog(@"logging in user");
-//        } else if (user != nil) {
-//            [self _createUser: userInfo];
-//            NSLog(@"creating parse user");
-//        } else {
-//            NSLog(@"%@", error.localizedDescription);
-//        }
-//    }];
-    
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *user, NSError *error) {
         if (user){
             [self _loginGoogleUser: userInfo];

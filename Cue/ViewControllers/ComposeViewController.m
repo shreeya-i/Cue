@@ -49,9 +49,6 @@ bool isGrantedNotificationAccess;
     [self.center requestAuthorizationWithOptions:options completionHandler:^(BOOL granted, NSError * _Nullable error) {
         isGrantedNotificationAccess = granted;
     }];
-    
-    //Might want to add this but causes delay going back to home page:
-    //self.tabBarController.tabBar.hidden = YES;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

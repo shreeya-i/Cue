@@ -86,10 +86,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 
 - (void) _setUpViews {
     
-//    self.refreshControl = [[UIRefreshControl alloc] init];
-//    [self.refreshControl addTarget:self action:@selector(fetchEvents) forControlEvents:UIControlEventValueChanged];
-//    [self.eventsTableView insertSubview:self.refreshControl atIndex:0];
-    
     self.isLoggedIn = FALSE;
     
     self.searchBar.delegate = self;
@@ -140,7 +136,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     [eventQuery findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error) {
         if (events != nil) {
             self.eventsArray = [NSMutableArray arrayWithArray:events];
-            NSLog(@"%@", self.eventsArray);
             [self.eventsTableView reloadData];
             
             if(self.eventsArray.count == 0){
@@ -148,7 +143,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
             }
             
             self.filteredData = self.eventsArray;
-            //[self.refreshControl endRefreshing];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
@@ -343,16 +337,9 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     }
 
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    //[formatter setDateFormat:@"h:mm a MMM d"];
     [formatter setDateFormat:@"MMM d"];
     NSString *stringFromDate = [formatter stringFromDate:cell.event.eventDate];
     cell.dateLabel.text = stringFromDate;
-
-
-//    CAGradientLayer *gradient = [CAGradientLayer layer];
-//    gradient.frame = cell.colorView.bounds;
-//    gradient.colors = @[(id)[UIColor lightGrayColor].CGColor, (id)[UIColor darkGrayColor].CGColor];
-//    [cell.colorView.layer insertSublayer:gradient atIndex:0];
     
     cell.colorView.layer.cornerRadius = 20.0;
     cell.colorView.layer.shadowOffset = CGSizeMake(1, 0);
@@ -364,7 +351,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.filteredData.count;
-    //return self.eventsArray.count;
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -379,12 +365,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
         [eventQuery findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error) {
             if (events != nil) {
                 self.filteredData = [NSMutableArray arrayWithArray:events];
-                //NSLog(@"%@", self.filteredData);
                 [self.eventsTableView reloadData];
-                
-//                if(self.filteredData.count == 0){
-//                    self.noEventsLabel.hidden = NO;
-//                }
             } else {
                 self.filteredData = self.eventsArray;
                 NSLog(@"%@", error.localizedDescription);
