@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface SuggestionViewController ()
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIImageView *businessImage;
 @property (weak, nonatomic) IBOutlet UILabel *businessName;
 @property (weak, nonatomic) IBOutlet UILabel *businessPhone;
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *businessRating;
 @property (weak, nonatomic) IBOutlet UILabel *businessDistance;
 @property (weak, nonatomic) IBOutlet UIButton *selectSuggestion;
+@property (weak, nonatomic) IBOutlet UILabel *businessPrice;
 
 @end
 
@@ -28,6 +30,7 @@
     self.businessPhone.text = self.detailSuggestion.phone;
     self.businessAddress.text = self.detailSuggestion.displayAddress;
     self.businessRating.text = self.detailSuggestion.rating;
+    self.businessPrice.text = self.detailSuggestion.price;
     self.businessDistance.text = [NSString stringWithFormat: @"%@ miles away", self.detailSuggestion.distance];
     
     
@@ -40,7 +43,26 @@
     self.businessImage.layer.cornerRadius = 20;
     self.businessImage.layer.masksToBounds = YES;
     
+    [self _setUpMap];
+}
+
+- (void) _setUpMap {
     
+    NSNumber *latitude = self.detailSuggestion.latitude;
+    NSNumber *longitude = self.detailSuggestion.longitude;
+    
+    //set mapView location
+    CLLocationCoordinate2D coord = {.latitude = [latitude doubleValue], .longitude = [longitude doubleValue]};
+    MKCoordinateSpan span = {.latitudeDelta = 0.010f, .longitudeDelta = 0.010f};
+    MKCoordinateRegion region = {coord, span};
+    [self.mapView setRegion:region];
+    
+    //set pin
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    CLLocationCoordinate2D coordforpin = {.latitude = [latitude doubleValue], .longitude = [longitude doubleValue]};
+    [annotation setCoordinate:coordforpin];
+    [annotation setTitle:self.detailSuggestion.name];
+    [self.mapView addAnnotation: annotation];
 }
 
 - (IBAction)didTapSelect:(id)sender {

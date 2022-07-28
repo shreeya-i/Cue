@@ -6,11 +6,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import "Suggestion.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SuggestionViewController : UIViewController
+@interface SuggestionViewController : UIViewController <MKMapViewDelegate>
 
 @property (strong, nonatomic) Suggestion *detailSuggestion;
 

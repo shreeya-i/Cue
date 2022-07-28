@@ -18,6 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *displayAddress;
 @property (nonatomic, strong) NSString *phone;
 @property (nonatomic, strong) NSString *rating;
+@property (nonatomic, strong) NSNumber *latitude;
+@property (nonatomic, strong) NSNumber *longitude;
+@property (nonatomic, strong) NSString *price;
 
 
 +(NSArray*)SuggestionWithDictionary:(NSArray*)dictionaries;

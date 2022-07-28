@@ -17,6 +17,7 @@
 		6E9B4674288F685F00B491C2 /* SuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B4673288F685F00B491C2 /* SuggestionViewController.m */; };
 		6E9B46772891E9F400B491C2 /* YelpSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46762891E9F400B491C2 /* YelpSelectionCell.m */; };
 		6E9B467A289307EA00B491C2 /* NotificationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B4679289307EA00B491C2 /* NotificationObject.m */; };
+		6E9B467C2893361F00B491C2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E9B467B2893361F00B491C2 /* MapKit.framework */; };
 		6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174C2874AF5500729470 /* AppDelegate.m */; };
 		6EE217502874AF5500729470 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174F2874AF5500729470 /* SceneDelegate.m */; };
 		6EE217562874AF5500729470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217542874AF5500729470 /* Main.storyboard */; };
@@ -79,6 +80,7 @@
 		6E9B46762891E9F400B491C2 /* YelpSelectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YelpSelectionCell.m; sourceTree = "<group>"; };
 		6E9B4678289307EA00B491C2 /* NotificationObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationObject.h; sourceTree = "<group>"; };
 		6E9B4679289307EA00B491C2 /* NotificationObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationObject.m; sourceTree = "<group>"; };
+		6E9B467B2893361F00B491C2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		6EE217482874AF5500729470 /* Cue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE2174B2874AF5500729470 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6EE2174C2874AF5500729470 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6EE217A6287CA1AB00729470 /* UserNotifications.framework in Frameworks */,
+				6E9B467C2893361F00B491C2 /* MapKit.framework in Frameworks */,
 				BC525BC1669439F8C67CA526 /* Pods_Cue.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -152,6 +155,7 @@
 		617D2C120A998592D41F09F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6E9B467B2893361F00B491C2 /* MapKit.framework */,
 				6EE217A5287CA1AB00729470 /* UserNotifications.framework */,
 				DC8DEBA59AADBE0E3A0AECDD /* Pods_Cue.framework */,
 				381F8C34AA5B43015E63A6EA /* Pods_Cue_CueUITests.framework */,

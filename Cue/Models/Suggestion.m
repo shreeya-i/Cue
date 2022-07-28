@@ -31,6 +31,11 @@
         self.rating = formattedRating;
         
         self.phone = dictionary[@"display_phone"];
+        
+        self.latitude = dictionary[@"coordinates"][@"latitude"];
+        self.longitude = dictionary[@"coordinates"][@"longitude"];
+        
+        self.price = dictionary[@"price"];
      
     }
     return self;

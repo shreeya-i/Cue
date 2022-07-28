@@ -160,17 +160,14 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 }
 
 - (void) _importExistingNotifs {
-    PFQuery *eventQuery = [PFQuery queryWithClassName:@"Notification"];
-    [eventQuery whereKey:@"user" equalTo: [PFUser currentUser]];
+    PFQuery *notifQuery = [PFQuery queryWithClassName:@"Notification"];
+    [notifQuery whereKey:@"user" equalTo: [PFUser currentUser]];
     NSDate *curDate = [NSDate date];
-    [eventQuery whereKey:@"postDate" greaterThanOrEqualTo:curDate];
+    [notifQuery whereKey:@"postDate" greaterThanOrEqualTo:curDate];
 
-    [eventQuery findObjectsInBackgroundWithBlock:^(NSArray *notifs, NSError *error) {
+    [notifQuery findObjectsInBackgroundWithBlock:^(NSArray *notifs, NSError *error) {
         if (notifs != nil) {
             for(NotificationObject *notif in notifs){
-                
-                //i need to be posting on the postdate itself. so the trigger needs to be the
-                //time interval difference between the postdate and currentdate
                 
                 NSDate *curDate = [NSDate date];
                 NSTimeInterval dayDiff = [notif.postDate timeIntervalSinceDate:curDate];
