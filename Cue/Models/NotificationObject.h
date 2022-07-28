@@ -1,15 +1,15 @@
 //
-//  Notification.h
+//  NotificationObject.h
 //  Cue
 //
-//  Created by Shreeya Indap on 7/18/22.
+//  Created by Shreeya Indap on 7/28/22.
 //
 
 #import <Parse/Parse.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Notification : PFObject <PFSubclassing>
+@interface NotificationObject : PFObject <PFSubclassing>
 
 //@property (nonatomic, strong) NSString *objectID;
 @property (nonatomic, strong) PFUser *user;
@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void) createNotification: ( NSString * _Nullable )text
           withDate: ( NSDate * _Nullable )date
           withCompletion: (PFBooleanResultBlock  _Nullable)completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

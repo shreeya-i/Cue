@@ -8,6 +8,7 @@
 #import "ProfileViewController.h"
 #import "SceneDelegate.h"
 #import "LoginViewController.h"
+#import <UserNotifications/UserNotifications.h>
 
 @interface ProfileViewController ()
 
@@ -142,10 +143,19 @@
     }];
 }
 
-
-- (IBAction)didTapLogout:(id)sender {
+- (void) _clearUserData {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kAccessToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center removeAllPendingNotificationRequests];
+    [center removeAllDeliveredNotifications];
+}
+
+
+- (IBAction)didTapLogout:(id)sender {
+    
+    [self _clearUserData];
     
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
            if (error) {

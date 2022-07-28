@@ -8,6 +8,8 @@
 #import "LoginViewController.h"
 #import "SceneDelegate.h"
 #import "SignUpViewController.h"
+#import "NotificationObject.h"
+#import <UserNotifications/UserNotifications.h>
 
 #import "GoogleAPIClientForREST/GTLRCalendar.h"
 #import "GTMAppAuth/GTMAppAuth.h"
@@ -33,6 +35,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 @property (strong, nonatomic) NSString *kClientID;
 @property (strong, nonatomic) NSString *kRedirectURI;
 @property (strong, nonatomic) NSString *kAccessToken;
+@property (strong, nonatomic) UNUserNotificationCenter *center;
 
 
 @end
@@ -43,6 +46,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     [super viewDidLoad];
     
     self.passwordField.secureTextEntry = true;
+    self.center = [UNUserNotificationCenter currentNotificationCenter];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *ivc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -69,6 +73,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
                 [self presentViewController:alert animated:YES completion:^{}];
             } else {
                 NSLog(@"User logged in successfully");
+                [self _importExistingNotifs];
                 SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 sceneDelegate.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
@@ -136,7 +141,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
         }
       }];
     }];
-    
 }
 
 - (void) _setUpConstants {
@@ -153,6 +157,37 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     NSLog(@"%@", baseID);
     NSLog(@"%@", self.kClientID);
     NSLog(@"%@", self.kRedirectURI);
+}
+
+- (void) _importExistingNotifs {
+    PFQuery *eventQuery = [PFQuery queryWithClassName:@"Notification"];
+    [eventQuery whereKey:@"user" equalTo: [PFUser currentUser]];
+    NSDate *curDate = [NSDate date];
+    [eventQuery whereKey:@"postDate" greaterThanOrEqualTo:curDate];
+
+    [eventQuery findObjectsInBackgroundWithBlock:^(NSArray *notifs, NSError *error) {
+        if (notifs != nil) {
+            for(NotificationObject *notif in notifs){
+                
+                //i need to be posting on the postdate itself. so the trigger needs to be the
+                //time interval difference between the postdate and currentdate
+                
+                NSDate *curDate = [NSDate date];
+                NSTimeInterval dayDiff = [notif.postDate timeIntervalSinceDate:curDate];
+                    
+                UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+                content.title = @"Cue";
+                content.body = notif.text;
+                content.sound = [UNNotificationSound defaultSound];
+                    
+                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:dayDiff repeats:NO];
+                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:notif.text content:content trigger:trigger];
+                [self.center addNotificationRequest:request withCompletionHandler:nil];
+            }
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
 }
 
 - (void)setGtmAuthorization:(GTMAppAuthFetcherAuthorization*)authorization {
@@ -255,6 +290,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
             [self presentViewController:alert animated:YES completion:^{}];
         } else {
             NSLog(@"User logged in successfully");
+            [self _importExistingNotifs];
             SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             sceneDelegate.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];

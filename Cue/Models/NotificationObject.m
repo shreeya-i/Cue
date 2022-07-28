@@ -1,26 +1,26 @@
 //
-//  Notification.m
+//  NotificationObject.m
 //  Cue
 //
-//  Created by Shreeya Indap on 7/18/22.
+//  Created by Shreeya Indap on 7/28/22.
 //
 
-#import "Notification.h"
+#import "NotificationObject.h"
 
-@implementation Notification
+@implementation NotificationObject
 
 @dynamic user;
 @dynamic text;
 @dynamic postDate;
 
-+ (nonnull NSString *)parseClassName { 
++ (nonnull NSString *)parseClassName {
     return @"Notification";
 }
 
 + (void) createNotification:(NSString *)text
                    withDate:(NSDate *)date
              withCompletion:(PFBooleanResultBlock)completion {
-Notification *newNotif = [Notification new];
+    NotificationObject *newNotif = [NotificationObject new];
     newNotif.text = text;
     newNotif.user = [PFUser currentUser];
     newNotif.postDate = date;

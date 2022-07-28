@@ -8,6 +8,7 @@
 #import "ComposeViewController.h"
 #import "Event.h"
 #import "CueCell.h"
+#import "NotificationObject.h"
 
 @interface ComposeViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
@@ -150,18 +151,33 @@ bool isGrantedNotificationAccess;
     NSDate *curDate = [NSDate date];
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     [dateComponents setDay:+7];
-    NSDate *sevenDays = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:curDate options:0];
-    NSTimeInterval weekDiff = [selectedDate timeIntervalSinceDate:sevenDays];
+    NSDate *sevenDaysAfter = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:curDate options:0];
+    NSTimeInterval weekDiff = [selectedDate timeIntervalSinceDate:sevenDaysAfter];
     
     if(weekDiff > 0){
+        NSString *notificationText = [NSString stringWithFormat:@"%@ is happening in one week", eventName];
+        
         UNMutableNotificationContent *weekContent = [[UNMutableNotificationContent alloc] init];
         weekContent.title = @"Cue";
-        weekContent.body = [NSString stringWithFormat:@"%@ is happening in one week", eventName];
+        weekContent.body = notificationText;
         weekContent.sound = [UNNotificationSound defaultSound];
-        
+
         UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:weekDiff repeats:NO];
         UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:eventName content:weekContent trigger:trigger];
         [self.center addNotificationRequest:request withCompletionHandler:nil];
+        
+        NSDateComponents *dateComponents2 = [[NSDateComponents alloc] init];
+        [dateComponents2 setDay:-7];
+        NSDate *sevenDaysBefore = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents2 toDate:selectedDate options:0];
+        
+        [NotificationObject createNotification:notificationText withDate:sevenDaysBefore withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+        if (error){
+           NSLog(@"Error creating notification");
+        }
+        else{
+            }
+            NSLog(@"Successfully created week notification");
+        }];
     }
 }
 
@@ -176,14 +192,29 @@ bool isGrantedNotificationAccess;
     NSTimeInterval dayDiff = [selectedDate timeIntervalSinceDate:oneDay];
     
     if(dayDiff > 0){
+        NSString *notificationText = [NSString stringWithFormat:@"%@ is happening in one day", eventName];
+        
         UNMutableNotificationContent *dayContent = [[UNMutableNotificationContent alloc] init];
         dayContent.title = @"Cue";
-        dayContent.body = [NSString stringWithFormat:@"%@ is happening in one day", eventName];
+        dayContent.body = notificationText;
         dayContent.sound = [UNNotificationSound defaultSound];
         
         UNTimeIntervalNotificationTrigger *trigger1 = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:dayDiff repeats:NO];
         UNNotificationRequest *request1 = [UNNotificationRequest requestWithIdentifier:eventName content:dayContent trigger:trigger1];
         [self.center addNotificationRequest:request1 withCompletionHandler:nil];
+        
+        NSDateComponents *dateComponents2 = [[NSDateComponents alloc] init];
+        [dateComponents2 setDay:-1];
+        NSDate *sevenDaysBefore = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents2 toDate:selectedDate options:0];
+        
+        [NotificationObject createNotification:notificationText withDate:sevenDaysBefore withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+        if (error){
+           NSLog(@"Error creating notification");
+        }
+        else{
+            }
+            NSLog(@"Successfully created day notification");
+        }];
     }
     
 }

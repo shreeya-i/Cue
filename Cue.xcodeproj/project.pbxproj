@@ -10,13 +10,13 @@
 		1CC17E72800391734ED96F89 /* Pods_Cue_CueUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381F8C34AA5B43015E63A6EA /* Pods_Cue_CueUITests.framework */; };
 		35962B66FC04D079057943C0 /* Pods_CueTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1924470FCB191FA67DA31E93 /* Pods_CueTests.framework */; };
 		6E9B46512880ABF000B491C2 /* CueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46502880ABF000B491C2 /* CueCell.m */; };
-		6E9B46582886250800B491C2 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46572886250800B491C2 /* Notification.m */; };
 		6E9B465B2887474000B491C2 /* GoogleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B465A2887474000B491C2 /* GoogleViewController.m */; };
 		6E9B465E2887477A00B491C2 /* GoogleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B465D2887477A00B491C2 /* GoogleCell.m */; };
 		6E9B466128874C5200B491C2 /* GCAEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B466028874C5200B491C2 /* GCAEvent.m */; };
 		6E9B466E288C6F8F00B491C2 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B466D288C6F8F00B491C2 /* Keys.plist */; };
 		6E9B4674288F685F00B491C2 /* SuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B4673288F685F00B491C2 /* SuggestionViewController.m */; };
 		6E9B46772891E9F400B491C2 /* YelpSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46762891E9F400B491C2 /* YelpSelectionCell.m */; };
+		6E9B467A289307EA00B491C2 /* NotificationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B4679289307EA00B491C2 /* NotificationObject.m */; };
 		6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174C2874AF5500729470 /* AppDelegate.m */; };
 		6EE217502874AF5500729470 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174F2874AF5500729470 /* SceneDelegate.m */; };
 		6EE217562874AF5500729470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217542874AF5500729470 /* Main.storyboard */; };
@@ -66,8 +66,6 @@
 		6CE2EAA1E71F18F3FB8A34FA /* Pods-CueTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CueTests.debug.xcconfig"; path = "Target Support Files/Pods-CueTests/Pods-CueTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6E9B464F2880ABF000B491C2 /* CueCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CueCell.h; sourceTree = "<group>"; };
 		6E9B46502880ABF000B491C2 /* CueCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CueCell.m; sourceTree = "<group>"; };
-		6E9B46562886250800B491C2 /* Notification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
-		6E9B46572886250800B491C2 /* Notification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
 		6E9B46592887474000B491C2 /* GoogleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoogleViewController.h; sourceTree = "<group>"; };
 		6E9B465A2887474000B491C2 /* GoogleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoogleViewController.m; sourceTree = "<group>"; };
 		6E9B465C2887477A00B491C2 /* GoogleCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoogleCell.h; sourceTree = "<group>"; };
@@ -79,6 +77,8 @@
 		6E9B4673288F685F00B491C2 /* SuggestionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuggestionViewController.m; sourceTree = "<group>"; };
 		6E9B46752891E9F400B491C2 /* YelpSelectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YelpSelectionCell.h; sourceTree = "<group>"; };
 		6E9B46762891E9F400B491C2 /* YelpSelectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YelpSelectionCell.m; sourceTree = "<group>"; };
+		6E9B4678289307EA00B491C2 /* NotificationObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationObject.h; sourceTree = "<group>"; };
+		6E9B4679289307EA00B491C2 /* NotificationObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationObject.m; sourceTree = "<group>"; };
 		6EE217482874AF5500729470 /* Cue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE2174B2874AF5500729470 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6EE2174C2874AF5500729470 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -165,12 +165,12 @@
 			children = (
 				6EE2179B2877A4B800729470 /* Event.h */,
 				6EE2179C2877A4B800729470 /* Event.m */,
-				6E9B46562886250800B491C2 /* Notification.h */,
-				6E9B46572886250800B491C2 /* Notification.m */,
 				6EE217B3287E12EF00729470 /* Suggestion.h */,
 				6EE217B4287E12EF00729470 /* Suggestion.m */,
 				6E9B465F28874C5200B491C2 /* GCAEvent.h */,
 				6E9B466028874C5200B491C2 /* GCAEvent.m */,
+				6E9B4678289307EA00B491C2 /* NotificationObject.h */,
+				6E9B4679289307EA00B491C2 /* NotificationObject.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -535,12 +535,12 @@
 				6E9B46772891E9F400B491C2 /* YelpSelectionCell.m in Sources */,
 				6E9B46512880ABF000B491C2 /* CueCell.m in Sources */,
 				6EE2178A28760D9900729470 /* SignUpViewController.m in Sources */,
+				6E9B467A289307EA00B491C2 /* NotificationObject.m in Sources */,
 				6EE217B5287E12EF00729470 /* Suggestion.m in Sources */,
 				6E9B466128874C5200B491C2 /* GCAEvent.m in Sources */,
 				6EE2175E2874AF5700729470 /* main.m in Sources */,
 				6EE217502874AF5500729470 /* SceneDelegate.m in Sources */,
 				6EE2178D2876119F00729470 /* HomeViewController.m in Sources */,
-				6E9B46582886250800B491C2 /* Notification.m in Sources */,
 				6EE2178728760B3900729470 /* ProfileViewController.m in Sources */,
 				6EE21797287651BE00729470 /* EventCell.m in Sources */,
 				6E9B465B2887474000B491C2 /* GoogleViewController.m in Sources */,
