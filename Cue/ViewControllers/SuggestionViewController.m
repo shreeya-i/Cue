@@ -31,7 +31,7 @@
     self.businessAddress.text = self.detailSuggestion.displayAddress;
     self.businessRating.text = self.detailSuggestion.rating;
     self.businessPrice.text = self.detailSuggestion.price;
-    self.businessDistance.text = [NSString stringWithFormat: @"%@ miles away", self.detailSuggestion.distance];
+    self.businessDistance.text = [NSString stringWithFormat: @"%@ mi", self.detailSuggestion.distance];
     
     
     NSURL * url = [NSURL URLWithString: self.detailSuggestion.imageURL];
@@ -63,6 +63,11 @@
     [annotation setCoordinate:coordforpin];
     [annotation setTitle:self.detailSuggestion.name];
     [self.mapView addAnnotation: annotation];
+}
+- (IBAction)didTapCall:(id)sender {
+    NSString *phoneStr = [NSString stringWithFormat:@"tel:9493784844"];
+    NSURL *phoneURL = [NSURL URLWithString:phoneStr];
+    [[UIApplication sharedApplication] openURL:phoneURL options:@{} completionHandler:nil];
 }
 
 - (IBAction)didTapSelect:(id)sender {
