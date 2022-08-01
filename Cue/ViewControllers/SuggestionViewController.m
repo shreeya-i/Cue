@@ -12,12 +12,12 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIImageView *businessImage;
 @property (weak, nonatomic) IBOutlet UILabel *businessName;
-@property (weak, nonatomic) IBOutlet UILabel *businessPhone;
 @property (weak, nonatomic) IBOutlet UILabel *businessAddress;
 @property (weak, nonatomic) IBOutlet UILabel *businessRating;
 @property (weak, nonatomic) IBOutlet UILabel *businessDistance;
 @property (weak, nonatomic) IBOutlet UIButton *selectSuggestion;
 @property (weak, nonatomic) IBOutlet UILabel *businessPrice;
+@property (strong, nonatomic) NSString *businessPhone;
 
 @end
 
@@ -27,7 +27,7 @@
     [super viewDidLoad];
     
     self.businessName.text = self.detailSuggestion.name;
-    self.businessPhone.text = self.detailSuggestion.phone;
+    self.businessPhone = self.detailSuggestion.phone;
     self.businessAddress.text = self.detailSuggestion.displayAddress;
     self.businessRating.text = self.detailSuggestion.rating;
     self.businessPrice.text = self.detailSuggestion.price;
@@ -65,6 +65,7 @@
     [self.mapView addAnnotation: annotation];
 }
 - (IBAction)didTapCall:(id)sender {
+    //This phone would theoretically be replaced with a formatted _businessPhone
     NSString *phoneStr = [NSString stringWithFormat:@"tel:9493784844"];
     NSURL *phoneURL = [NSURL URLWithString:phoneStr];
     [[UIApplication sharedApplication] openURL:phoneURL options:@{} completionHandler:nil];

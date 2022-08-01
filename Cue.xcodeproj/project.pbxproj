@@ -13,11 +13,11 @@
 		6E9B465B2887474000B491C2 /* GoogleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B465A2887474000B491C2 /* GoogleViewController.m */; };
 		6E9B465E2887477A00B491C2 /* GoogleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B465D2887477A00B491C2 /* GoogleCell.m */; };
 		6E9B466128874C5200B491C2 /* GCAEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B466028874C5200B491C2 /* GCAEvent.m */; };
-		6E9B466E288C6F8F00B491C2 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B466D288C6F8F00B491C2 /* Keys.plist */; };
 		6E9B4674288F685F00B491C2 /* SuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B4673288F685F00B491C2 /* SuggestionViewController.m */; };
 		6E9B46772891E9F400B491C2 /* YelpSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B46762891E9F400B491C2 /* YelpSelectionCell.m */; };
 		6E9B467A289307EA00B491C2 /* NotificationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9B4679289307EA00B491C2 /* NotificationObject.m */; };
 		6E9B467C2893361F00B491C2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E9B467B2893361F00B491C2 /* MapKit.framework */; };
+		6E9B467E2894661800B491C2 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B467D2894661800B491C2 /* Keys.plist */; };
 		6EE2174D2874AF5500729470 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174C2874AF5500729470 /* AppDelegate.m */; };
 		6EE217502874AF5500729470 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2174F2874AF5500729470 /* SceneDelegate.m */; };
 		6EE217562874AF5500729470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE217542874AF5500729470 /* Main.storyboard */; };
@@ -73,7 +73,6 @@
 		6E9B465D2887477A00B491C2 /* GoogleCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoogleCell.m; sourceTree = "<group>"; };
 		6E9B465F28874C5200B491C2 /* GCAEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCAEvent.h; sourceTree = "<group>"; };
 		6E9B466028874C5200B491C2 /* GCAEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCAEvent.m; sourceTree = "<group>"; };
-		6E9B466D288C6F8F00B491C2 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Keys.plist; sourceTree = SOURCE_ROOT; };
 		6E9B4672288F685F00B491C2 /* SuggestionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SuggestionViewController.h; sourceTree = "<group>"; };
 		6E9B4673288F685F00B491C2 /* SuggestionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuggestionViewController.m; sourceTree = "<group>"; };
 		6E9B46752891E9F400B491C2 /* YelpSelectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YelpSelectionCell.h; sourceTree = "<group>"; };
@@ -81,6 +80,7 @@
 		6E9B4678289307EA00B491C2 /* NotificationObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationObject.h; sourceTree = "<group>"; };
 		6E9B4679289307EA00B491C2 /* NotificationObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationObject.m; sourceTree = "<group>"; };
 		6E9B467B2893361F00B491C2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6E9B467D2894661800B491C2 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		6EE217482874AF5500729470 /* Cue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE2174B2874AF5500729470 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6EE2174C2874AF5500729470 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 				6EE2174C2874AF5500729470 /* AppDelegate.m */,
 				6EE2174E2874AF5500729470 /* SceneDelegate.h */,
 				6EE2174F2874AF5500729470 /* SceneDelegate.m */,
-				6E9B466D288C6F8F00B491C2 /* Keys.plist */,
+				6E9B467D2894661800B491C2 /* Keys.plist */,
 				6EE217542874AF5500729470 /* Main.storyboard */,
 				6EE217572874AF5700729470 /* Assets.xcassets */,
 				6EE217592874AF5700729470 /* LaunchScreen.storyboard */,
@@ -399,7 +399,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E9B466E288C6F8F00B491C2 /* Keys.plist in Resources */,
+				6E9B467E2894661800B491C2 /* Keys.plist in Resources */,
 				6EE2175B2874AF5700729470 /* LaunchScreen.storyboard in Resources */,
 				6EE217582874AF5700729470 /* Assets.xcassets in Resources */,
 				6EE217562874AF5500729470 /* Main.storyboard in Resources */,

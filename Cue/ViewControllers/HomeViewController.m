@@ -55,7 +55,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     [self _setUpViews];
     [self _fetchEvents];
     [self _setUpConstants];
-    [self _addressCheck];
+    [self _loginChecks];
 }
 
 - (void) _initAPI {
@@ -149,33 +149,59 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     }];
 }
 
-- (void) _addressCheck {
+- (void) _loginChecks {
     NSString *address = [PFUser currentUser][@"address"];
     if(!address){
-        UIAlertController * alertController = [UIAlertController alertControllerWithTitle: @"Address Required"
-                                                                                         message: @"Input an address to be associated with your Google account."
-                                                                                     preferredStyle:UIAlertControllerStyleAlert];
-           [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-               textField.placeholder = @"Address";
-               textField.textColor = [UIColor blackColor];
-               textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-               textField.borderStyle = UITextBorderStyleRoundedRect;
+        [self _addressAlert];
+    } else if([[NSUserDefaults standardUserDefaults] objectForKey:@"kAccessToken"] != nil) {
+        [self _googleCheck];
+    }
+}
+
+- (void) _addressAlert {
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle: @"Address Required"
+                                                                                     message: @"Input an address to be associated with your Google account."
+                                                                                 preferredStyle:UIAlertControllerStyleAlert];
+       [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+           textField.placeholder = @"Address";
+           textField.textColor = [UIColor blackColor];
+           textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+           textField.borderStyle = UITextBorderStyleRoundedRect;
+       }];
+       [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+           NSArray * textfields = alertController.textFields;
+           UITextField * addressField = textfields[0];
+           PFUser *user = [PFUser currentUser];
+           user[@"address"] = addressField.text;
+           [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+               if(error){
+                   NSLog(@"Error saving: %@", error.localizedDescription);
+               }
+               else{
+                   NSLog(@"Successfully saved");
+               }
            }];
-           [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-               NSArray * textfields = alertController.textFields;
-               UITextField * addressField = textfields[0];
-               PFUser *user = [PFUser currentUser];
-               user[@"address"] = addressField.text;
-               [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                   if(error){
-                       NSLog(@"Error saving: %@", error.localizedDescription);
-                   }
-                   else{
-                       NSLog(@"Successfully saved");
-                   }
-               }];
-           }]];
-           [self presentViewController:alertController animated:YES completion:nil];
+           [self _googleCheck];
+       }]];
+       [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void) _googleCheck {
+    
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"kAccessToken"] != nil) {
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        self.kAccessToken = [defaults objectForKey:@"kAccessToken"];
+        
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle: @"Google Calendar"
+                    message: @"Would you like to import your Google Calendar events?"
+                    preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
+            [self _getUserInfo];
+        }];
+        [alert addAction:noAction];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:^{}];
     }
 }
 
