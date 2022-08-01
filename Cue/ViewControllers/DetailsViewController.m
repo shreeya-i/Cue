@@ -35,7 +35,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self _setUpViews];
-    [self _dispatchInfo];
+    if(self.selectedSuggestion){
+        [self _setUpTableView];
+    } else {
+        [self _dispatchInfo];
+    }
 }
 
 - (void) _dispatchInfo {
@@ -55,7 +59,7 @@
     NSLog(@"PRINT THIS %@", self.eventCategories);
     
     self.nameLabel.text = self.detailEvent.eventName;
-
+    
     self.suggestions = [NSMutableArray array];
     
     NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
@@ -71,12 +75,12 @@
 
 - (void) _fetchData{
     NSString *apiKey = [[NSUserDefaults standardUserDefaults]
-        stringForKey:@"apiKey"];
+                        stringForKey:@"apiKey"];
     NSString *header = [NSString stringWithFormat:@"Bearer %@", apiKey];
     NSString *radius = [NSString stringWithFormat: @"%@", self.detailEvent.searchRadius];
     NSString *location = [self.detailEvent.address stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString *requestURL = [NSString stringWithFormat: @"http://api.yelp.com/v3/businesses/search?radius=%@&location=%@&categories=%@", radius, location, self.eventCategories];
-
+    
     NSURL *url = [NSURL URLWithString:requestURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setValue:header forHTTPHeaderField:@"Authorization"];
@@ -98,15 +102,22 @@
                 else{
                     self.noSuggestionsLabel.hidden = NO;
                 }
-                    self.suggestionsTableView.delegate = self;
-                    self.suggestionsTableView.dataSource = self;
-                    self.suggestionsTableView.rowHeight = 115;
-                    [self.suggestionsTableView reloadData];
+                [self _setUpTableView];
             });
         }
     }];
     [task resume];
+}
 
+- (void) _setUpTableView {
+    self.suggestionsTableView.delegate = self;
+    self.suggestionsTableView.dataSource = self;
+    if(self.selectedSuggestion){
+        self.suggestionsTableView.rowHeight = 200;
+    } else {
+        self.suggestionsTableView.rowHeight = 115;
+    }
+    [self.suggestionsTableView reloadData];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -149,19 +160,19 @@
 }
 
 
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-     if([segue.identifier isEqualToString:@"suggestionSegue"]){
-         NSIndexPath *myIndexPath = [self.suggestionsTableView indexPathForCell:sender];
-         Suggestion *dataToPass = self.suggestionsArray[myIndexPath.row];
-         SuggestionViewController *detailVC = [segue destinationViewController];
-         detailVC.delegateObject = self;
-         detailVC.detailSuggestion = dataToPass;
-     }
- }
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"suggestionSegue"]){
+        NSIndexPath *myIndexPath = [self.suggestionsTableView indexPathForCell:sender];
+        Suggestion *dataToPass = self.suggestionsArray[myIndexPath.row];
+        SuggestionViewController *detailVC = [segue destinationViewController];
+        detailVC.delegateObject = self;
+        detailVC.detailSuggestion = dataToPass;
+    }
+}
 
 - (void) didSelectCue:(Suggestion *)suggestionToSend {
     self.selectedSuggestion = suggestionToSend;
-    [self.suggestionsTableView reloadData];
+    [self _setUpTableView];
 }
 
 @end

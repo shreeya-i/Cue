@@ -20,8 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 // Param date: Date of event
 // Param cues: Array of cues the user has requested e.g. Restaurant reservation or activity booking
 + (void) createNotification: ( NSString * _Nullable )text
-          withDate: ( NSDate * _Nullable )date
-          withCompletion: (PFBooleanResultBlock  _Nullable)completion;
+                   withDate: ( NSDate * _Nullable )date
+             withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end
 

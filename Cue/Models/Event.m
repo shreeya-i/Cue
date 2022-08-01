@@ -19,7 +19,7 @@
 @dynamic address;
 
 + (nonnull NSString *)parseClassName {
-return @"Event";
+    return @"Event";
 }
 
 //To upload the user image to Parse, get the user input from the view controller and then call the postUserImage method from the view controller by passing all the required arguments into it.
@@ -27,9 +27,9 @@ return @"Event";
 + (void) postEvent: ( NSString * _Nullable )name
           withDate: (NSDate * _Nullable)date
           withCues: (NSArray * _Nullable)cues
-          withRadius:(NSNumber * _Nullable)radius
-          withAddress:(NSString * _Nullable)address
-        withCompletion: (PFBooleanResultBlock  _Nullable)completion {
+        withRadius:(NSNumber * _Nullable)radius
+       withAddress:(NSString * _Nullable)address
+    withCompletion: (PFBooleanResultBlock  _Nullable)completion {
     
     NSMutableArray *yelpCategories = [[NSMutableArray alloc] init];
     for (NSString *cue in cues) {
@@ -73,7 +73,7 @@ return @"Event";
     newEvent.address = address;
     newEvent.cuesString = [cues componentsJoinedByString:@", "];
     
-[newEvent saveInBackgroundWithBlock: completion];
+    [newEvent saveInBackgroundWithBlock: completion];
 }
 
 @end

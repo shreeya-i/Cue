@@ -6,6 +6,7 @@
 //
 
 #import <Parse/Parse.h>
+#import "Suggestion.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,8 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void) postEvent: ( NSString * _Nullable )name
           withDate: ( NSDate * _Nullable )date
           withCues: ( NSArray * _Nullable )cues
-          withRadius: ( NSNumber * _Nullable)radius
-          withAddress: ( NSString * _Nullable)address
+        withRadius: ( NSNumber * _Nullable)radius
+       withAddress: ( NSString * _Nullable)address
     withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end

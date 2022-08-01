@@ -108,24 +108,24 @@ bool isGrantedNotificationAccess;
             self.addressToUse = [PFUser currentUser][@"address"];
         }
         [Event postEvent:eventName withDate:selectedDate withCues:cuesArray withRadius: self.selectedRadius withAddress: self.addressToUse withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
-       if (error){
-           NSLog(@"Error creating event");
-           UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];
-           UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
-           [alert addAction:okAction];
-           [self presentViewController:alert animated:YES completion:^{}];
-        }
-        else{
-            if(isGrantedNotificationAccess && self.notifsOn){
-                /// Notifications: DO NOT account for current user which needs to be fixed.
-                [self _weekNotif];
-                [self _dayNotif];
+            if (error){
+                NSLog(@"Error creating event");
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
+                [alert addAction:okAction];
+                [self presentViewController:alert animated:YES completion:^{}];
             }
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            NSLog(@"Successfully created event");
-        }
-    }];
+            else{
+                if(isGrantedNotificationAccess && self.notifsOn){
+                    /// Notifications: DO NOT account for current user which needs to be fixed.
+                    [self _weekNotif];
+                    [self _dayNotif];
+                }
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                NSLog(@"Successfully created event");
+            }
+        }];
     }
     
 }
@@ -161,7 +161,7 @@ bool isGrantedNotificationAccess;
         weekContent.title = @"Cue";
         weekContent.body = notificationText;
         weekContent.sound = [UNNotificationSound defaultSound];
-
+        
         UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:weekDiff repeats:NO];
         UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:eventName content:weekContent trigger:trigger];
         [self.center addNotificationRequest:request withCompletionHandler:nil];
@@ -171,10 +171,10 @@ bool isGrantedNotificationAccess;
         NSDate *sevenDaysBefore = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents2 toDate:selectedDate options:0];
         
         [NotificationObject createNotification:notificationText withDate:sevenDaysBefore withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
-        if (error){
-           NSLog(@"Error creating notification");
-        }
-        else{
+            if (error){
+                NSLog(@"Error creating notification");
+            }
+            else{
             }
             NSLog(@"Successfully created week notification");
         }];
@@ -208,10 +208,10 @@ bool isGrantedNotificationAccess;
         NSDate *sevenDaysBefore = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents2 toDate:selectedDate options:0];
         
         [NotificationObject createNotification:notificationText withDate:sevenDaysBefore withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
-        if (error){
-           NSLog(@"Error creating notification");
-        }
-        else{
+            if (error){
+                NSLog(@"Error creating notification");
+            }
+            else{
             }
             NSLog(@"Successfully created day notification");
         }];
@@ -234,20 +234,20 @@ bool isGrantedNotificationAccess;
 - (IBAction)addressSwitchPressed:(id)sender {
     if(![self.addressSwitch isOn]){
         UIAlertController * alertController = [UIAlertController alertControllerWithTitle: @"Input Address"
-                                                                                         message: @"Input location for this event."
-                                                                                     preferredStyle:UIAlertControllerStyleAlert];
-           [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-               textField.placeholder = @"Address";
-               textField.textColor = [UIColor blackColor];
-               textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-               textField.borderStyle = UITextBorderStyleRoundedRect;
-           }];
-           [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-               NSArray * textfields = alertController.textFields;
-               UITextField * addressField = textfields[0];
-               self.inputtedAddress = addressField.text;
-           }]];
-           [self presentViewController:alertController animated:YES completion:nil];
+                                                                                  message: @"Input location for this event."
+                                                                           preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"Address";
+            textField.textColor = [UIColor blackColor];
+            textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+            textField.borderStyle = UITextBorderStyleRoundedRect;
+        }];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSArray * textfields = alertController.textFields;
+            UITextField * addressField = textfields[0];
+            self.inputtedAddress = addressField.text;
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 

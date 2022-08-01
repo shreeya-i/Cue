@@ -36,7 +36,7 @@
         self.longitude = dictionary[@"coordinates"][@"longitude"];
         
         self.price = dictionary[@"price"];
-     
+        
     }
     return self;
 }

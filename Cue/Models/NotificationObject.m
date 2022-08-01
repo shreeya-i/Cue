@@ -24,8 +24,8 @@
     newNotif.text = text;
     newNotif.user = [PFUser currentUser];
     newNotif.postDate = date;
-
-[newNotif saveInBackgroundWithBlock: completion];
+    
+    [newNotif saveInBackgroundWithBlock: completion];
 }
 
 

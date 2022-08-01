@@ -37,13 +37,13 @@
     
     PFUser *user = [PFUser currentUser];
     if(user[@"profilePicture"]){
-            PFFileObject *file = user[@"profilePicture"];
-            [file getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
-                        if (!error) {
-                            UIImage *image = [UIImage imageWithData:imageData];
-                            [self.profilePicture setImage:image];
-                        }
-                    }];
+        PFFileObject *file = user[@"profilePicture"];
+        [file getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+            if (!error) {
+                UIImage *image = [UIImage imageWithData:imageData];
+                [self.profilePicture setImage:image];
+            }
+        }];
     }
     else {
         self.profilePicture.image = [UIImage imageNamed: @"defaultpfp"];
@@ -54,7 +54,7 @@
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
     imagePickerVC.allowsEditing = YES;
-
+    
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
     }
@@ -69,7 +69,7 @@
     
     UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
-
+    
     if (editedImage){
         [self.profilePicture setImage: editedImage];
         PFFileObject *file = [self getPFFileFromImage: editedImage];
@@ -132,7 +132,7 @@
         }
         else{
             [self.delegate didSaveEdits: nameData :usernameData :passwordData :addressData :self.profilePicture.file];
-
+            
             self.nameField.text = @"";
             self.usernameField.text = @"";
             self.passwordField.text = @"";
@@ -158,27 +158,27 @@
     [self _clearUserData];
     
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
-           if (error) {
-               NSLog(@"Cannot log out");
-           } else {
-               // Success
-               NSLog(@"User logged out successfully.");
-               SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
-               UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-               LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-               sceneDelegate.window.rootViewController = loginViewController;
-           }
-       }];
+        if (error) {
+            NSLog(@"Cannot log out");
+        } else {
+            // Success
+            NSLog(@"User logged out successfully.");
+            SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            sceneDelegate.window.rootViewController = loginViewController;
+        }
+    }];
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -33,9 +33,9 @@
     self.events = [NSMutableArray array];
     for (NSDictionary *anEvent in eventsData) {
         GCAEvent *event = [GCAEvent new];
-
+        
         event.content = anEvent[@"summary"];
-
+        
         NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
         [dateFormatter1 setDateFormat:@"yyyy-MM-dd"];
         
@@ -50,7 +50,7 @@
         } else {
             event.startDate = [dateFormatter1 dateFromString:startDate];
         }
-
+        
         [self.events addObject:event];
     }
 }
@@ -68,7 +68,7 @@
     
     NSDateFormatter *dateformatter =[[NSDateFormatter alloc]init];
     [dateformatter setDateFormat:@"MMM d, yyyy"];
-     NSString *date = [dateformatter stringFromDate: cell.event.startDate];
+    NSString *date = [dateformatter stringFromDate: cell.event.startDate];
     cell.startDate.text = date;
     cell.isSelected = NO;
     return cell;
@@ -90,31 +90,31 @@
     for(GCAEvent *event in self.selectedEvents){
         NSString *address = [PFUser currentUser][@"address"];
         [Event postEvent:event.content withDate:event.startDate withCues:cues withRadius:@1000 withAddress:address withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
-       if (error){
-           NSLog(@"Error creating event");
-           UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];
-           UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
-           [alert addAction:okAction];
-           [self presentViewController:alert animated:YES completion:^{}];
-        }
-        else{
-            [self.navigationController popViewControllerAnimated:YES];
-            NSLog(@"Successfully created event");
-        }
-    }];
+            if (error){
+                NSLog(@"Error creating event");
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
+                [alert addAction:okAction];
+                [self presentViewController:alert animated:YES completion:^{}];
+            }
+            else{
+                [self.navigationController popViewControllerAnimated:YES];
+                NSLog(@"Successfully created event");
+            }
+        }];
     }
 }
 
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
