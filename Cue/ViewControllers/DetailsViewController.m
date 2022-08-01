@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *noSuggestionsLabel;
 @property (nonatomic, strong) NSString *eventCategories;
 @property (nonatomic, strong) NSArray *suggestionsArray;
-@property (nonatomic, strong) NSMutableArray *suggestions;
+@property (nonatomic, strong) NSMutableArray <Suggestion *> *suggestions;
 @property (nonatomic, strong) Suggestion *selectedSuggestion;
 
 @end

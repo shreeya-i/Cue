@@ -35,7 +35,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 @property (strong, nonatomic) NSString *kClientID;
 @property (strong, nonatomic) NSString *kRedirectURI;
 @property (strong, nonatomic) NSString *kAccessToken;
-@property (strong, nonatomic) UNUserNotificationCenter *center;
+@property (strong, nonatomic) UNUserNotificationCenter *notificationCenter;
 
 
 @end
@@ -46,7 +46,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     [super viewDidLoad];
     
     self.passwordField.secureTextEntry = true;
-    self.center = [UNUserNotificationCenter currentNotificationCenter];
+    self.notificationCenter = [UNUserNotificationCenter currentNotificationCenter];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *ivc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -58,10 +58,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     NSString *password = self.passwordField.text;
     
     if([self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""]) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"Username or password is empty." preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
-        [alert addAction:okAction];
-        [self presentViewController:alert animated:YES completion:^{}];
+        [self _emptyFieldAlert];
     }
     else{
         [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
@@ -74,13 +71,23 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
             } else {
                 NSLog(@"User logged in successfully");
                 [self _importExistingNotifs];
-                SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                sceneDelegate.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
+                [self _switchViews];
             }
         }];
     }
-    
+}
+
+- (void) _emptyFieldAlert {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"Username or password is empty." preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:^{}];
+}
+
+- (void) _switchViews {
+    SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    sceneDelegate.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
 }
 
 - (IBAction)didTapGoogle:(id)sender {
@@ -179,7 +186,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
                 
                 UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:dayDiff repeats:NO];
                 UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:notif.text content:content trigger:trigger];
-                [self.center addNotificationRequest:request withCompletionHandler:nil];
+                [self.notificationCenter addNotificationRequest:request withCompletionHandler:nil];
             }
         } else {
             NSLog(@"%@", error.localizedDescription);

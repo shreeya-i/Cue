@@ -149,9 +149,9 @@ bool isGrantedNotificationAccess;
     NSDate *selectedDate = self.datePicker.date;
     NSString *eventName = self.nameField.text;
     NSDate *curDate = [NSDate date];
-    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
-    [dateComponents setDay:+7];
-    NSDate *sevenDaysAfter = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:curDate options:0];
+    NSDateComponents *increaseWeek = [[NSDateComponents alloc] init];
+    [increaseWeek setDay:+7];
+    NSDate *sevenDaysAfter = [[NSCalendar currentCalendar] dateByAddingComponents:increaseWeek toDate:curDate options:0];
     NSTimeInterval weekDiff = [selectedDate timeIntervalSinceDate:sevenDaysAfter];
     
     if(weekDiff > 0){
@@ -166,17 +166,17 @@ bool isGrantedNotificationAccess;
         UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:eventName content:weekContent trigger:trigger];
         [self.center addNotificationRequest:request withCompletionHandler:nil];
         
-        NSDateComponents *dateComponents2 = [[NSDateComponents alloc] init];
-        [dateComponents2 setDay:-7];
-        NSDate *sevenDaysBefore = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents2 toDate:selectedDate options:0];
+        NSDateComponents *decreaseWeek = [[NSDateComponents alloc] init];
+        [decreaseWeek setDay:-7];
+        NSDate *sevenDaysBefore = [[NSCalendar currentCalendar] dateByAddingComponents:decreaseWeek toDate:selectedDate options:0];
         
         [NotificationObject createNotification:notificationText withDate:sevenDaysBefore withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
             if (error){
                 NSLog(@"Error creating notification");
             }
             else{
+                NSLog(@"Successfully created week notification");
             }
-            NSLog(@"Successfully created week notification");
         }];
     }
 }
@@ -186,9 +186,9 @@ bool isGrantedNotificationAccess;
     NSDate *selectedDate = self.datePicker.date;
     NSString *eventName = self.nameField.text;
     NSDate *curDate = [NSDate date];
-    NSDateComponents *dateComponents1 = [[NSDateComponents alloc] init];
-    [dateComponents1 setDay:+1];
-    NSDate *oneDay = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents1 toDate:curDate options:0];
+    NSDateComponents *increaseOneDay = [[NSDateComponents alloc] init];
+    [increaseOneDay setDay:+1];
+    NSDate *oneDay = [[NSCalendar currentCalendar] dateByAddingComponents:increaseOneDay toDate:curDate options:0];
     NSTimeInterval dayDiff = [selectedDate timeIntervalSinceDate:oneDay];
     
     if(dayDiff > 0){
@@ -203,17 +203,17 @@ bool isGrantedNotificationAccess;
         UNNotificationRequest *request1 = [UNNotificationRequest requestWithIdentifier:eventName content:dayContent trigger:trigger1];
         [self.center addNotificationRequest:request1 withCompletionHandler:nil];
         
-        NSDateComponents *dateComponents2 = [[NSDateComponents alloc] init];
-        [dateComponents2 setDay:-1];
-        NSDate *sevenDaysBefore = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents2 toDate:selectedDate options:0];
+        NSDateComponents *decreaseDay = [[NSDateComponents alloc] init];
+        [decreaseDay setDay:-1];
+        NSDate *sevenDaysBefore = [[NSCalendar currentCalendar] dateByAddingComponents:decreaseDay toDate:selectedDate options:0];
         
         [NotificationObject createNotification:notificationText withDate:sevenDaysBefore withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
             if (error){
                 NSLog(@"Error creating notification");
             }
             else{
+                NSLog(@"Successfully created day notification");
             }
-            NSLog(@"Successfully created day notification");
         }];
     }
     
