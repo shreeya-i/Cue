@@ -78,14 +78,15 @@
     }];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self dismissViewControllerAnimated:alert completion:^{}];
-        [self _didSelectCue];
+        [self _didSelectCue:self.detailSuggestion];
         }];
     [alert addAction:cancelAction];
     [alert addAction:okAction];
     [self presentViewController:alert animated:YES completion:^{}];
 }
 
--(void) _didSelectCue {
+-(void) _didSelectCue:(Suggestion*)detailSuggestion {
+    [self.delegateObject didSelectCue:detailSuggestion];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

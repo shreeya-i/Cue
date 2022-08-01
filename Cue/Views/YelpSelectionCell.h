@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Suggestion.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *businessName;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
+@property (strong, nonatomic) Suggestion *detailSuggestion;
 
 @end
 

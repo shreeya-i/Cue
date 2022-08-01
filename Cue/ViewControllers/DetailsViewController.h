@@ -7,10 +7,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Event.h"
+#import "SuggestionViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DetailsViewController : UIViewController
+@interface DetailsViewController : UIViewController <SuggestionViewDelegate>
 
 @property (strong, nonatomic) Event *detailEvent;
 @property (weak, nonatomic) IBOutlet UITableView *suggestionsTableView;

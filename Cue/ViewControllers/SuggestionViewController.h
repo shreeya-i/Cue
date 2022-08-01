@@ -11,9 +11,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol SuggestionViewDelegate
+- (void)didSelectCue:(Suggestion*)suggestionToSend;
+@end
+
 @interface SuggestionViewController : UIViewController <MKMapViewDelegate>
 
 @property (strong, nonatomic) Suggestion *detailSuggestion;
+@property (nonatomic, weak) id <SuggestionViewDelegate> delegateObject;
 
 @end
 

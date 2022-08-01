@@ -7,13 +7,14 @@
 
 #import "DetailsViewController.h"
 #import "SuggestionCell.h"
+#import "YelpSelectionCell.h"
 #import "AFNetworking/AFNetworking.h"
 #import "Suggestion.h"
 #import "SVProgressHUD/SVProgressHUD.h"
-#import "SuggestionViewController.h"
 
 
 @interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource>
+
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -21,7 +22,7 @@
 @property (nonatomic, strong) NSString *eventCategories;
 @property (nonatomic, strong) NSArray *suggestionsArray;
 @property (nonatomic, strong) NSMutableArray *suggestions;
-@property (strong, nonatomic) NSMutableArray *selectedSuggestions;
+@property (nonatomic, strong) Suggestion *selectedSuggestion;
 
 @end
 
@@ -54,8 +55,7 @@
     NSLog(@"PRINT THIS %@", self.eventCategories);
     
     self.nameLabel.text = self.detailEvent.eventName;
-    
-    self.selectedSuggestions = [NSMutableArray array];
+
     self.suggestions = [NSMutableArray array];
     
     NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
@@ -110,23 +110,39 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    SuggestionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SuggestionCell" forIndexPath:indexPath];
-    cell.isSelected = NO;
-    
-    cell.suggestion = self.suggestions[indexPath.row];
-    cell.businessName.text = cell.suggestion.name;
-    
-    cell.colorView.layer.cornerRadius = 20.0;
-    cell.colorView.layer.shadowOffset = CGSizeMake(1, 0);
-    cell.colorView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    cell.colorView.layer.shadowRadius = 5;
-    cell.colorView.layer.shadowOpacity = .25;
-    
-    return cell;
+    if(self.selectedSuggestion){
+        YelpSelectionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YelpSelectionCell" forIndexPath:indexPath];
+        cell.detailSuggestion = self.selectedSuggestion;
+        cell.businessName.text = cell.detailSuggestion.name;
+        cell.distanceLabel.text = cell.detailSuggestion.distance;
+        cell.ratingLabel.text = cell.detailSuggestion.rating;
+        
+        NSURL * url = [NSURL URLWithString: cell.detailSuggestion.imageURL];
+        NSData * data = [NSData dataWithContentsOfURL:url];
+        cell.businessImage.image = [UIImage imageWithData:data];
+        
+        return cell;
+    } else {
+        SuggestionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SuggestionCell" forIndexPath:indexPath];
+        
+        cell.suggestion = self.suggestions[indexPath.row];
+        cell.businessName.text = cell.suggestion.name;
+        
+        cell.colorView.layer.cornerRadius = 20.0;
+        cell.colorView.layer.shadowOffset = CGSizeMake(1, 0);
+        cell.colorView.layer.shadowColor = [[UIColor blackColor] CGColor];
+        cell.colorView.layer.shadowRadius = 5;
+        cell.colorView.layer.shadowOpacity = .25;
+        return cell;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.suggestions.count;
+    if(self.selectedSuggestion){
+        return 1;
+    } else {
+        return self.suggestions.count;
+    }
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -138,8 +154,14 @@
          NSIndexPath *myIndexPath = [self.suggestionsTableView indexPathForCell:sender];
          Suggestion *dataToPass = self.suggestionsArray[myIndexPath.row];
          SuggestionViewController *detailVC = [segue destinationViewController];
+         detailVC.delegateObject = self;
          detailVC.detailSuggestion = dataToPass;
      }
  }
+
+- (void) didSelectCue:(Suggestion *)suggestionToSend {
+    self.selectedSuggestion = suggestionToSend;
+    [self.suggestionsTableView reloadData];
+}
 
 @end
