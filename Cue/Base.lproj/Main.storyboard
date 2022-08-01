@@ -678,24 +678,39 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cQq-xu-CSS">
-                                <rect key="frame" x="0.0" y="245" width="414" height="75"/>
+                                <rect key="frame" x="20" y="245" width="374" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UnY-Sn-WAi">
-                                    <size key="itemSize" width="128" height="66"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UnY-Sn-WAi">
+                                    <size key="itemSize" width="120" height="60"/>
+                                    <size key="estimatedItemSize" width="120" height="66"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="b5N-HQ-hik">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="66"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterCell" id="b5N-HQ-hik" customClass="FilterCell">
+                                        <rect key="frame" x="0.0" y="7.5" width="120" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Pug-DH-359">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="66"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="120" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Filter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Xj-l8-mWn">
+                                                    <rect key="frame" x="21" y="19" width="79" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="128" height="66"/>
+                                        <color key="backgroundColor" red="0.87590861350000004" green="0.91487788969999995" blue="0.82914850529999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="tintColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <size key="customSize" width="120" height="60"/>
+                                        <connections>
+                                            <outlet property="filterName" destination="3Xj-l8-mWn" id="tKm-1S-aaT"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -710,6 +725,7 @@
                     <navigationItem key="navigationItem" id="34D-5Z-zwt"/>
                     <connections>
                         <outlet property="dayLabel" destination="NLu-tA-Xdv" id="mQ5-QR-FOT"/>
+                        <outlet property="filtersCollectionView" destination="cQq-xu-CSS" id="5bm-vI-hvV"/>
                         <outlet property="nameLabel" destination="9HB-48-w3u" id="qoE-90-tc4"/>
                         <outlet property="noSuggestionsLabel" destination="Yv9-wh-L4G" id="knm-PK-QVP"/>
                         <outlet property="suggestionsTableView" destination="lYx-HG-Q3M" id="KQQ-5T-hFt"/>

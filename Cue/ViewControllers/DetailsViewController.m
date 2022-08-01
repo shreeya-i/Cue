@@ -11,18 +11,21 @@
 #import "AFNetworking/AFNetworking.h"
 #import "Suggestion.h"
 #import "SVProgressHUD/SVProgressHUD.h"
+#import "FilterCell.h"
 
 
-@interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *noSuggestionsLabel;
+@property (weak, nonatomic) IBOutlet UICollectionView *filtersCollectionView;
 @property (nonatomic, strong) NSString *eventCategories;
 @property (nonatomic, strong) NSArray *suggestionsArray;
 @property (nonatomic, strong) NSMutableArray <Suggestion *> *suggestions;
 @property (nonatomic, strong) Suggestion *selectedSuggestion;
+@property (nonatomic, strong) NSArray *filters;
 
 @end
 
@@ -51,6 +54,10 @@
 }
 
 - (void) _setUpViews {
+    
+    self.filters = @[@"One", @"Two", @"Three", @"Four"];
+    self.filtersCollectionView.dataSource = self;
+    self.filtersCollectionView.delegate = self;
     
     self.noSuggestionsLabel.hidden = YES;
     
@@ -173,6 +180,32 @@
 - (void) didSelectCue:(Suggestion *)suggestionToSend {
     self.selectedSuggestion = suggestionToSend;
     [self _setUpTableView];
+}
+
+- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    FilterCell *cell = [self.filtersCollectionView dequeueReusableCellWithReuseIdentifier:@"FilterCell" forIndexPath:indexPath];
+    cell.filterName.text = self.filters[indexPath.row];
+    return cell;
+}
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.filters.count;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
+    
+    UICollectionViewCell *cell =[self.filtersCollectionView cellForItemAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor blueColor]; // highlight selection
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UICollectionViewCell *cell =[self.filtersCollectionView cellForItemAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor redColor]; // Default color
 }
 
 @end

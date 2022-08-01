@@ -39,6 +39,12 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 
 @implementation HomeViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.eventsTableView reloadData];
+    [self _fetchEvents];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -356,7 +362,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EventCell" forIndexPath:indexPath];
     cell.event = self.filteredData[indexPath.row];
     cell.nameLabel.text = cell.event.eventName;
-    if(!cell.event.cuesString){
+    if([cell.event.cuesString isEqual:@""]){
         cell.cuesLabel.text = @"No Cues Selected";
     } else {
         cell.cuesLabel.text = [NSString stringWithFormat: @"Cues: %@", cell.event.cuesString];
