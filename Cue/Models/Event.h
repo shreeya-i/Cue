@@ -6,7 +6,7 @@
 //
 
 #import <Parse/Parse.h>
-#import "Suggestion.h"
+#import "Cue.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumber *searchRadius;
 @property (nonatomic, strong) NSString *cuesString;
 @property (nonatomic, strong) NSString *address;
+@property (nonatomic, strong) Cue *selectedCue;
 
 
 // Param name: Name of event

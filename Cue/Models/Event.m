@@ -17,6 +17,7 @@
 @dynamic searchRadius;
 @dynamic cuesString;
 @dynamic address;
+@dynamic selectedCue;
 
 + (nonnull NSString *)parseClassName {
     return @"Event";

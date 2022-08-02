@@ -24,8 +24,10 @@
 @property (nonatomic, strong) NSString *eventCategories;
 @property (nonatomic, strong) NSArray *suggestionsArray;
 @property (nonatomic, strong) NSMutableArray <Suggestion *> *suggestions;
+@property (nonatomic, strong) NSMutableArray <NSString *> *selectedFilters;
 @property (nonatomic, strong) Suggestion *selectedSuggestion;
 @property (nonatomic, strong) NSArray *filters;
+@property (nonatomic, strong) NSMutableArray *sortedArray;
 
 @end
 
@@ -55,7 +57,8 @@
 
 - (void) _setUpViews {
     
-    self.filters = @[@"One", @"Two", @"Three", @"Four"];
+    self.filters = @[@"Rating", @"Distance"];
+    //self.filtersCollectionView.allowsMultipleSelection = true;
     self.filtersCollectionView.dataSource = self;
     self.filtersCollectionView.delegate = self;
     
@@ -67,7 +70,8 @@
     
     self.nameLabel.text = self.detailEvent.eventName;
     
-    self.suggestions = [NSMutableArray array];
+    //self.suggestions = [NSMutableArray array];
+    self.selectedFilters = [NSMutableArray array];
     
     NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
     [dayFormatter setDateFormat:@"EEE, MMM d"];
@@ -80,7 +84,7 @@
     self.timeLabel.text = timeFromDate;
 }
 
-- (void) _fetchData{
+- (void) _fetchData {
     NSString *apiKey = [[NSUserDefaults standardUserDefaults]
                         stringForKey:@"apiKey"];
     NSString *header = [NSString stringWithFormat:@"Bearer %@", apiKey];
@@ -101,12 +105,10 @@
             NSLog(@"%@", responseObject);
             NSArray *suggestionDictionary = responseObject[@"businesses"];
             self.suggestionsArray = [Suggestion SuggestionWithDictionary:suggestionDictionary];
+            [self.sortedArray removeAllObjects];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [SVProgressHUD dismiss];
-                if(self.suggestionsArray.count>0){
-                    [self.suggestions addObjectsFromArray:self.suggestionsArray];
-                }
-                else{
+                if(self.suggestionsArray.count == 0){
                     self.noSuggestionsLabel.hidden = NO;
                 }
                 [self _setUpTableView];
@@ -127,6 +129,12 @@
     [self.suggestionsTableView reloadData];
 }
 
+- (IBAction)refreshData:(id)sender {
+    [self _fetchData];
+    [self.suggestionsTableView reloadData];
+    [self.filtersCollectionView reloadData];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(self.selectedSuggestion){
         YelpSelectionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YelpSelectionCell" forIndexPath:indexPath];
@@ -142,10 +150,13 @@
         return cell;
     } else {
         SuggestionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SuggestionCell" forIndexPath:indexPath];
+        if (self.sortedArray.count > 0) {
+            cell.suggestion = self.sortedArray[indexPath.row];
+        } else {
+            cell.suggestion = self.suggestionsArray[indexPath.row];
+        }
         
-        cell.suggestion = self.suggestions[indexPath.row];
         cell.businessName.text = cell.suggestion.name;
-        
         cell.colorView.layer.cornerRadius = 20.0;
         cell.colorView.layer.shadowOffset = CGSizeMake(1, 0);
         cell.colorView.layer.shadowColor = [[UIColor blackColor] CGColor];
@@ -159,7 +170,8 @@
     if(self.selectedSuggestion){
         return 1;
     } else {
-        return self.suggestions.count;
+        //return self.suggestions.count;
+        return self.suggestionsArray.count;
     }
 }
 
@@ -174,6 +186,7 @@
         SuggestionViewController *detailVC = [segue destinationViewController];
         detailVC.delegateObject = self;
         detailVC.detailSuggestion = dataToPass;
+        detailVC.detailEvent = self.detailEvent;
     }
 }
 
@@ -185,6 +198,7 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     FilterCell *cell = [self.filtersCollectionView dequeueReusableCellWithReuseIdentifier:@"FilterCell" forIndexPath:indexPath];
     cell.filterName.text = self.filters[indexPath.row];
+    cell.backgroundColor = [UIColor colorWithRed: 0.92 green: 0.95 blue: 0.84 alpha: 1.00];
     return cell;
 }
 
@@ -196,16 +210,33 @@
     return self.filters.count;
 }
 
+- (void) _getSort:(NSString *) selectedFilter {
+    NSSortDescriptor *sortDescriptor;
+    if([selectedFilter isEqual:@"Distance"]){
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"distance"
+                                                     ascending:YES];
+    } else if ([selectedFilter isEqual:@"Rating"]) {
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"rating"
+                                                     ascending:YES];
+    }
+    NSArray *sorted = [self.suggestionsArray sortedArrayUsingDescriptors:@[sortDescriptor]];
+    self.sortedArray = [sorted mutableCopy];
+    [self.suggestionsTableView reloadData];
+}
+
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
-    
     UICollectionViewCell *cell =[self.filtersCollectionView cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor blueColor]; // highlight selection
+    cell.backgroundColor = [UIColor colorWithRed: 0.56 green: 0.78 blue: 0.58 alpha: 1.00];
+    NSString *selectedCell = self.filters[indexPath.row];
+    [self.selectedFilters addObject:selectedCell];
+    [self _getSort: selectedCell];
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     UICollectionViewCell *cell =[self.filtersCollectionView cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor redColor]; // Default color
+    cell.backgroundColor = [UIColor colorWithRed: 0.92 green: 0.95 blue: 0.84 alpha: 1.00];
+    NSString *selectedCell = self.filters[indexPath.row];
+    [self.selectedFilters removeObject:selectedCell];
 }
 
 @end

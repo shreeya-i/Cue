@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "Suggestion.h"
+#import "Event.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) Suggestion *detailSuggestion;
 @property (nonatomic, weak) id <SuggestionViewDelegate> delegateObject;
+@property (nonatomic, strong) Event *detailEvent;
 
 @end
 

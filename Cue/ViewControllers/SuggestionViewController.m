@@ -7,6 +7,7 @@
 
 #import "SuggestionViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Cue.h"
 
 @interface SuggestionViewController ()
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -86,6 +87,14 @@
 }
 
 -(void) _didSelectCue:(Suggestion*)detailSuggestion {
+    [Cue createCue:detailSuggestion.name withImageURL:detailSuggestion.imageURL withDistance:detailSuggestion.distance withPhone:detailSuggestion.phone withRating:detailSuggestion.rating withPrice:detailSuggestion.price withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+        if (error){
+            NSLog(@"Error selecting Cue");
+        }
+        else{
+            NSLog(@"Successfully selected cue");
+        }
+    }];
     [self.delegateObject didSelectCue:detailSuggestion];
     [self.navigationController popViewControllerAnimated:YES];
 }
