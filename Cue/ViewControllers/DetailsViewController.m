@@ -194,7 +194,7 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     FilterCell *cell = [self.filtersCollectionView dequeueReusableCellWithReuseIdentifier:@"FilterCell" forIndexPath:indexPath];
     cell.filterName.text = self.filters[indexPath.row];
-    cell.backgroundColor = [UIColor colorWithRed: 0.92 green: 0.95 blue: 0.84 alpha: 1.00];
+    cell.backgroundColor = [UIColor colorWithRed: 0.69 green: 0.83 blue: 0.51 alpha: 0.5];
     return cell;
 }
 
@@ -222,7 +222,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
     UICollectionViewCell *cell =[self.filtersCollectionView cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor colorWithRed: 0.56 green: 0.78 blue: 0.58 alpha: 1.00];
+    cell.backgroundColor = [UIColor colorWithRed: 0.33 green: 0.62 blue: 0.29 alpha: 0.5];
     NSString *selectedCell = self.filters[indexPath.row];
     [self.selectedFilters addObject:selectedCell];
     [self _getSort: selectedCell];
@@ -230,7 +230,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell =[self.filtersCollectionView cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor colorWithRed: 0.92 green: 0.95 blue: 0.84 alpha: 1.00];
+    cell.backgroundColor = [UIColor colorWithRed: 0.69 green: 0.83 blue: 0.51 alpha: 0.5];
     NSString *selectedCell = self.filters[indexPath.row];
     [self.selectedFilters removeObject:selectedCell];
 }

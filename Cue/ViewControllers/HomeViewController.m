@@ -374,7 +374,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     cell.dateLabel.text = stringFromDate;
     
     UIColor *lighter = [UIColor colorWithRed: 0.69 green: 0.83 blue: 0.51 alpha: 0.2];
-    UIColor *darker = [UIColor colorWithRed: 0.33 green: 0.62 blue: 0.29 alpha: 0.2];
+    UIColor *darker = [UIColor colorWithRed: 0.33 green: 0.62 blue: 0.29 alpha: 0.1];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = cell.colorView.bounds;

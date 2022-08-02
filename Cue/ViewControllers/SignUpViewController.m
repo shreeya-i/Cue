@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UITextField *addressField;
+@property (weak, nonatomic) IBOutlet UIButton *proceedButton;
 
 @end
 
@@ -21,6 +22,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.proceedButton.layer.cornerRadius = 15.0;
 }
 
 - (IBAction)didTapSignUp:(id)sender {

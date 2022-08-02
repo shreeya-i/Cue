@@ -15,10 +15,12 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *addressSwitch;
-@property (weak, nonatomic) IBOutlet UIButton *cuesButton;
 @property (weak, nonatomic) IBOutlet UITableView *cuesTableView;
 @property (weak, nonatomic) IBOutlet UISlider *distanceSlider;
 @property (weak, nonatomic) IBOutlet UILabel *sliderValueLabel;
+@property (weak, nonatomic) IBOutlet UIView *colorView;
+@property (weak, nonatomic) IBOutlet UIButton *createButton;
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) NSArray *cues;
 @property (strong, nonatomic) NSMutableArray *selectedCues;
 @property (strong, nonatomic) UNUserNotificationCenter *center;
@@ -40,6 +42,18 @@ bool isGrantedNotificationAccess;
     self.notifsOn = true;
     
     self.cues = [[NSArray alloc]initWithObjects: @"Active life", @"Restaurants", @"Arts and entertainment", @"Local flavor", @"Nightlife", @"Shopping", @"Beauty and spas", @"Tours", @"Event planning and services", nil];
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = self.backgroundView.bounds;
+    UIColor *lighter = [UIColor colorWithRed: 0.60 green: 0.60 blue: 0.60 alpha: 0.1];
+    UIColor *darker = [UIColor colorWithRed: 0.60 green: 0.60 blue: 0.60 alpha: 0.2];
+    gradient.colors = @[(id)lighter.CGColor, (id)darker.CGColor];
+    [self.backgroundView.layer insertSublayer:gradient atIndex:0];
+    
+    self.colorView.layer.cornerRadius = 20.0;
+    self.colorView.clipsToBounds = YES;
+    
+    self.createButton.layer.cornerRadius = 15.0;
     
     self.cuesTableView.dataSource = self;
     self.cuesTableView.delegate = self;
