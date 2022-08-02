@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *filtersCollectionView;
 @property (nonatomic, strong) NSString *eventCategories;
 @property (nonatomic, strong) NSArray *suggestionsArray;
-@property (nonatomic, strong) NSMutableArray <Suggestion *> *suggestions;
 @property (nonatomic, strong) NSMutableArray <NSString *> *selectedFilters;
 @property (nonatomic, strong) Suggestion *selectedSuggestion;
 @property (nonatomic, strong) NSArray *filters;
@@ -58,7 +57,6 @@
 - (void) _setUpViews {
     
     self.filters = @[@"Rating", @"Distance"];
-    //self.filtersCollectionView.allowsMultipleSelection = true;
     self.filtersCollectionView.dataSource = self;
     self.filtersCollectionView.delegate = self;
     
@@ -70,7 +68,6 @@
     
     self.nameLabel.text = self.detailEvent.eventName;
     
-    //self.suggestions = [NSMutableArray array];
     self.selectedFilters = [NSMutableArray array];
     
     NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
@@ -170,7 +167,6 @@
     if(self.selectedSuggestion){
         return 1;
     } else {
-        //return self.suggestions.count;
         return self.suggestionsArray.count;
     }
 }

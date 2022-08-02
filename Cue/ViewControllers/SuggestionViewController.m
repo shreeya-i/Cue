@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *selectSuggestion;
 @property (weak, nonatomic) IBOutlet UILabel *businessPrice;
 @property (strong, nonatomic) NSString *businessPhone;
+@property (strong, nonatomic) Cue *selectedCue;
 
 @end
 

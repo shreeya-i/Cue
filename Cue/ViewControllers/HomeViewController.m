@@ -373,11 +373,16 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     NSString *stringFromDate = [formatter stringFromDate:cell.event.eventDate];
     cell.dateLabel.text = stringFromDate;
     
+    UIColor *lighter = [UIColor colorWithRed: 0.69 green: 0.83 blue: 0.51 alpha: 0.2];
+    UIColor *darker = [UIColor colorWithRed: 0.33 green: 0.62 blue: 0.29 alpha: 0.2];
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = cell.colorView.bounds;
+    gradient.colors = @[(id)lighter.CGColor, (id)darker.CGColor];
+    [cell.colorView.layer insertSublayer:gradient atIndex:0];
+    
     cell.colorView.layer.cornerRadius = 20.0;
-    cell.colorView.layer.shadowOffset = CGSizeMake(1, 0);
-    cell.colorView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    cell.colorView.layer.shadowRadius = 5;
-    cell.colorView.layer.shadowOpacity = .25;
+    cell.colorView.clipsToBounds = YES;
     
     return cell;
 }

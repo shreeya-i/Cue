@@ -22,6 +22,12 @@
 
 + (void) createCue:(NSString *)name withImageURL:(NSString *)imageURL withDistance:(NSString *)distance withPhone:(NSString *)phone withRating:(NSString *)rating withPrice:(NSString *)price withCompletion:(PFBooleanResultBlock)completion {
     Cue *selectedCue = [Cue new];
+    selectedCue.name = name;
+    selectedCue.imageURL = imageURL;
+    selectedCue.distance = distance;
+    selectedCue.phone = phone;
+    selectedCue.rating = rating;
+    selectedCue.price = price;
     [selectedCue saveInBackgroundWithBlock: completion];
 }
 

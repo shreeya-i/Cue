@@ -11,6 +11,8 @@
 #import <UserNotifications/UserNotifications.h>
 
 @interface ProfileViewController ()
+@property (weak, nonatomic) IBOutlet UIView *colorView;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 
 @end
 
@@ -23,12 +25,22 @@
     [self.profilePicture addGestureRecognizer:postTapGestureRecognizer];
     [self.profilePicture setUserInteractionEnabled:YES];
     
+    UIColor *lighter = [UIColor colorWithRed: 0.69 green: 0.83 blue: 0.51 alpha: 1.0];
+    UIColor *darker = [UIColor colorWithRed: 0.33 green: 0.62 blue: 0.29 alpha: 0.2];
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = self.colorView.bounds;
+    gradient.colors = @[(id)lighter.CGColor, (id)darker.CGColor];
+    [self.colorView.layer insertSublayer:gradient atIndex:0];
+    
+    self.saveButton.layer.cornerRadius = 15.0;
+    
     [self _fetchDetails];
 }
 
 - (void) _fetchDetails {
     self.currentName.text = [PFUser currentUser][@"name"];
-    self.currentUsername.text = [PFUser currentUser].username;
+    self.currentUsername.text = [NSString stringWithFormat:@"@%@", [PFUser currentUser].username];
     
     self.profilePicture.layer.cornerRadius  = self.profilePicture.frame.size.width/2;
     self.profilePicture.clipsToBounds = YES;
@@ -154,7 +166,6 @@
 
 
 - (IBAction)didTapLogout:(id)sender {
-    
     [self _clearUserData];
     
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
@@ -170,6 +181,7 @@
         }
     }];
 }
+
 
 /*
  #pragma mark - Navigation
