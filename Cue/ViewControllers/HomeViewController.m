@@ -100,9 +100,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     NSMutableArray* actions = [[NSMutableArray alloc] init];
     [actions addObject:[UIAction actionWithTitle:@"Compose New" image:nil identifier:nil
                                          handler:^(__kindof UIAction* _Nonnull action) {
-        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        ComposeViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"ComposeViewController"];
-        [self.navigationController pushViewController:controller animated:YES];
+        [self performSegueWithIdentifier:@"composeSegue" sender:self];
     }]];
     [actions addObject:[UIAction actionWithTitle:@"Import from Google" image:nil identifier:nil
                                          handler:^(__kindof UIAction* _Nonnull action) {
@@ -255,7 +253,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     NSString *curDateString = [dateFormatter stringFromDate:curDate];
     
     // Creates a fetcher for the API call.
-    NSString *endpoint = [NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=%@&access_token=%@", curDateString, self.kAccessToken];
+    NSString *endpoint = [NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=%@&access_token=%@&singleEvents=true&orderBy=startTime", curDateString, self.kAccessToken];
     NSURL *userinfoEndpoint = [NSURL URLWithString:endpoint];
     GTMSessionFetcher *fetcher = [fetcherService fetcherWithURL:userinfoEndpoint];
     
@@ -422,6 +420,12 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
         NSIndexPath *myIndexPath = [self.eventsTableView indexPathForCell:sender];
         Event *dataToPass = self.filteredData[myIndexPath.row];
         DetailsViewController *detailVC = [segue destinationViewController];
+        detailVC.detailEvent = dataToPass;
+    } else if ([segue.identifier isEqualToString:@"editSegue"]){
+        NSIndexPath *myIndexPath = [self.eventsTableView indexPathForCell:sender];
+        Event *dataToPass = self.filteredData[myIndexPath.row];
+        ComposeViewController *detailVC = [segue destinationViewController];
+        detailVC.segueType = @"editSegue";
         detailVC.detailEvent = dataToPass;
     }
 }

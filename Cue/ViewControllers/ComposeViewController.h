@@ -7,10 +7,15 @@
 
 #import <UIKit/UIKit.h>
 #import <UserNotifications/UserNotifications.h>
+#import "Event.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ComposeViewController : UIViewController
+
+@property (nonatomic, strong) NSString *segueType;
+@property (nonatomic, strong) Event *detailEvent;
+
 
 @end
 

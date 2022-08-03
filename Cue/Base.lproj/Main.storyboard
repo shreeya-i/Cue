@@ -308,6 +308,16 @@
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odp-1G-tv2">
+                                                            <rect key="frame" x="317" y="115" width="26" height="24"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="ellipsis" catalog="system" title=""/>
+                                                            <connections>
+                                                                <segue destination="4ga-QJ-ll1" kind="show" identifier="editSegue" id="Nii-wt-WFP"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.58327443789121869" green="0.70785984848484851" blue="0.52987930727186539" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </view>
@@ -342,6 +352,9 @@
                                 <color key="tintColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
+                                <connections>
+                                    <segue destination="4ga-QJ-ll1" kind="show" identifier="composeSegue" id="7nx-yi-lR6"/>
+                                </connections>
                             </button>
                             <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="WcN-D6-iY1">
                                 <rect key="frame" x="20" y="197" width="374" height="44"/>
@@ -379,13 +392,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sr7-Jx-wgz">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G3u-jI-cSV">
-                                <rect key="frame" x="20" y="170" width="374" height="609"/>
+                                <rect key="frame" x="20" y="170" width="374" height="645"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IjL-lz-j9O">
@@ -518,7 +526,6 @@
                     <navigationItem key="navigationItem" id="Qoe-pa-gNW"/>
                     <connections>
                         <outlet property="addressSwitch" destination="UK9-ng-XeX" id="Vnc-HH-wm7"/>
-                        <outlet property="backgroundView" destination="sr7-Jx-wgz" id="pnC-QO-8tQ"/>
                         <outlet property="colorView" destination="G3u-jI-cSV" id="HAc-E5-hOF"/>
                         <outlet property="createButton" destination="RwJ-SO-h9c" id="n1L-Qp-XlD"/>
                         <outlet property="cuesTableView" destination="THg-JQ-Icv" id="Y0G-YF-3V0"/>
@@ -526,6 +533,7 @@
                         <outlet property="distanceSlider" destination="ACV-50-9GU" id="qwX-zg-Urb"/>
                         <outlet property="nameField" destination="IjL-lz-j9O" id="yFK-jv-7Ay"/>
                         <outlet property="notificationSwitch" destination="WTo-vi-Csp" id="0ye-Di-qAW"/>
+                        <outlet property="pageTitle" destination="FPZ-dd-hWh" id="tiO-7a-12b"/>
                         <outlet property="sliderValueLabel" destination="pxl-xw-jpy" id="4LA-9o-hWe"/>
                     </connections>
                 </viewController>
@@ -1178,14 +1186,16 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="bMo-21-SNK"/>
+        <segue reference="pU8-g3-d6l"/>
         <segue reference="8Cf-yo-Zqe"/>
+        <segue reference="Nii-wt-WFP"/>
         <segue reference="LDM-oV-CCS"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="checkmark.circle" catalog="system" width="128" height="121"/>
         <image name="defaultpfp" width="360" height="360"/>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="google" width="30" height="30"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>

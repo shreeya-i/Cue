@@ -34,6 +34,7 @@
     [self.colorView.layer insertSublayer:gradient atIndex:0];
     
     self.saveButton.layer.cornerRadius = 15.0;
+    [self.saveButton.titleLabel setFont:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]];
     
     [self _fetchDetails];
 }

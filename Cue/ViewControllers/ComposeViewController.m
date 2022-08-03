@@ -11,6 +11,7 @@
 #import "NotificationObject.h"
 
 @interface ComposeViewController () <UITableViewDelegate, UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UILabel *pageTitle;
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
@@ -20,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *sliderValueLabel;
 @property (weak, nonatomic) IBOutlet UIView *colorView;
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
-@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) NSArray *cues;
 @property (strong, nonatomic) NSMutableArray *selectedCues;
 @property (strong, nonatomic) UNUserNotificationCenter *center;
@@ -35,25 +35,34 @@ bool isGrantedNotificationAccess;
 
 @implementation ComposeViewController
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.tabBarController.tabBar.hidden = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    if([self.segueType isEqual: @"editSegue"]){
+        [self _setUpEdit];
+    } else {
+        [self _setUpCompose];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tabBarController.tabBar.hidden = YES;
     
     isGrantedNotificationAccess = false;
     self.notifsOn = true;
     
     self.cues = [[NSArray alloc]initWithObjects: @"Active life", @"Restaurants", @"Arts and entertainment", @"Local flavor", @"Nightlife", @"Shopping", @"Beauty and spas", @"Tours", @"Event planning and services", nil];
     
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = self.backgroundView.bounds;
-    UIColor *lighter = [UIColor colorWithRed: 0.60 green: 0.60 blue: 0.60 alpha: 0.1];
-    UIColor *darker = [UIColor colorWithRed: 0.60 green: 0.60 blue: 0.60 alpha: 0.2];
-    gradient.colors = @[(id)lighter.CGColor, (id)darker.CGColor];
-    [self.backgroundView.layer insertSublayer:gradient atIndex:0];
-    
     self.colorView.layer.cornerRadius = 20.0;
     self.colorView.clipsToBounds = YES;
     
     self.createButton.layer.cornerRadius = 15.0;
+    [self.createButton.titleLabel setFont:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]];
     
     self.cuesTableView.dataSource = self;
     self.cuesTableView.delegate = self;
@@ -67,6 +76,16 @@ bool isGrantedNotificationAccess;
     [self.center requestAuthorizationWithOptions:options completionHandler:^(BOOL granted, NSError * _Nullable error) {
         isGrantedNotificationAccess = granted;
     }];
+}
+
+- (void) _setUpEdit {
+    self.pageTitle.text = @"Edit Event";
+    self.nameField.placeholder = self.detailEvent.eventName;
+    NSLog(@"%@", self.detailEvent.eventName);
+}
+
+- (void) _setUpCompose {
+    self.pageTitle.text = @"Compose Event";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -137,6 +156,7 @@ bool isGrantedNotificationAccess;
                 }
                 
                 [self.navigationController popViewControllerAnimated:YES];
+                self.tabBarController.tabBar.hidden = NO;
                 NSLog(@"Successfully created event");
             }
         }];
@@ -266,13 +286,13 @@ bool isGrantedNotificationAccess;
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
