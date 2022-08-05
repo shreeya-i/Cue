@@ -10,6 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol EventCellDelegate
+@end
+
 @interface EventCell : UITableViewCell
 
 @property (nonatomic, strong) Event *event;

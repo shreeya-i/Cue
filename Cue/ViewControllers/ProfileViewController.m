@@ -10,7 +10,7 @@
 #import "LoginViewController.h"
 #import <UserNotifications/UserNotifications.h>
 
-@interface ProfileViewController ()
+@interface ProfileViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIView *colorView;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 
@@ -35,6 +35,19 @@
     
     self.saveButton.layer.cornerRadius = 15.0;
     [self.saveButton.titleLabel setFont:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]];
+    
+    self.nameField.delegate = self;
+    [self addPlaceholder:self.nameField :@"Name"];
+    [self.nameField addTarget:self action:@selector(didChangeText:) forControlEvents:UIControlEventEditingChanged];
+    self.usernameField.delegate = self;
+    [self addPlaceholder:self.usernameField :@"Username"];
+    [self.usernameField addTarget:self action:@selector(didChangeText:) forControlEvents:UIControlEventEditingChanged];
+    self.addressField.delegate = self;
+    [self addPlaceholder:self.addressField :@"Address"];
+    [self.addressField addTarget:self action:@selector(didChangeText:) forControlEvents:UIControlEventEditingChanged];
+    self.passwordField.delegate = self;
+    [self addPlaceholder:self.passwordField :@"Password"];
+    [self.passwordField addTarget:self action:@selector(didChangeText:) forControlEvents:UIControlEventEditingChanged];
     
     [self _fetchDetails];
 }
@@ -63,6 +76,48 @@
     }
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self.view endEditing: true];
+    return false;
+}
+
+- (void) didChangeText:(UITextField *)textField {
+    UILabel *label = [[UILabel alloc] init];
+    for(UIView *subview in textField.subviews){
+        if(subview.tag == 55555){
+            label = subview;
+        }
+    }
+    [UIView animateWithDuration:0.5 animations:^{
+        if(textField.text.length == 0){
+            label.center = [textField convertPoint:textField.center fromView:textField.superview];
+            CGRect myFrame = label.frame;
+            myFrame.origin.x = 5.0;
+            label.frame = myFrame;
+        } else {
+            label.frame=CGRectMake(label.frame.origin.x,
+                                   textField.bounds.origin.y - 13.0,
+                                   100,
+                                   10);
+        }
+    }];
+}
+
+- (void) addPlaceholder:(UITextField *)textField :(NSString *)name {
+    UILabel *label = [[UILabel alloc] init];
+    label.textColor = [UIColor lightGrayColor];
+    label.tag = 55555;
+    label.font = [UIFont systemFontOfSize:13];
+    label.text = name;
+    [label sizeToFit];
+    [textField addSubview:label];
+    label.center = [textField convertPoint:textField.center fromView:textField.superview];
+    CGRect myFrame = label.frame;
+    myFrame.origin.x = 5.0;
+    label.frame = myFrame;
+    
+}
+ 
 - (void) didTapPlaceholderImage:(UITapGestureRecognizer *)sender{
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
