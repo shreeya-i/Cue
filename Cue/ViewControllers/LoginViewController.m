@@ -61,17 +61,20 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
         [self _emptyFieldAlert];
     }
     else{
+        __weak typeof(self) weakSelf = self;
         [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
             if (error != nil) {
+                __strong typeof(self) strongSelf = weakSelf;
                 NSLog(@"User log in failed: %@", error.localizedDescription);
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Please enter a valid acccount." preferredStyle:(UIAlertControllerStyleAlert)];
                 UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
                 [alert addAction:okAction];
-                [self presentViewController:alert animated:YES completion:^{}];
+                [strongSelf presentViewController:alert animated:YES completion:^{}];
             } else {
+                __strong typeof(self) strongSelf = weakSelf;
                 NSLog(@"User logged in successfully");
-                [self _importExistingNotifs];
-                [self _switchViews];
+                [strongSelf _importExistingNotifs];
+                [strongSelf _switchViews];
             }
         }];
     }
@@ -285,17 +288,21 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     NSString *username = userInfo[@"email"];
     NSString *password = @"google";
     
+    __weak typeof(self) weakSelf = self;
+    
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
         if (error != nil) {
-            NSLog(@"User log in failed: %@", error.localizedDescription);
+            __strong typeof(self) strongSelf = weakSelf;
+            NSLog(@"User login failed: %@", error.localizedDescription);
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Please enter a valid acccount." preferredStyle:(UIAlertControllerStyleAlert)];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
             [alert addAction:okAction];
-            [self presentViewController:alert animated:YES completion:^{}];
+            [strongSelf presentViewController:alert animated:YES completion:^{}];
         } else {
+            __strong typeof(self) strongSelf = weakSelf;
             NSLog(@"User logged in successfully");
-            [self _importExistingNotifs];
-            SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
+            [strongSelf _importExistingNotifs];
+            SceneDelegate *sceneDelegate = (SceneDelegate *)strongSelf.view.window.windowScene.delegate;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             sceneDelegate.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
         }
@@ -308,17 +315,20 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     newUser[@"name"] = userInfo[@"name"];
     newUser.username = userInfo[@"email"];
     newUser.password = @"google";
+    __weak typeof(self) weakSelf = self;
     
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
         if (error != nil) {
+            __strong typeof(self) strongSelf = weakSelf;
             NSLog(@"Error: %@", error.localizedDescription);
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to sign up" preferredStyle:(UIAlertControllerStyleAlert)];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
             [alert addAction:okAction];
-            [self presentViewController:alert animated:YES completion:^{}];
+            [strongSelf presentViewController:alert animated:YES completion:^{}];
         } else {
+            __strong typeof(self) strongSelf = weakSelf;
             NSLog(@"User registered successfully");
-            SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
+            SceneDelegate *sceneDelegate = (SceneDelegate *)strongSelf.view.window.windowScene.delegate;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             sceneDelegate.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
         }

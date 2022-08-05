@@ -45,14 +45,12 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     [self _fetchEvents];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.noEventsLabel.hidden = YES;
     self.tabBarController.tabBar.hidden = NO;
     [self.eventsTableView reloadData];
     [self _fetchEvents];
-    
 }
 
 - (void)viewDidLoad {
@@ -91,20 +89,22 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 }
 
 - (void) _setUpViews {
-    
     self.isLoggedIn = FALSE;
     
     self.searchBar.delegate = self;
     self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     
     NSMutableArray* actions = [[NSMutableArray alloc] init];
+    __weak typeof(self) weakSelf = self;
     [actions addObject:[UIAction actionWithTitle:@"Compose New" image:nil identifier:nil
                                          handler:^(__kindof UIAction* _Nonnull action) {
-        [self performSegueWithIdentifier:@"composeSegue" sender:self];
+        __strong typeof(self) strongSelf = weakSelf;
+        [strongSelf performSegueWithIdentifier:@"composeSegue" sender:self];
     }]];
     [actions addObject:[UIAction actionWithTitle:@"Import from Google" image:nil identifier:nil
                                          handler:^(__kindof UIAction* _Nonnull action) {
-        [self _didTapImport];
+        __strong typeof(self) strongSelf = weakSelf;
+        [strongSelf _didTapImport];
     }]];
     
     UIMenu* menu = [UIMenu menuWithTitle:@"" children:actions];
@@ -191,7 +191,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 }
 
 - (void) _googleCheck {
-    
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"kAccessToken"] != nil) {
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         self.kAccessToken = [defaults objectForKey:@"kAccessToken"];
@@ -288,7 +287,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
         GoogleViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"GoogleViewController"];
         controller.importedEvents = jsonDictionaryOrArray;
         [self.navigationController pushViewController:controller animated:YES];
-        
     }];
 }
 
@@ -355,7 +353,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 
 
 // Table View Functions:
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EventCell" forIndexPath:indexPath];
     cell.event = self.filteredData[indexPath.row];
@@ -412,7 +409,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     }
     [self.eventsTableView reloadData];
 }
-
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

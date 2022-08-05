@@ -55,7 +55,6 @@
 }
 
 - (void) _setUpViews {
-    
     self.filters = @[@"Rating", @"Distance"];
     self.filtersCollectionView.dataSource = self;
     self.filtersCollectionView.delegate = self;
@@ -93,22 +92,25 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setValue:header forHTTPHeaderField:@"Authorization"];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    __weak typeof(self) weakSelf = self;
     NSURLSessionDataTask *task = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if(error) {
             [SVProgressHUD dismiss];
-            self.noSuggestionsLabel.hidden = NO;
+            __strong typeof(self) strongSelf = weakSelf;
+            strongSelf.noSuggestionsLabel.hidden = NO;
             NSLog(@"error");
         } else {
             NSLog(@"%@", responseObject);
+            __strong typeof(self) strongSelf = weakSelf;
             NSArray *suggestionDictionary = responseObject[@"businesses"];
-            self.suggestionsArray = [Suggestion SuggestionWithDictionary:suggestionDictionary];
-            [self.sortedArray removeAllObjects];
+            strongSelf.suggestionsArray = [Suggestion SuggestionWithDictionary:suggestionDictionary];
+            [strongSelf.sortedArray removeAllObjects];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [SVProgressHUD dismiss];
-                if(self.suggestionsArray.count == 0){
-                    self.noSuggestionsLabel.hidden = NO;
+                if(strongSelf.suggestionsArray.count == 0){
+                    strongSelf.noSuggestionsLabel.hidden = NO;
                 }
-                [self _setUpTableView];
+                [strongSelf _setUpTableView];
             });
         }
     }];
@@ -170,10 +172,6 @@
         return self.suggestionsArray.count;
     }
 }
-
-- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-}
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"suggestionSegue"]){

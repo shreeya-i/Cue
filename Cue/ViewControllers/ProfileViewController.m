@@ -20,7 +20,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self _setUpViews];
+    [self _fetchDetails];
+}
+
+- (void) _setUpViews {
     UITapGestureRecognizer *postTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapPlaceholderImage:)];
     [self.profilePicture addGestureRecognizer:postTapGestureRecognizer];
     [self.profilePicture setUserInteractionEnabled:YES];
@@ -48,8 +52,6 @@
     self.passwordField.delegate = self;
     [self addPlaceholder:self.passwordField :@"Password"];
     [self.passwordField addTarget:self action:@selector(didChangeText:) forControlEvents:UIControlEventEditingChanged];
-    
-    [self _fetchDetails];
 }
 
 - (void) _fetchDetails {
@@ -194,18 +196,20 @@
     if(self.profilePicture.file){
         user[@"profilePicture"] = self.profilePicture.file;
     }
+    __weak typeof(self) weakSelf = self;
     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if(error){
             NSLog(@"Error saving: %@", error.localizedDescription);
         }
         else{
-            [self.delegate didSaveEdits: nameData :usernameData :passwordData :addressData :self.profilePicture.file];
+            __strong typeof(self) strongSelf = weakSelf;
+            [strongSelf.delegate didSaveEdits: nameData :usernameData :passwordData :addressData :strongSelf.profilePicture.file];
             
-            self.nameField.text = @"";
-            self.usernameField.text = @"";
-            self.passwordField.text = @"";
-            self.addressField.text = @"";
-            [self _fetchDetails];
+            strongSelf.nameField.text = @"";
+            strongSelf.usernameField.text = @"";
+            strongSelf.passwordField.text = @"";
+            strongSelf.addressField.text = @"";
+            [strongSelf _fetchDetails];
             NSLog(@"Successfully saved");
         }
     }];
@@ -224,13 +228,15 @@
 - (IBAction)didTapLogout:(id)sender {
     [self _clearUserData];
     
+    __weak typeof(self) weakSelf = self;
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
         if (error) {
             NSLog(@"Cannot log out");
         } else {
             // Success
+            __strong typeof(self) strongSelf = weakSelf;
             NSLog(@"User logged out successfully.");
-            SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
+            SceneDelegate *sceneDelegate = (SceneDelegate *)strongSelf.view.window.windowScene.delegate;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
             sceneDelegate.window.rootViewController = loginViewController;

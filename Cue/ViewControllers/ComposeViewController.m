@@ -140,23 +140,26 @@ bool isGrantedNotificationAccess;
         } else {
             self.addressToUse = [PFUser currentUser][@"address"];
         }
+        __weak typeof(self) weakSelf = self;
         [Event postEvent:eventName withDate:selectedDate withCues:cuesArray withRadius: self.selectedRadius withAddress: self.addressToUse withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
             if (error){
+                __strong typeof(self) strongSelf = weakSelf;
                 NSLog(@"Error creating event");
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];
                 UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
                 [alert addAction:okAction];
-                [self presentViewController:alert animated:YES completion:^{}];
+                [strongSelf presentViewController:alert animated:YES completion:^{}];
             }
             else{
+                __strong typeof(self) strongSelf = weakSelf;
                 if(isGrantedNotificationAccess && self.notifsOn){
                     /// Notifications: DO NOT account for current user which needs to be fixed.
-                    [self _weekNotif];
-                    [self _dayNotif];
+                    [strongSelf _weekNotif];
+                    [strongSelf _dayNotif];
                 }
                 
-                [self.navigationController popViewControllerAnimated:YES];
-                self.tabBarController.tabBar.hidden = NO;
+                [strongSelf.navigationController popViewControllerAnimated:YES];
+                strongSelf.tabBarController.tabBar.hidden = NO;
                 NSLog(@"Successfully created event");
             }
         }];

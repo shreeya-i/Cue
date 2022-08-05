@@ -25,7 +25,7 @@
     
     self.eventsTableView.dataSource = self;
     self.eventsTableView.delegate = self;
-    self.eventsTableView.rowHeight = 100;
+    self.eventsTableView.rowHeight = 160;
     
     self.selectedEvents = [NSMutableArray array];
     
@@ -65,6 +65,12 @@
     GoogleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GoogleCell" forIndexPath:indexPath];
     cell.event = self.events[indexPath.row];
     cell.eventName.text = cell.event.content;
+    
+    cell.colorView.layer.cornerRadius = 20.0;
+    cell.colorView.layer.shadowOffset = CGSizeMake(1, 0);
+    cell.colorView.layer.shadowColor = [[UIColor blackColor] CGColor];
+    cell.colorView.layer.shadowRadius = 5;
+    cell.colorView.layer.shadowOpacity = .25;
     
     NSDateFormatter *dateformatter =[[NSDateFormatter alloc]init];
     [dateformatter setDateFormat:@"MMM d, yyyy"];

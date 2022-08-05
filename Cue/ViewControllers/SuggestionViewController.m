@@ -35,6 +35,8 @@
     self.businessPrice.text = self.detailSuggestion.price;
     self.businessDistance.text = [NSString stringWithFormat: @"%@ mi", self.detailSuggestion.distance];
     
+    self.selectSuggestion.layer.cornerRadius = 15.0;
+    [self.selectSuggestion.titleLabel setFont:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]];
     
     NSURL * url = [NSURL URLWithString: self.detailSuggestion.imageURL];
     NSData * data = [NSData dataWithContentsOfURL:url];
