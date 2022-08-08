@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Event : PFObject <PFSubclassing>
 
-@property (nonatomic, strong) NSString *eventID;
 @property (nonatomic, strong) PFUser *author;
 @property (nonatomic, strong) NSString *eventName;
 @property (nonatomic, strong) NSDate *eventDate;
@@ -20,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumber *searchRadius;
 @property (nonatomic, strong) NSString *cuesString;
 @property (nonatomic, strong) NSString *address;
+@property (nonatomic, strong) NSString *objectId;
+@property (nonatomic, strong) NSString *selectedCueId;
 @property (nonatomic, strong) Cue *selectedCue;
 
 

@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *selectSuggestion;
 @property (weak, nonatomic) IBOutlet UILabel *businessPrice;
 @property (strong, nonatomic) NSString *businessPhone;
+@property (strong, nonatomic) NSString *cueObjectId;
 @property (strong, nonatomic) Cue *selectedCue;
 
 @end
@@ -90,18 +91,33 @@
 }
 
 -(void) _didSelectCue:(Suggestion*)detailSuggestion {
-    [Cue createCue:detailSuggestion.name withImageURL:detailSuggestion.imageURL withDistance:detailSuggestion.distance withPhone:detailSuggestion.phone withRating:detailSuggestion.rating withPrice:detailSuggestion.price withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
-        if (error){
-            NSLog(@"Error selecting Cue");
-        }
-        else{
-            NSLog(@"Successfully selected cue");
+//    [Cue createCue:detailSuggestion.name withImageURL:detailSuggestion.imageURL withDistance:detailSuggestion.distance withPhone:detailSuggestion.phone withRating:detailSuggestion.rating withPrice:detailSuggestion.price withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+//        if (error){
+//            NSLog(@"Error selecting Cue");
+//        }
+//        else{
+//            NSLog(@"Successfully selected cue");
+//        }
+//    }];
+    
+    PFObject *selectedCue = [PFObject objectWithClassName:@"Cue"];
+    selectedCue[@"name"] = detailSuggestion.name;
+    selectedCue[@"distance"] = detailSuggestion.distance;
+    selectedCue[@"rating"] = detailSuggestion.rating;
+    selectedCue[@"imageURL"] = detailSuggestion.imageURL;
+    selectedCue[@"price"] = detailSuggestion.price;
+    selectedCue[@"phone"] = detailSuggestion.phone;
+    
+    [selectedCue saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(succeeded){
+            self.cueObjectId = selectedCue.objectId;
+            NSLog(@"%@", self.cueObjectId);
+            [self.delegateObject didSelectCue:detailSuggestion withCueId:self.cueObjectId];
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }];
-    [self.delegateObject didSelectCue:detailSuggestion];
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
+}
 /*
  #pragma mark - Navigation
  

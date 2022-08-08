@@ -15,6 +15,7 @@
 @dynamic phone;
 @dynamic rating;
 @dynamic price;
+@dynamic objectId;
 
 + (nonnull NSString *)parseClassName {
     return @"Cue";

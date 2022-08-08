@@ -24,9 +24,15 @@
 @property (nonatomic, strong) NSString *eventCategories;
 @property (nonatomic, strong) NSArray *suggestionsArray;
 @property (nonatomic, strong) NSMutableArray <NSString *> *selectedFilters;
-@property (nonatomic, strong) Suggestion *selectedSuggestion;
+@property (nonatomic) BOOL suggestionSelected;
 @property (nonatomic, strong) NSArray *filters;
 @property (nonatomic, strong) NSMutableArray *sortedArray;
+@property (nonatomic, strong) NSString *eventID;
+
+@property (nonatomic, strong) NSString *suggestionName;
+@property (nonatomic, strong) NSString *suggestionDistance;
+@property (nonatomic, strong) NSString *suggestionRating;
+@property (nonatomic, strong) NSString *suggestionImageURL;
 
 @end
 
@@ -34,16 +40,47 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    [self _checkSelection];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self _setUpViews];
-    if(self.selectedSuggestion){
+    [self _checkSelection];
+    if(self.suggestionSelected){
         [self _setUpTableView];
     } else {
         [self _dispatchInfo];
     }
+}
+
+- (void) _checkSelection {
+    PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
+    [eventQuery getObjectInBackgroundWithId:self.eventID
+                                 block:^(PFObject *event, NSError *error) {
+        if(!error){
+            if(event[@"selectedCueId"]){
+                PFQuery *eventQuery = [PFQuery queryWithClassName:@"Cue"];
+
+                [eventQuery getObjectInBackgroundWithId:event[@"selectedCueId"]
+                                             block:^(PFObject *cue, NSError *error) {
+                    if(!error){
+                        self.suggestionSelected = true;
+                        self.suggestionName = cue[@"name"];
+                        self.suggestionRating = cue[@"rating"];
+                        self.suggestionDistance = cue[@"distance"];
+                        self.suggestionImageURL = cue[@"imageURL"];
+                    } else{
+                        NSLog(@"No cue found");
+                    }
+                }];
+                NSLog(@"No error found");
+            }
+        } else{
+            NSLog(@"No event found");
+        }
+    }];
+
 }
 
 - (void) _dispatchInfo {
@@ -55,6 +92,8 @@
 }
 
 - (void) _setUpViews {
+    self.eventID = self.detailEvent.objectId;
+    
     self.filters = @[@"Rating", @"Distance"];
     self.filtersCollectionView.dataSource = self;
     self.filtersCollectionView.delegate = self;
@@ -100,7 +139,7 @@
             strongSelf.noSuggestionsLabel.hidden = NO;
             NSLog(@"error");
         } else {
-            NSLog(@"%@", responseObject);
+            //NSLog(@"%@", responseObject);
             __strong typeof(self) strongSelf = weakSelf;
             NSArray *suggestionDictionary = responseObject[@"businesses"];
             strongSelf.suggestionsArray = [Suggestion SuggestionWithDictionary:suggestionDictionary];
@@ -120,8 +159,9 @@
 - (void) _setUpTableView {
     self.suggestionsTableView.delegate = self;
     self.suggestionsTableView.dataSource = self;
-    if(self.selectedSuggestion){
+    if(self.suggestionSelected){
         self.suggestionsTableView.rowHeight = 200;
+        self.suggestionsTableView.allowsSelection = false;
     } else {
         self.suggestionsTableView.rowHeight = 115;
     }
@@ -135,14 +175,13 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(self.selectedSuggestion){
+    if(self.suggestionSelected){
         YelpSelectionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YelpSelectionCell" forIndexPath:indexPath];
-        cell.detailSuggestion = self.selectedSuggestion;
-        cell.businessName.text = cell.detailSuggestion.name;
-        cell.distanceLabel.text = cell.detailSuggestion.distance;
-        cell.ratingLabel.text = cell.detailSuggestion.rating;
-        
-        NSURL * url = [NSURL URLWithString: cell.detailSuggestion.imageURL];
+        cell.businessName.text = self.suggestionName;
+        cell.distanceLabel.text = self.suggestionDistance;
+        cell.ratingLabel.text = self.suggestionRating;
+
+        NSURL * url = [NSURL URLWithString: self.suggestionImageURL];
         NSData * data = [NSData dataWithContentsOfURL:url];
         cell.businessImage.image = [UIImage imageWithData:data];
         
@@ -166,7 +205,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if(self.selectedSuggestion){
+    if(self.suggestionSelected){
         return 1;
     } else {
         return self.suggestionsArray.count;
@@ -184,8 +223,20 @@
     }
 }
 
-- (void) didSelectCue:(Suggestion *)suggestionToSend {
-    self.selectedSuggestion = suggestionToSend;
+- (void) didSelectCue:(Suggestion *)suggestionToSend withCueId:(NSString *)cueId{
+    PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
+
+    [eventQuery getObjectInBackgroundWithId:self.eventID
+                                 block:^(PFObject *event, NSError *error) {
+        if(!error){
+            event[@"selectedCue"] = [PFObject objectWithoutDataWithClassName:@"Cue" objectId: cueId];
+            event[@"selectedCueId"] = cueId;
+            [event saveInBackground];
+        } else{
+            NSLog(@"No event found");
+        }
+    }];
+
     [self _setUpTableView];
 }
 

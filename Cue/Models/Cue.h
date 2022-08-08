@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *phone;
 @property (nonatomic, strong) NSString *rating;
 @property (nonatomic, strong) NSString *price;
+@property (nonatomic, strong) NSString *objectId;
 
 + (void) createCue: ( NSString * _Nullable )name
       withImageURL: ( NSString * _Nullable )imageURL

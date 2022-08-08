@@ -9,7 +9,6 @@
 
 @implementation Event
 
-@dynamic eventID;
 @dynamic author;
 @dynamic eventName;
 @dynamic eventDate;
@@ -18,6 +17,8 @@
 @dynamic cuesString;
 @dynamic address;
 @dynamic selectedCue;
+@dynamic selectedCueId;
+@dynamic objectId;
 
 + (nonnull NSString *)parseClassName {
     return @"Event";
