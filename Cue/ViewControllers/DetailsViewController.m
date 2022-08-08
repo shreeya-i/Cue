@@ -164,7 +164,7 @@
     self.suggestionsTableView.delegate = self;
     self.suggestionsTableView.dataSource = self;
     if(self.suggestionSelected){
-        self.suggestionsTableView.rowHeight = 200;
+        self.suggestionsTableView.rowHeight = 400;
         self.suggestionsTableView.allowsSelection = false;
     } else {
         self.suggestionsTableView.rowHeight = 115;
@@ -184,12 +184,18 @@
     if(self.suggestionSelected){
         YelpSelectionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YelpSelectionCell" forIndexPath:indexPath];
         cell.businessName.text = self.suggestionName;
-        cell.distanceLabel.text = self.suggestionDistance;
+        cell.distanceLabel.text = [NSString stringWithFormat: @"%@ mi", self.suggestionDistance];
         cell.ratingLabel.text = self.suggestionRating;
         
         NSURL * url = [NSURL URLWithString: self.suggestionImageURL];
         NSData * data = [NSData dataWithContentsOfURL:url];
         cell.businessImage.image = [UIImage imageWithData:data];
+        
+        cell.colorView.layer.cornerRadius = 20.0;
+        cell.colorView.layer.shadowOffset = CGSizeMake(1, 0);
+        cell.colorView.layer.shadowColor = [[UIColor blackColor] CGColor];
+        cell.colorView.layer.shadowRadius = 5;
+        cell.colorView.layer.shadowOpacity = .25;
         
         return cell;
     } else {
