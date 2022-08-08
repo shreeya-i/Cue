@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol SuggestionViewDelegate
-- (void)didSelectCue:(Suggestion*)suggestionToSend withCueId:(NSString *)cueId;
+- (void)didSelectCue:(NSString *)cueId;
 @end
 
 @interface SuggestionViewController : UIViewController <MKMapViewDelegate>
