@@ -118,7 +118,7 @@
 		6EE2179C2877A4B800729470 /* Event.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		6EE217A5287CA1AB00729470 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		6EE217A7287CE6C600729470 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
-		6EE217A8287CE6C600729470 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		6EE217A8287CE6C600729470 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; tabWidth = 5; };
 		6EE217AA287CEBBF00729470 /* SuggestionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SuggestionCell.h; path = Cue/Views/SuggestionCell.h; sourceTree = SOURCE_ROOT; };
 		6EE217AB287CEBBF00729470 /* SuggestionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SuggestionCell.m; path = Cue/Views/SuggestionCell.m; sourceTree = SOURCE_ROOT; };
 		6EE217B3287E12EF00729470 /* Suggestion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Suggestion.h; sourceTree = "<group>"; };

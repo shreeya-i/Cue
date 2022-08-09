@@ -631,16 +631,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Jul 11, 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NLu-tA-Xdv">
-                                <rect key="frame" x="41" y="166" width="217" height="24"/>
+                                <rect key="frame" x="41" y="160" width="217" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5:00 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Po2-TT-y8d">
-                                <rect key="frame" x="41" y="198" width="114" height="24"/>
+                                <rect key="frame" x="41" y="186" width="114" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -743,7 +743,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cQq-xu-CSS">
-                                <rect key="frame" x="41" y="277" width="333" height="51"/>
+                                <rect key="frame" x="41" y="254" width="333" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UnY-Sn-WAi">
@@ -783,12 +783,30 @@
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sort by:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6O-Y3-iEO">
-                                <rect key="frame" x="41" y="257" width="38" height="12"/>
+                                <rect key="frame" x="41" y="234" width="38" height="12"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Suggested Cues:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXo-Fa-zON">
+                                <rect key="frame" x="41" y="327" width="333" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qr9-eC-Xoo">
+                                <rect key="frame" x="130" y="264" width="154" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.5832744379" green="0.70785984850000006" blue="0.52987930729999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Unassign Cue"/>
+                                <connections>
+                                    <action selector="unassignCue:" destination="y1t-pH-6rt" eventType="touchUpInside" id="dtk-lQ-zU3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0PV-Qa-Vop"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -812,12 +830,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cuesForYourEventLabel" destination="JXo-Fa-zON" id="5jT-8D-wOE"/>
                         <outlet property="dayLabel" destination="NLu-tA-Xdv" id="mQ5-QR-FOT"/>
                         <outlet property="filtersCollectionView" destination="cQq-xu-CSS" id="5bm-vI-hvV"/>
                         <outlet property="nameLabel" destination="9HB-48-w3u" id="qoE-90-tc4"/>
                         <outlet property="noSuggestionsLabel" destination="Yv9-wh-L4G" id="knm-PK-QVP"/>
+                        <outlet property="sortByLabel" destination="f6O-Y3-iEO" id="myU-Dr-cZE"/>
                         <outlet property="suggestionsTableView" destination="lYx-HG-Q3M" id="KQQ-5T-hFt"/>
                         <outlet property="timeLabel" destination="Po2-TT-y8d" id="zK3-YZ-Flt"/>
+                        <outlet property="unassignCueButton" destination="qr9-eC-Xoo" id="KOc-C3-bqT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M9Z-eH-r0l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1168,7 +1189,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="bMo-21-SNK"/>
-        <segue reference="8Cf-yo-Zqe"/>
+        <segue reference="4I6-Pu-pDd"/>
         <segue reference="Nii-wt-WFP"/>
         <segue reference="LDM-oV-CCS"/>
     </inferredMetricsTieBreakers>

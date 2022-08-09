@@ -21,6 +21,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *noSuggestionsLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *filtersCollectionView;
+@property (weak, nonatomic) IBOutlet UILabel *cuesForYourEventLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sortByLabel;
+@property (weak, nonatomic) IBOutlet UIButton *unassignCueButton;
 @property (nonatomic, strong) NSString *eventCategories;
 @property (nonatomic, strong) NSArray *suggestionsArray;
 @property (nonatomic, strong) NSMutableArray <NSString *> *selectedFilters;
@@ -41,17 +44,17 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self _checkSelection];
-    if(self.suggestionSelected){
-        [self _setUpTableView];
-    } else {
-        [self _dispatchInfo];
-    }
+    [self _postCheckFunctions];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self _setUpViews];
     [self _checkSelection];
+    [self _setUpViews];
+    [self _postCheckFunctions];
+}
+
+- (void) _postCheckFunctions{
     if(self.suggestionSelected){
         [self _setUpTableView];
     } else {
@@ -65,6 +68,10 @@
                                       block:^(PFObject *event, NSError *error) {
         if(!error){
             if(event[@"selectedCueId"]){
+                if([event[@"selectedCueId"] isEqual: @""]){
+                    self.suggestionSelected = false;
+                    return;
+                }
                 PFQuery *eventQuery = [PFQuery queryWithClassName:@"Cue"];
                 
                 [eventQuery getObjectInBackgroundWithId:event[@"selectedCueId"]
@@ -76,6 +83,7 @@
                         self.suggestionDistance = cue[@"distance"];
                         self.suggestionImageURL = cue[@"imageURL"];
                         [self.suggestionsTableView reloadData];
+                        
                     } else{
                         NSLog(@"No cue found");
                     }
@@ -85,7 +93,6 @@
             NSLog(@"No event found");
         }
     }];
-    
 }
 
 - (void) _dispatchInfo {
@@ -97,13 +104,22 @@
 }
 
 - (void) _setUpViews {
+    self.cuesForYourEventLabel.text = @"Suggested Cues:";
+    
     self.eventID = self.detailEvent.objectId;
     
     self.filters = @[@"Rating", @"Distance"];
     self.filtersCollectionView.dataSource = self;
     self.filtersCollectionView.delegate = self;
     
+    self.unassignCueButton.layer.cornerRadius = 15.0;
+    [self.unassignCueButton.titleLabel setFont:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]];
+    
     self.noSuggestionsLabel.hidden = YES;
+    self.unassignCueButton.hidden = YES;
+    self.sortByLabel.hidden = YES;
+    self.filtersCollectionView.hidden = YES;
+    self.cuesForYourEventLabel.hidden = YES;
     
     self.eventCategories = [self.detailEvent.selectedCues componentsJoinedByString:@","];
     self.eventCategories = [self.eventCategories stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -166,18 +182,50 @@
     if(self.suggestionSelected){
         self.suggestionsTableView.rowHeight = 400;
         self.suggestionsTableView.allowsSelection = false;
+        self.cuesForYourEventLabel.hidden = false;
+        self.cuesForYourEventLabel.text = @"Selected Cue:";
+        self.filtersCollectionView.hidden = true;
+        self.sortByLabel.hidden = true;
+        self.unassignCueButton.hidden = false;
     } else {
         self.suggestionsTableView.rowHeight = 115;
-    }
-    [self.suggestionsTableView reloadData];
-}
-
-- (IBAction)refreshData:(id)sender {
-    if(!self.suggestionSelected){
-        [self _fetchData];
+        self.cuesForYourEventLabel.hidden = false;
+        self.cuesForYourEventLabel.text = @"Suggested Cues:";
+        self.filtersCollectionView.hidden = false;
+        self.sortByLabel.hidden = false;
+        self.unassignCueButton.hidden = true;
     }
     [self.suggestionsTableView reloadData];
     [self.filtersCollectionView reloadData];
+}
+
+- (IBAction)refreshData:(id)sender {
+    [self _fetchData];
+    [self.suggestionsTableView reloadData];
+    [self.filtersCollectionView reloadData];
+}
+
+- (IBAction)unassignCue:(id)sender {
+    self.suggestionSelected = false;
+    [self _resetSelection];
+    [self _checkSelection];
+    [self _setUpTableView];
+    [self _fetchData];
+    [self.suggestionsTableView reloadData];
+    [self.filtersCollectionView reloadData];
+}
+
+- (void) _resetSelection{
+    PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
+    [eventQuery getObjectInBackgroundWithId:self.eventID
+                                      block:^(PFObject *event, NSError *error) {
+        if(!error){
+            event[@"selectedCueId"] = @"";
+            [event saveInBackground];
+        } else{
+            NSLog(@"No event found");
+        }
+    }];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -190,6 +238,8 @@
         NSURL * url = [NSURL URLWithString: self.suggestionImageURL];
         NSData * data = [NSData dataWithContentsOfURL:url];
         cell.businessImage.image = [UIImage imageWithData:data];
+        cell.businessImage.layer.cornerRadius = 8.0;
+        cell.businessImage.layer.masksToBounds = YES;
         
         cell.colorView.layer.cornerRadius = 20.0;
         cell.colorView.layer.shadowOffset = CGSizeMake(1, 0);
@@ -227,7 +277,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"suggestionSegue"]){
         NSIndexPath *myIndexPath = [self.suggestionsTableView indexPathForCell:sender];
-        Suggestion *dataToPass = self.suggestionsArray[myIndexPath.row];
+        Suggestion *dataToPass = [[Suggestion alloc] init];
+        if (self.sortedArray.count > 0) {
+            dataToPass = self.sortedArray[myIndexPath.row];
+        } else {
+            dataToPass = self.suggestionsArray[myIndexPath.row];
+        }
         SuggestionViewController *detailVC = [segue destinationViewController];
         detailVC.delegateObject = self;
         detailVC.detailSuggestion = dataToPass;
@@ -243,6 +298,7 @@
             event[@"selectedCue"] = [PFObject objectWithoutDataWithClassName:@"Cue" objectId: cueId];
             event[@"selectedCueId"] = cueId;
             self.suggestionSelected = true;
+            self.cuesForYourEventLabel.text = @"Selected Cue:";
             [event saveInBackground];
         } else{
             NSLog(@"No event found");
