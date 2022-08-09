@@ -155,6 +155,6 @@ Many people find it difficult to remember and plan for events such as birthdays,
 
 #### [OPTIONAL:] Existing API Endpoints
 ##### Yelp API
-= (http://api.yelp.com/v3/businesses/search)
+- (http://api.yelp.com/v3/businesses/search)
 ##### Google Calender API
 - (https://www.googleapis.com/calendar/v3/calendars/primary/events)
