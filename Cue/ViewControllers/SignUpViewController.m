@@ -38,13 +38,15 @@
         [self _emptyFieldAlert];
     }
     else{
+        __weak typeof(self) weakSelf = self;
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
             if (error != nil) {
+                __strong typeof(self) strongSelf = weakSelf;
                 NSLog(@"Error: %@", error.localizedDescription);
-                [self _signUpError];
+                [strongSelf _signUpError];
             } else {
-                NSLog(@"User registered successfully");
-                SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
+                __strong typeof(self) strongSelf = weakSelf;
+                SceneDelegate *sceneDelegate = (SceneDelegate *)strongSelf.view.window.windowScene.delegate;
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 sceneDelegate.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
             }

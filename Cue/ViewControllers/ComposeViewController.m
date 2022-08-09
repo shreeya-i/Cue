@@ -50,7 +50,11 @@ bool isGrantedNotificationAccess;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self _setUpViews];
+}
+
+/// Initializing view constants
+- (void) _setUpViews {
     self.tabBarController.tabBar.hidden = YES;
     
     isGrantedNotificationAccess = false;
@@ -78,15 +82,17 @@ bool isGrantedNotificationAccess;
     }];
 }
 
+/// Unfinished feature: setting up Edit Event page if segue equaled editSegue rather than composeSegue
 - (void) _setUpEdit {
     self.pageTitle.text = @"Edit Event";
     self.nameField.placeholder = self.detailEvent.eventName;
-    NSLog(@"%@", self.detailEvent.eventName);
 }
 
 - (void) _setUpCompose {
     self.pageTitle.text = @"Compose Event";
 }
+
+/// Table View functions:
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.cues.count;
@@ -114,6 +120,7 @@ bool isGrantedNotificationAccess;
     cell.isSelected = !(cell.isSelected);
 }
 
+/// UISlider search radius distance
 - (IBAction)didChangeRadius:(id)sender {
     NSNumber *newRadius = @((int) self.distanceSlider.value);
     NSString *stringValue = [newRadius stringValue];
@@ -121,6 +128,7 @@ bool isGrantedNotificationAccess;
     self.sliderValueLabel.text = [NSString stringWithFormat:@"%@ meters", stringValue];
 }
 
+/// Creates new event + associated notifications, a day and week before (when applicable)
 - (IBAction)didTapCreate:(id)sender {
     NSString *eventName = self.nameField.text;
     NSDate *selectedDate = self.datePicker.date;
@@ -144,11 +152,7 @@ bool isGrantedNotificationAccess;
         [Event postEvent:eventName withDate:selectedDate withCues:cuesArray withRadius: self.selectedRadius withAddress: self.addressToUse withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
             if (error){
                 __strong typeof(self) strongSelf = weakSelf;
-                NSLog(@"Error creating event");
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];
-                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
-                [alert addAction:okAction];
-                [strongSelf presentViewController:alert animated:YES completion:^{}];
+                [strongSelf _errorAlert];
             }
             else{
                 __strong typeof(self) strongSelf = weakSelf;
@@ -157,14 +161,19 @@ bool isGrantedNotificationAccess;
                     [strongSelf _weekNotif];
                     [strongSelf _dayNotif];
                 }
-                
                 [strongSelf.navigationController popViewControllerAnimated:YES];
                 strongSelf.tabBarController.tabBar.hidden = NO;
-                NSLog(@"Successfully created event");
             }
         }];
     }
-    
+}
+
+- (void) _errorAlert {
+    NSLog(@"Error creating event");
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:^{}];
 }
 
 - (void) _emptyFieldAlert{
@@ -181,7 +190,7 @@ bool isGrantedNotificationAccess;
     [self presentViewController:alert animated:YES completion:^{}];
 }
 
-//Week before notification
+/// One week before notification
 - (void) _weekNotif {
     NSDate *selectedDate = self.datePicker.date;
     NSString *eventName = self.nameField.text;
@@ -218,7 +227,7 @@ bool isGrantedNotificationAccess;
     }
 }
 
-//Day before notification:
+///One day before notification:
 - (void) _dayNotif {
     NSDate *selectedDate = self.datePicker.date;
     NSString *eventName = self.nameField.text;
@@ -256,18 +265,17 @@ bool isGrantedNotificationAccess;
     
 }
 
+/// Toggles notifications above
 - (IBAction)switchPressed:(id)sender {
     if([self.notificationSwitch isOn]){
         self.notifsOn = YES;
-        NSLog(@"%i", self.notifsOn);
     }
     else{
         self.notifsOn = NO;
-        NSLog(@"%i", self.notifsOn);
     }
-    
 }
 
+/// Address to search suggestions with, defaults with user's home address
 - (IBAction)addressSwitchPressed:(id)sender {
     if(![self.addressSwitch isOn]){
         UIAlertController * alertController = [UIAlertController alertControllerWithTitle: @"Input Address"

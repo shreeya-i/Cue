@@ -210,7 +210,6 @@
             strongSelf.passwordField.text = @"";
             strongSelf.addressField.text = @"";
             [strongSelf _fetchDetails];
-            NSLog(@"Successfully saved");
         }
     }];
 }
@@ -225,7 +224,6 @@
         } else {
             // Success
             __strong typeof(self) strongSelf = weakSelf;
-            NSLog(@"User logged out successfully.");
             SceneDelegate *sceneDelegate = (SceneDelegate *)strongSelf.view.window.windowScene.delegate;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];

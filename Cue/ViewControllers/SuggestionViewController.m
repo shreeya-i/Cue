@@ -106,12 +106,13 @@
     }
     selectedCue[@"phone"] = detailSuggestion.phone;
     
+    __weak typeof(self) weakSelf = self;
     [selectedCue saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if(succeeded){
-            self.cueObjectId = selectedCue.objectId;
-            NSLog(@"%@", self.cueObjectId);
-            [self.delegateObject didSelectCue:self.cueObjectId];
-            [self.navigationController popViewControllerAnimated:YES];
+            __strong typeof(self) strongSelf = weakSelf;
+            strongSelf.cueObjectId = selectedCue.objectId;
+            [strongSelf.delegateObject didSelectCue:self.cueObjectId];
+            [strongSelf.navigationController popViewControllerAnimated:YES];
         }
     }];
 

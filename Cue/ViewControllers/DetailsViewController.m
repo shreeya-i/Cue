@@ -64,13 +64,15 @@
 
 /// Checks if this event has been assigned a cue. If so, displays only this cue rather than all suggestions.
 - (void) _checkSelection {
+    __weak typeof(self) weakSelf = self;
     PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
     [eventQuery getObjectInBackgroundWithId:self.eventID
                                       block:^(PFObject *event, NSError *error) {
         if(!error){
+            __strong typeof(self) strongSelf = weakSelf;
             if(event[@"selectedCueId"]){
                 if([event[@"selectedCueId"] isEqual: @""]){
-                    self.suggestionSelected = false;
+                    strongSelf.suggestionSelected = false;
                     return;
                 }
                 PFQuery *eventQuery = [PFQuery queryWithClassName:@"Cue"];
@@ -78,12 +80,12 @@
                 [eventQuery getObjectInBackgroundWithId:event[@"selectedCueId"]
                                                   block:^(PFObject *cue, NSError *error) {
                     if(!error){
-                        self.suggestionSelected = true;
-                        self.suggestionName = cue[@"name"];
-                        self.suggestionRating = cue[@"rating"];
-                        self.suggestionDistance = cue[@"distance"];
-                        self.suggestionImageURL = cue[@"imageURL"];
-                        [self.suggestionsTableView reloadData];
+                        strongSelf.suggestionSelected = true;
+                        strongSelf.suggestionName = cue[@"name"];
+                        strongSelf.suggestionRating = cue[@"rating"];
+                        strongSelf.suggestionDistance = cue[@"distance"];
+                        strongSelf.suggestionImageURL = cue[@"imageURL"];
+                        [strongSelf.suggestionsTableView reloadData];
                         
                     } else{
                         NSLog(@"No cue found");
@@ -116,7 +118,6 @@
     
     self.eventCategories = [self.detailEvent.selectedCues componentsJoinedByString:@","];
     self.eventCategories = [self.eventCategories stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSLog(@"PRINT THIS %@", self.eventCategories);
     
     self.nameLabel.text = self.detailEvent.eventName;
     
@@ -208,6 +209,7 @@
     [self.filtersCollectionView reloadData];
 }
 
+/// Functions associated with assigning Cue to event:
 - (IBAction)unassignCue:(id)sender {
     self.suggestionSelected = false;
     [self _resetSelection];
@@ -232,14 +234,16 @@
 }
 
 - (void) didSelectCue:(NSString *)cueId{
+    __weak typeof(self) weakSelf = self;
     PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
     [eventQuery getObjectInBackgroundWithId:self.eventID
                                       block:^(PFObject *event, NSError *error) {
         if(!error){
+            __strong typeof(self) strongSelf = weakSelf;
             event[@"selectedCue"] = [PFObject objectWithoutDataWithClassName:@"Cue" objectId: cueId];
             event[@"selectedCueId"] = cueId;
-            self.suggestionSelected = true;
-            self.cuesForYourEventLabel.text = @"Selected Cue:";
+            strongSelf.suggestionSelected = true;
+            strongSelf.cuesForYourEventLabel.text = @"Selected Cue:";
             [event saveInBackground];
         } else{
             NSLog(@"No event found");
@@ -313,6 +317,14 @@
     return self.filters.count;
 }
 
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
+    UICollectionViewCell *cell =[self.filtersCollectionView cellForItemAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor colorWithRed: 0.33 green: 0.62 blue: 0.29 alpha: 0.5];
+    NSString *selectedCell = self.filters[indexPath.row];
+    [self.selectedFilters addObject:selectedCell];
+    [self _getSort: selectedCell];
+}
+
 - (void) _getSort:(NSString *) selectedFilter {
     NSSortDescriptor *sortDescriptor;
     if([selectedFilter isEqual:@"Distance"]){
@@ -325,14 +337,6 @@
     NSArray *sorted = [self.suggestionsArray sortedArrayUsingDescriptors:@[sortDescriptor]];
     self.sortedArray = [sorted mutableCopy];
     [self.suggestionsTableView reloadData];
-}
-
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
-    UICollectionViewCell *cell =[self.filtersCollectionView cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor colorWithRed: 0.33 green: 0.62 blue: 0.29 alpha: 0.5];
-    NSString *selectedCell = self.filters[indexPath.row];
-    [self.selectedFilters addObject:selectedCell];
-    [self _getSort: selectedCell];
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {

@@ -57,7 +57,6 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"%lu", (unsigned long)self.events.count);
     return self.events.count;
 }
 
@@ -97,7 +96,6 @@
         NSString *address = [PFUser currentUser][@"address"];
         [Event postEvent:event.content withDate:event.startDate withCues:cues withRadius:@1000 withAddress:address withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
             if (error){
-                NSLog(@"Error creating event");
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to create event." preferredStyle:(UIAlertControllerStyleAlert)];
                 UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
                 [alert addAction:okAction];
@@ -105,7 +103,6 @@
             }
             else{
                 [self.navigationController popViewControllerAnimated:YES];
-                NSLog(@"Successfully created event");
             }
         }];
     }

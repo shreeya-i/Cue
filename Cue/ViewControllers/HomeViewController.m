@@ -85,9 +85,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
                         stringForKey:@"GTMClientID"];
     self.kClientID = [NSString stringWithFormat:@"%@.apps.googleusercontent.com", baseID];
     self.kRedirectURI = [NSString stringWithFormat: @"com.googleusercontent.apps.%@:/oauthredirect", baseID];
-    NSLog(@"%@", baseID);
-    NSLog(@"%@", self.kClientID);
-    NSLog(@"%@", self.kRedirectURI);
 }
 
 /// Set up constant UIViews
@@ -141,16 +138,18 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     [eventQuery whereKey:@"eventDate" greaterThanOrEqualTo:curDate];
     eventQuery.limit = 20;
     
+    __weak typeof(self) weakSelf = self;
     [eventQuery findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error) {
         if (events != nil) {
-            self.eventsArray = [NSMutableArray arrayWithArray:events];
-            [self.eventsTableView reloadData];
+            __strong typeof(self) strongSelf = weakSelf;
+            strongSelf.eventsArray = [NSMutableArray arrayWithArray:events];
+            [strongSelf.eventsTableView reloadData];
             
-            if(self.eventsArray.count == 0){
-                self.noEventsLabel.hidden = NO;
+            if(strongSelf.eventsArray.count == 0){
+                strongSelf.noEventsLabel.hidden = NO;
             }
             
-            self.filteredData = self.eventsArray;
+            strongSelf.filteredData = strongSelf.eventsArray;
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
@@ -247,7 +246,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 }
 
 - (void ) _getUserEvents {
-    NSLog(@"Performing userinfo request");
     
     // Creates a GTMSessionFetcherService with the authorization.
     // Normally you would save this service object and re-use it for all REST API calls.
@@ -290,7 +288,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
         }
         
         // Success response!
-        NSLog(@"Success: %@", jsonDictionaryOrArray);
         UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         GoogleViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"GoogleViewController"];
         controller.importedEvents = jsonDictionaryOrArray;
@@ -343,16 +340,18 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
                                            presentingViewController:self
                                                            callback:^(OIDAuthState *_Nullable authState,
                                                                       NSError *_Nullable error) {
+                __weak typeof(self) weakSelf = self;
                 if (authState) {
                     GTMAppAuthFetcherAuthorization *authorization =
                     [[GTMAppAuthFetcherAuthorization alloc] initWithAuthState:authState];
-                    
-                    [self setGtmAuthorization:authorization];
+                    __strong typeof(self) strongSelf = weakSelf;
+                    [strongSelf setGtmAuthorization:authorization];
                     NSLog(@"Got authorization tokens. Access token: %@",
                           authState.lastTokenResponse.accessToken);
-                    self.kAccessToken = authState.lastTokenResponse.accessToken;
+                    strongSelf.kAccessToken = authState.lastTokenResponse.accessToken;
                 } else {
-                    [self setGtmAuthorization:nil];
+                    __strong typeof(self) strongSelf = weakSelf;
+                    [strongSelf setGtmAuthorization:nil];
                     NSLog(@"Authorization error: %@", [error localizedDescription]);
                 }
             }];
@@ -403,12 +402,15 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
         NSDate *curDate = [NSDate date];
         [eventQuery whereKey:@"eventDate" greaterThanOrEqualTo:curDate];
         
+        __weak typeof(self) weakSelf = self;
         [eventQuery findObjectsInBackgroundWithBlock:^(NSArray *events, NSError *error) {
             if (events != nil) {
-                self.filteredData = [NSMutableArray arrayWithArray:events];
-                [self.eventsTableView reloadData];
+                __strong typeof(self) strongSelf = weakSelf;
+                strongSelf.filteredData = [NSMutableArray arrayWithArray:events];
+                [strongSelf.eventsTableView reloadData];
             } else {
-                self.filteredData = self.eventsArray;
+                __strong typeof(self) strongSelf = weakSelf;
+                strongSelf.filteredData = strongSelf.eventsArray;
                 NSLog(@"%@", error.localizedDescription);
             }
         }];

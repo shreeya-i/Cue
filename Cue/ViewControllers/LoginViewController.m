@@ -178,20 +178,22 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
                                        presentingViewController:self
                                                        callback:^(OIDAuthState *_Nullable authState,
                                                                   NSError *_Nullable error) {
+            __weak typeof(self) weakSelf = self;
             if (authState) {
+                __strong typeof(self) strongSelf = weakSelf;
                 GTMAppAuthFetcherAuthorization *authorization =
                 [[GTMAppAuthFetcherAuthorization alloc] initWithAuthState:authState];
-                
-                [self setGtmAuthorization:authorization];
+                [strongSelf setGtmAuthorization:authorization];
                 NSLog(@"Got authorization tokens. Access token: %@",
                       authState.lastTokenResponse.accessToken);
-                self.kAccessToken = authState.lastTokenResponse.accessToken;
+                strongSelf.kAccessToken = authState.lastTokenResponse.accessToken;
                 
                 NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
                 [defaults setObject:authState.lastTokenResponse.accessToken forKey:@"kAccessToken"];
                 [defaults synchronize];
             } else {
-                [self setGtmAuthorization:nil];
+                __strong typeof(self) strongSelf = weakSelf;
+                [strongSelf setGtmAuthorization:nil];
                 NSLog(@"Authorization error: %@", [error localizedDescription]);
             }
         }];
@@ -276,12 +278,15 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     PFQuery *userQuery = [PFUser query];
     [userQuery whereKey:@"username" equalTo: userInfo[@"email"]];
     
+    __weak typeof(self) weakSelf = self;
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *user, NSError *error) {
         if (user){
-            [self _loginGoogleUser: userInfo];
+            __strong typeof(self) strongSelf = weakSelf;
+            [strongSelf _loginGoogleUser: userInfo];
             NSLog(@"logging in user");
         } else {
-            [self _createGoogleUser: userInfo];
+            __strong typeof(self) strongSelf = weakSelf;
+            [strongSelf _createGoogleUser: userInfo];
             NSLog(@"creating parse user");
         }
     }];
@@ -289,7 +294,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 
 /// Login existing Google user
 - (void) _loginGoogleUser: (NSDictionary*) userInfo {
-    NSLog(@"what");
     NSString *username = userInfo[@"email"];
     NSString *password = @"google";
     
@@ -305,7 +309,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
             [strongSelf presentViewController:alert animated:YES completion:^{}];
         } else {
             __strong typeof(self) strongSelf = weakSelf;
-            NSLog(@"User logged in successfully");
             [strongSelf _importExistingNotifs];
             SceneDelegate *sceneDelegate = (SceneDelegate *)strongSelf.view.window.windowScene.delegate;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -316,7 +319,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 
 /// Create new Cue user using Google account
 - (void) _createGoogleUser:(NSDictionary*) userInfo {
-    NSLog(@"Almost there");
     PFUser *newUser = [PFUser user];
     newUser[@"name"] = userInfo[@"name"];
     newUser.username = userInfo[@"email"];
@@ -333,7 +335,6 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
             [strongSelf presentViewController:alert animated:YES completion:^{}];
         } else {
             __strong typeof(self) strongSelf = weakSelf;
-            NSLog(@"User registered successfully");
             SceneDelegate *sceneDelegate = (SceneDelegate *)strongSelf.view.window.windowScene.delegate;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             sceneDelegate.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
