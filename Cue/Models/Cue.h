@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *price;
 @property (nonatomic, strong) NSString *objectId;
 
+// Param name: Name of suggestion (cue) being selected to assign to an event
 + (void) createCue: ( NSString * _Nullable )name
       withImageURL: ( NSString * _Nullable )imageURL
       withDistance: ( NSString * _Nullable )distance

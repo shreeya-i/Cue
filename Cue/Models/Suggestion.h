@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumber *longitude;
 @property (nonatomic, strong) NSString *price;
 
-
+// Creates Suggestion objects given by the array of dictionaries
 +(NSArray*)SuggestionWithDictionary:(NSArray*)dictionaries;
 
 @end

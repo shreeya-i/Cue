@@ -55,14 +55,15 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self _initAPI];
+    [self _initYelp];
+    [self _initGoogle];
     [self _setUpViews];
     [self _fetchEvents];
-    [self _setUpConstants];
     [self _loginChecks];
 }
 
-- (void) _initAPI {
+/// Initialize Yelp API constants
+- (void) _initYelp {
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
     
@@ -72,7 +73,8 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void) _setUpConstants {
+/// Initialize Google API constants
+- (void) _initGoogle {
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
     NSString *GTMClientID = [dict objectForKey: @"kGoogleAPIClientID"];
@@ -88,6 +90,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     NSLog(@"%@", self.kRedirectURI);
 }
 
+/// Set up constant UIViews
 - (void) _setUpViews {
     self.isLoggedIn = FALSE;
     
@@ -129,6 +132,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     self.todaysDay.text = stringFromDate2;
 }
 
+/// Fetch Parse events for current logged in user to populate home calendar
 - (void)_fetchEvents {
     PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
     [eventQuery orderByAscending: @"eventDate"];
@@ -153,12 +157,14 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     }];
 }
 
+/// Check whether a user is logging in with Google. If this is a first time user, they will be prompted to enter a home address
+/// If this account but is a new session, the user will be asked if they want to import from their GCal
 - (void) _loginChecks {
     NSString *address = [PFUser currentUser][@"address"];
     if(!address){
         [self _addressAlert];
     } else if([[NSUserDefaults standardUserDefaults] objectForKey:@"kAccessToken"] != nil) {
-        [self _googleCheck];
+        [self _importFromGoogle];
     }
 }
 
@@ -185,12 +191,12 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
                 NSLog(@"Successfully saved");
             }
         }];
-        [self _googleCheck];
+        [self _importFromGoogle];
     }]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void) _googleCheck {
+- (void) _importFromGoogle {
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"kAccessToken"] != nil) {
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         self.kAccessToken = [defaults objectForKey:@"kAccessToken"];
@@ -200,13 +206,15 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
                                                                  preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){}];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
-            [self _getUserInfo];
+            [self _getUserEvents];
         }];
         [alert addAction:noAction];
         [alert addAction:okAction];
         [self presentViewController:alert animated:YES completion:^{}];
     }
 }
+
+/// Following Google API functions:
 
 - (void)setGtmAuthorization:(GTMAppAuthFetcherAuthorization*)authorization {
     if ([_authorization isEqual:authorization]) {
@@ -234,11 +242,11 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 - (void)updateUI {
     if (!_authorization.canAuthorize) {
     } else {
-        [self _getUserInfo];
+        [self _getUserEvents];
     }
 }
 
-- (void ) _getUserInfo {
+- (void ) _getUserEvents {
     NSLog(@"Performing userinfo request");
     
     // Creates a GTMSessionFetcherService with the authorization.
@@ -290,13 +298,14 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     }];
 }
 
+/// Initiates Google login if the user is not logged in through a Google account. Else directly imports Google Calendar events.
 - (void) _didTapImport {
     if (self.isLoggedIn) {
-        [self _getUserInfo];
+        [self _getUserEvents];
     } else if([[NSUserDefaults standardUserDefaults] objectForKey:@"kAccessToken"] != nil) {
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         self.kAccessToken = [defaults objectForKey:@"kAccessToken"];
-        [self _getUserInfo];
+        [self _getUserEvents];
     } else {
         NSURL *issuer = [NSURL URLWithString:kIssuer];
         NSURL *redirectURI = [NSURL URLWithString:self.kRedirectURI];
@@ -352,7 +361,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 }
 
 
-// Table View Functions:
+/// Table View Functions:
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EventCell" forIndexPath:indexPath];
     cell.event = self.filteredData[indexPath.row];

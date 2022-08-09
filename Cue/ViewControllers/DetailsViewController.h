@@ -16,8 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Event *detailEvent;
 @property (weak, nonatomic) IBOutlet UITableView *suggestionsTableView;
 
-
-
 @end
 
 NS_ASSUME_NONNULL_END

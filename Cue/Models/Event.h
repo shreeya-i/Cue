@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 // Param name: Name of event
 // Param date: Date of event
 // Param cues: Array of cues the user has requested e.g. Restaurant reservation or activity booking
+// Param radius: Search distance
+// Param address: Address to search around, default is user's home address
 + (void) postEvent: ( NSString * _Nullable )name
           withDate: ( NSDate * _Nullable )date
           withCues: ( NSArray * _Nullable )cues

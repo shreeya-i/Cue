@@ -31,7 +31,7 @@
 @property (nonatomic, strong) NSArray *filters;
 @property (nonatomic, strong) NSMutableArray *sortedArray;
 @property (nonatomic, strong) NSString *eventID;
-
+/// Properties from detailSuggestion:
 @property (nonatomic, strong) NSString *suggestionName;
 @property (nonatomic, strong) NSString *suggestionDistance;
 @property (nonatomic, strong) NSString *suggestionRating;
@@ -62,6 +62,7 @@
     }
 }
 
+/// Checks if this event has been assigned a cue. If so, displays only this cue rather than all suggestions.
 - (void) _checkSelection {
     PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
     [eventQuery getObjectInBackgroundWithId:self.eventID
@@ -93,14 +94,6 @@
             NSLog(@"No event found");
         }
     }];
-}
-
-- (void) _dispatchInfo {
-    [SVProgressHUD show];
-    dispatch_queue_t getSuggestionsQueue = dispatch_queue_create("Get Yelp Events", NULL);
-    dispatch_async(getSuggestionsQueue, ^{
-        [self _fetchData];
-    });
 }
 
 - (void) _setUpViews {
@@ -140,6 +133,15 @@
     self.timeLabel.text = timeFromDate;
 }
 
+/// Function to import Yelp suggestions based on best match
+- (void) _dispatchInfo {
+    [SVProgressHUD show];
+    dispatch_queue_t getSuggestionsQueue = dispatch_queue_create("Get Yelp Events", NULL);
+    dispatch_async(getSuggestionsQueue, ^{
+        [self _fetchData];
+    });
+}
+
 - (void) _fetchData {
     NSString *apiKey = [[NSUserDefaults standardUserDefaults]
                         stringForKey:@"apiKey"];
@@ -176,6 +178,7 @@
     [task resume];
 }
 
+/// Sets up view based on if there is an assigned cue or not
 - (void) _setUpTableView {
     self.suggestionsTableView.delegate = self;
     self.suggestionsTableView.dataSource = self;
@@ -228,6 +231,25 @@
     }];
 }
 
+- (void) didSelectCue:(NSString *)cueId{
+    PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
+    [eventQuery getObjectInBackgroundWithId:self.eventID
+                                      block:^(PFObject *event, NSError *error) {
+        if(!error){
+            event[@"selectedCue"] = [PFObject objectWithoutDataWithClassName:@"Cue" objectId: cueId];
+            event[@"selectedCueId"] = cueId;
+            self.suggestionSelected = true;
+            self.cuesForYourEventLabel.text = @"Selected Cue:";
+            [event saveInBackground];
+        } else{
+            NSLog(@"No event found");
+        }
+    }];
+    [self _setUpTableView];
+}
+
+/// TableView functions:
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(self.suggestionSelected){
         YelpSelectionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YelpSelectionCell" forIndexPath:indexPath];
@@ -274,38 +296,7 @@
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"suggestionSegue"]){
-        NSIndexPath *myIndexPath = [self.suggestionsTableView indexPathForCell:sender];
-        Suggestion *dataToPass = [[Suggestion alloc] init];
-        if (self.sortedArray.count > 0) {
-            dataToPass = self.sortedArray[myIndexPath.row];
-        } else {
-            dataToPass = self.suggestionsArray[myIndexPath.row];
-        }
-        SuggestionViewController *detailVC = [segue destinationViewController];
-        detailVC.delegateObject = self;
-        detailVC.detailSuggestion = dataToPass;
-        detailVC.detailEvent = self.detailEvent;
-    }
-}
-
-- (void) didSelectCue:(NSString *)cueId{
-    PFQuery *eventQuery = [PFQuery queryWithClassName:@"Event"];
-    [eventQuery getObjectInBackgroundWithId:self.eventID
-                                      block:^(PFObject *event, NSError *error) {
-        if(!error){
-            event[@"selectedCue"] = [PFObject objectWithoutDataWithClassName:@"Cue" objectId: cueId];
-            event[@"selectedCueId"] = cueId;
-            self.suggestionSelected = true;
-            self.cuesForYourEventLabel.text = @"Selected Cue:";
-            [event saveInBackground];
-        } else{
-            NSLog(@"No event found");
-        }
-    }];
-    [self _setUpTableView];
-}
+/// CollectionView functions:
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     FilterCell *cell = [self.filtersCollectionView dequeueReusableCellWithReuseIdentifier:@"FilterCell" forIndexPath:indexPath];
@@ -349,6 +340,22 @@
     cell.backgroundColor = [UIColor colorWithRed: 0.69 green: 0.83 blue: 0.51 alpha: 0.5];
     NSString *selectedCell = self.filters[indexPath.row];
     [self.selectedFilters removeObject:selectedCell];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"suggestionSegue"]){
+        NSIndexPath *myIndexPath = [self.suggestionsTableView indexPathForCell:sender];
+        Suggestion *dataToPass = [[Suggestion alloc] init];
+        if (self.sortedArray.count > 0) {
+            dataToPass = self.sortedArray[myIndexPath.row];
+        } else {
+            dataToPass = self.suggestionsArray[myIndexPath.row];
+        }
+        SuggestionViewController *detailVC = [segue destinationViewController];
+        detailVC.delegateObject = self;
+        detailVC.detailSuggestion = dataToPass;
+        detailVC.detailEvent = self.detailEvent;
+    }
 }
 
 @end

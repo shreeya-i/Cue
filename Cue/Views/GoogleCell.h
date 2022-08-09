@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) GCAEvent *event;
 @property (nonatomic) BOOL isSelected;
 
-
 @end
 
 NS_ASSUME_NONNULL_END

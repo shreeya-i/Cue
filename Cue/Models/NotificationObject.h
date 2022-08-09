@@ -16,9 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) NSDate *postDate;
 
-// Param name: Name of event
-// Param date: Date of event
-// Param cues: Array of cues the user has requested e.g. Restaurant reservation or activity booking
+// Param text: Notification text
+// Param date: Date of notification to be posted
 + (void) createNotification: ( NSString * _Nullable )text
                    withDate: ( NSDate * _Nullable )date
              withCompletion: (PFBooleanResultBlock  _Nullable)completion;

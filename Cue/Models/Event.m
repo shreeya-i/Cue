@@ -24,8 +24,6 @@
     return @"Event";
 }
 
-//To upload the user image to Parse, get the user input from the view controller and then call the postUserImage method from the view controller by passing all the required arguments into it.
-
 + (void) postEvent: ( NSString * _Nullable )name
           withDate: (NSDate * _Nullable)date
           withCues: (NSArray * _Nullable)cues
