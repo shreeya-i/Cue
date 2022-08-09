@@ -10,7 +10,7 @@
 #import "SignUpViewController.h"
 #import "NotificationObject.h"
 #import <UserNotifications/UserNotifications.h>
-
+/// Google API imports:
 #import "GoogleAPIClientForREST/GTLRCalendar.h"
 #import "GTMAppAuth/GTMAppAuth.h"
 #import "OIDAuthorizationRequest.h"
@@ -31,12 +31,10 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *googleButton;
-
 @property (strong, nonatomic) NSString *kClientID;
 @property (strong, nonatomic) NSString *kRedirectURI;
 @property (strong, nonatomic) NSString *kAccessToken;
 @property (strong, nonatomic) UNUserNotificationCenter *notificationCenter;
-
 
 @end
 
@@ -80,6 +78,42 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     }
 }
 
+/// Instantiate tab bar view once login completed
+- (void) _switchViews {
+    SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    sceneDelegate.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
+}
+
+/// Import currently logged in user's notifications saved in backend
+- (void) _importExistingNotifs {
+    PFQuery *notifQuery = [PFQuery queryWithClassName:@"Notification"];
+    [notifQuery whereKey:@"user" equalTo: [PFUser currentUser]];
+    NSDate *curDate = [NSDate date];
+    [notifQuery whereKey:@"postDate" greaterThanOrEqualTo:curDate];
+    
+    [notifQuery findObjectsInBackgroundWithBlock:^(NSArray *notifs, NSError *error) {
+        if (notifs != nil) {
+            for(NotificationObject *notif in notifs){
+                
+                NSDate *curDate = [NSDate date];
+                NSTimeInterval dayDiff = [notif.postDate timeIntervalSinceDate:curDate];
+                
+                UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+                content.title = @"Cue";
+                content.body = notif.text;
+                content.sound = [UNNotificationSound defaultSound];
+                
+                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:dayDiff repeats:NO];
+                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:notif.text content:content trigger:trigger];
+                [self.notificationCenter addNotificationRequest:request withCompletionHandler:nil];
+            }
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+}
+
 - (void) _emptyFieldAlert {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"Username or password is empty." preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
@@ -87,10 +121,21 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     [self presentViewController:alert animated:YES completion:^{}];
 }
 
-- (void) _switchViews {
-    SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    sceneDelegate.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
+/// Initialize Google API Constants
+- (void) _setUpConstants {
+    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
+    NSString *GTMClientID = [dict objectForKey: @"kGoogleAPIClientID"];
+    [[NSUserDefaults standardUserDefaults] setObject:GTMClientID forKey:@"GTMClientID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSString *baseID = [[NSUserDefaults standardUserDefaults]
+                        stringForKey:@"GTMClientID"];
+    self.kClientID = [NSString stringWithFormat:@"%@.apps.googleusercontent.com", baseID];
+    self.kRedirectURI = [NSString stringWithFormat: @"com.googleusercontent.apps.%@:/oauthredirect", baseID];
+    NSLog(@"%@", baseID);
+    NSLog(@"%@", self.kClientID);
+    NSLog(@"%@", self.kRedirectURI);
 }
 
 - (IBAction)didTapGoogle:(id)sender {
@@ -153,49 +198,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     }];
 }
 
-- (void) _setUpConstants {
-    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
-    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
-    NSString *GTMClientID = [dict objectForKey: @"kGoogleAPIClientID"];
-    [[NSUserDefaults standardUserDefaults] setObject:GTMClientID forKey:@"GTMClientID"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    NSString *baseID = [[NSUserDefaults standardUserDefaults]
-                        stringForKey:@"GTMClientID"];
-    self.kClientID = [NSString stringWithFormat:@"%@.apps.googleusercontent.com", baseID];
-    self.kRedirectURI = [NSString stringWithFormat: @"com.googleusercontent.apps.%@:/oauthredirect", baseID];
-    NSLog(@"%@", baseID);
-    NSLog(@"%@", self.kClientID);
-    NSLog(@"%@", self.kRedirectURI);
-}
-
-- (void) _importExistingNotifs {
-    PFQuery *notifQuery = [PFQuery queryWithClassName:@"Notification"];
-    [notifQuery whereKey:@"user" equalTo: [PFUser currentUser]];
-    NSDate *curDate = [NSDate date];
-    [notifQuery whereKey:@"postDate" greaterThanOrEqualTo:curDate];
-    
-    [notifQuery findObjectsInBackgroundWithBlock:^(NSArray *notifs, NSError *error) {
-        if (notifs != nil) {
-            for(NotificationObject *notif in notifs){
-                
-                NSDate *curDate = [NSDate date];
-                NSTimeInterval dayDiff = [notif.postDate timeIntervalSinceDate:curDate];
-                
-                UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
-                content.title = @"Cue";
-                content.body = notif.text;
-                content.sound = [UNNotificationSound defaultSound];
-                
-                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:dayDiff repeats:NO];
-                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:notif.text content:content trigger:trigger];
-                [self.notificationCenter addNotificationRequest:request withCompletionHandler:nil];
-            }
-        } else {
-            NSLog(@"%@", error.localizedDescription);
-        }
-    }];
-}
+/// Google API functions:
 
 - (void)setGtmAuthorization:(GTMAppAuthFetcherAuthorization*)authorization {
     if ([_authorization isEqual:authorization]) {
@@ -226,6 +229,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     }
 }
 
+/// Access Google user information e.g. name, email
 - (void ) _getUserInfo {
     NSLog(@"Performing userinfo request");
     
@@ -266,6 +270,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     }];
 }
 
+/// Check if the user who just logged in with User already has an account created locally in Parse
 - (void) _checkGoogleParseUser:(NSDictionary*) userInfo {
     NSLog(@"Checking parse user");
     PFQuery *userQuery = [PFUser query];
@@ -280,9 +285,9 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
             NSLog(@"creating parse user");
         }
     }];
-    
 }
 
+/// Login existing Google user
 - (void) _loginGoogleUser: (NSDictionary*) userInfo {
     NSLog(@"what");
     NSString *username = userInfo[@"email"];
@@ -309,6 +314,7 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
     }];
 }
 
+/// Create new Cue user using Google account
 - (void) _createGoogleUser:(NSDictionary*) userInfo {
     NSLog(@"Almost there");
     PFUser *newUser = [PFUser user];
@@ -334,11 +340,5 @@ static NSString *const OIDOAuthTokenErrorDomain = @"org.openid.appauth.oauth_tok
         }
     }];
 }
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-// Get the new view controller using [segue destinationViewController].
-// Pass the selected object to the new view controller.
-//}
 
 @end

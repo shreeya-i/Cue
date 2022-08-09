@@ -28,7 +28,6 @@
 
 - (IBAction)didTapSignUp:(id)sender {
     PFUser *newUser = [PFUser user];
-    
     newUser[@"name"] = self.nameField.text;
     newUser.username = self.usernameField.text;
     newUser.password = self.passwordField.text;
@@ -36,19 +35,13 @@
     
     if([self.nameField.text isEqual:@""] ||
        [self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""] || [self.addressField.text isEqual:@""]) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"All fields are required" preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
-        [alert addAction:okAction];
-        [self presentViewController:alert animated:YES completion:^{}];
+        [self _emptyFieldAlert];
     }
     else{
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
             if (error != nil) {
                 NSLog(@"Error: %@", error.localizedDescription);
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to sign up" preferredStyle:(UIAlertControllerStyleAlert)];
-                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
-                [alert addAction:okAction];
-                [self presentViewController:alert animated:YES completion:^{}];
+                [self _signUpError];
             } else {
                 NSLog(@"User registered successfully");
                 SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
@@ -57,6 +50,20 @@
             }
         }];
     }
+}
+
+- (void) _emptyFieldAlert {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Empty Field" message:@"All fields are required" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:^{}];
+}
+
+- (void) _signUpError {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to sign up" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:^{}];
 }
 
 /*

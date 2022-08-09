@@ -12,6 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Protocol between Suggestion and Details to update the view once Cue selected
 @protocol SuggestionViewDelegate
 - (void)didSelectCue:(NSString *)cueId;
 @end

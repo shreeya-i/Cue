@@ -10,6 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Protocol to reformat the profile page with the saved information
 @protocol EditDelegate
 
 - (void)didSaveEdits:(NSString *)name :(NSString *)username :(NSString *)password :(NSString *)address :(PFFileObject *)profileImage;

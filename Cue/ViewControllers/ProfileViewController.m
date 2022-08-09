@@ -54,6 +54,7 @@
     [self.passwordField addTarget:self action:@selector(didChangeText:) forControlEvents:UIControlEventEditingChanged];
 }
 
+/// Fetch current user details from Parse
 - (void) _fetchDetails {
     self.currentName.text = [PFUser currentUser][@"name"];
     self.currentUsername.text = [NSString stringWithFormat:@"@%@", [PFUser currentUser].username];
@@ -83,6 +84,7 @@
     return false;
 }
 
+/// Animation for text input
 - (void) didChangeText:(UITextField *)textField {
     UILabel *label = [[UILabel alloc] init];
     for(UIView *subview in textField.subviews){
@@ -117,9 +119,9 @@
     CGRect myFrame = label.frame;
     myFrame.origin.x = 5.0;
     label.frame = myFrame;
-    
 }
  
+/// Tap gesture for editing profile picture
 - (void) didTapPlaceholderImage:(UITapGestureRecognizer *)sender{
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
@@ -164,9 +166,7 @@
     return [PFFileObject fileObjectWithName:@"image.png" data:imageData];
 }
 
-
 - (IBAction)didTapSave:(id)sender {
-    
     NSString *nameData;
     NSString *usernameData;
     NSString *passwordData;
@@ -215,16 +215,6 @@
     }];
 }
 
-- (void) _clearUserData {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kAccessToken"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-    [center removeAllPendingNotificationRequests];
-    [center removeAllDeliveredNotifications];
-}
-
-
 - (IBAction)didTapLogout:(id)sender {
     [self _clearUserData];
     
@@ -244,15 +234,14 @@
     }];
 }
 
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+/// Removes notifications and Google access token upon logout
+- (void) _clearUserData {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kAccessToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center removeAllPendingNotificationRequests];
+    [center removeAllDeliveredNotifications];
+}
 
 @end

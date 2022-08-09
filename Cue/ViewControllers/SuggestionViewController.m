@@ -28,7 +28,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self _setUpViews];
+    [self _setUpMap];
+}
+
+- (void) _setUpViews {
     self.businessName.text = self.detailSuggestion.name;
     self.businessPhone = self.detailSuggestion.phone;
     self.businessAddress.text = self.detailSuggestion.displayAddress;
@@ -47,12 +51,10 @@
     [self.businessImage addSubview:overlay];
     self.businessImage.layer.cornerRadius = 20;
     self.businessImage.layer.masksToBounds = YES;
-    
-    [self _setUpMap];
 }
 
+/// Displays suggestion's location based on address
 - (void) _setUpMap {
-    
     NSNumber *latitude = self.detailSuggestion.latitude;
     NSNumber *longitude = self.detailSuggestion.longitude;
     
@@ -69,13 +71,16 @@
     [annotation setTitle:self.detailSuggestion.name];
     [self.mapView addAnnotation: annotation];
 }
+
+/// This phone number would theoretically be replaced with property  _businessPhone
+/// Hardcoded to avoid calling the actual business, works only on mobile devices
 - (IBAction)didTapCall:(id)sender {
-    //This phone would theoretically be replaced with a formatted _businessPhone
     NSString *phoneStr = [NSString stringWithFormat:@"tel:9493784844"];
     NSURL *phoneURL = [NSURL URLWithString:phoneStr];
     [[UIApplication sharedApplication] openURL:phoneURL options:@{} completionHandler:nil];
 }
 
+/// Assigns Cue to event
 - (IBAction)didTapSelect:(id)sender {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Confirm" message:@"Would you like to assign this cue to this event?" preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -111,14 +116,5 @@
     }];
 
 }
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
