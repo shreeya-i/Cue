@@ -8,7 +8,7 @@
 
 ## Overview
 ### Description
-As more people and circumstances enter your life, it becomes difficult to remember dates such as birthdays, anniversaries, holidays, etc. Cue is a reminder app that auto-suggests and helps book gifts/restaraunts/etc for any important date a user enters.
+Many people find it difficult to remember and plan for events such as birthdays, anniversaries, holidays, etc. Cue is a reminder app that auto-suggests gift/restaraunts/activity/etc bookings (aka Cues) for any important date a user enters.
 
 ### App Evaluation
 
@@ -17,7 +17,7 @@ As more people and circumstances enter your life, it becomes difficult to rememb
 - **Story:** Anyone who is need of keeping track of important dates or events, especially ones that need prior preparation e.g. restaurant reservations, flower orders, children's toys, etc, obtains immense value from Cue's services.
 - **Market:** Cue's market has no constraints and can be used by a person of any age/gender/socioeconomic/etc status.
 - **Habit:** The average user would only need to use Cue to initially add an event and then to accept an action suggestion. Cue's habit forming allows users to rely on the app for automatic suggestion based on the category of the event, rather than to make those searches themselves.
-- **Scope:** The stripped-down version of this app would simply include entering an event and recieving a list of  recommendations from Cue, which can easily be done using a Yelp API or similar database. A stretch goal would be for the app to automatically reserve or buy the product once the user approves it.
+- **Scope:** The stripped-down version of this app would simply include entering an event and recieving a list of recommendations from Cue, done using the Yelp API. A stretch goal would be for the app to automatically reserve or buy the product once the user approves it.
 
 ## Product Spec
 
@@ -25,32 +25,33 @@ As more people and circumstances enter your life, it becomes difficult to rememb
 
 **Required Must-have Stories**
 
-* User can sign in with authentication
-* User can log in and log out of their account
-* The current signed in user is persisted across app restarts
-* The home page calendar is auto-populated with holidays
-* User can add an event name, date, and category which appears on the home calendar
-* User can update their profile settings
-* User can tap on an event to see more details on a new view
-* User can switch between Calendar, Event, and Profile screens
-* User can view upcoming events with all inputted details on the Events screen
-* User can set notification settings for every event, which appear on their phone
+[x] User can sign in with authentication
+[x] User can log in and log out of their account
+[x] The current signed in user is persisted across app restarts
+[x] User can add an event name, date, and category which appears on the home calendar
+[x] User can update their profile settings
+[x] User can tap on an event to see more details on a new view
+[x] User can switch between Calendar, Event, and Profile screens
+[x] User can view upcoming events with all inputted details on the Events screen
+[x] User can set notification settings for every event, which appear on their phone
 
 
 **Optional Nice-to-have Stories**
 
-* User can see a calendar view (rather than table view) of their upcoming events
-* Event service suggestions based on user location
-* Each upcoming event has gift/restaurant suggestions depending on the category
-* User can login via Facebook/Gmail
-* Cue Calendar can import Google Calendar events
-* User can add contacts / number of participants to event who also recieve event reminders
-* Cue is automated: auto-buys a product / auto-reserves a restaurant / etc
-* Cue can support other types of appointments beyond important events e.g. acquaintance reach out reminders
-* User can view stats on the Profile page
-* Infinite scrolling calendar
-* Event can be set up as reoccurring
-* Fetch birthdays from Facebook
+[] User can see a calendar view (rather than table view) of their upcoming events
+[x] Event service suggestions based on user location
+[x] Each upcoming event has gift/restaurant suggestions depending on the category
+[x] User can login via Facebook/Gmail
+[x] Cue Calendar can import Google Calendar events
+[] User can add contacts / number of participants to event who also recieve event reminders
+[] Cue is automated: auto-buys a product / auto-reserves a restaurant / etc
+[x] Infinite scrolling calendar
+[] Event can be set up as reoccurring
+[] Fetch birthdays from Facebook
+[x] Users can search through their home timeline events
+[x] Yelp suggestions can be filtered based on properties
+[x] Events can be assigned Cues
+[x] Yelp suggestions offer more details about the business
 
 
 ### 2. Screen Archetypes
@@ -59,24 +60,22 @@ As more people and circumstances enter your life, it becomes difficult to rememb
     * Allows user to login or sign up for a new account
 * Home / Calendar
     * Displays all upcoming events in a calendar view, which can be tapped on for more details
-    * Includes button to create a new event
+    * Includes button menu to create a new event or import from Google Calendar
 * Add Event
-    * Allows user to input a new event, including the category, contacts, and Cues requested
-* Upcoming Events
-    * Lists all of a user's upcoming events, including holidays and self-inputted
-    * Displays a list of Cue's auto-suggested gifts
+    * Allows user to input a new event, including the category, address, date, and Cues requested
 * Event Details
-    * Detail view of event, which displays all the information inputted in add event
+    * Detail view of event, which displays all the information inputted in add event as well as booking suffegestions
+* Suggestion Details
+    * Detail view of Yelp suggestion, which displays information, showcases location, allows the user to contact and assign the business to an event
 * Profile
-    * Allows user to edit profile settings and view Cue stats
+    * Allows user to edit profile settings or logout
 
 ### 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
 
 * Home / Calendar
-* Upcoming Events
-* Profile Settings
+* Edit Profile
 
 **Flow Navigation** (Screen to Screen)
 
@@ -84,10 +83,10 @@ As more people and circumstances enter your life, it becomes difficult to rememb
     * Sign Up
 * Home
    * Event Details
+        * Suggestion Details
    * Compose Event
-* Upcoming
-   * Event Details
-* Profile
+   * Import Google Calendar Events
+* Edit Profile
 
 ## Wireframes
 
