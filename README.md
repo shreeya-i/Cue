@@ -25,33 +25,33 @@ Many people find it difficult to remember and plan for events such as birthdays,
 
 **Required Must-have Stories**
 
-[x] User can sign in with authentication
-[x] User can log in and log out of their account
-[x] The current signed in user is persisted across app restarts
-[x] User can add an event name, date, and category which appears on the home calendar
-[x] User can update their profile settings
-[x] User can tap on an event to see more details on a new view
-[x] User can switch between Calendar, Event, and Profile screens
-[x] User can view upcoming events with all inputted details on the Events screen
-[x] User can set notification settings for every event, which appear on their phone
+- [x] User can sign in with authentication
+- [x] User can log in and log out of their account
+- [x] The current signed in user is persisted across app restarts
+- [x] User can add an event name, date, and category which appears on the home calendar
+- [x] User can update their profile settings
+- [x] User can tap on an event to see more details on a new view
+- [x] User can switch between Calendar, Event, and Profile screens
+- [x] User can view upcoming events with all inputted details on the Events screen
+- [x] User can set notification settings for every event, which appear on their phone
 
 
 **Optional Nice-to-have Stories**
 
-[] User can see a calendar view (rather than table view) of their upcoming events
-[x] Event service suggestions based on user location
-[x] Each upcoming event has gift/restaurant suggestions depending on the category
-[x] User can login via Facebook/Gmail
-[x] Cue Calendar can import Google Calendar events
-[] User can add contacts / number of participants to event who also recieve event reminders
-[] Cue is automated: auto-buys a product / auto-reserves a restaurant / etc
-[x] Infinite scrolling calendar
-[] Event can be set up as reoccurring
-[] Fetch birthdays from Facebook
-[x] Users can search through their home timeline events
-[x] Yelp suggestions can be filtered based on properties
-[x] Events can be assigned Cues
-[x] Yelp suggestions offer more details about the business
+- [ ] User can see a calendar view (rather than table view) of their upcoming events
+- [x] Event service suggestions based on user location
+- [x] Each upcoming event has gift/restaurant suggestions depending on the category
+- [x] User can login via Facebook/Gmail
+- [x] Cue Calendar can import Google Calendar events
+- [ ] User can add contacts / number of participants to event who also recieve event reminders
+- [ ] Cue is automated: auto-buys a product / auto-reserves a restaurant / etc
+- [x] Infinite scrolling calendar
+- [ ] Event can be set up as reoccurring
+- [ ] Fetch birthdays from Facebook
+- [x] Users can search through their home timeline events
+- [x] Yelp suggestions can be filtered based on properties
+- [x] Events can be assigned Cues
+- [x] Yelp suggestions offer more details about the business
 
 
 ### 2. Screen Archetypes
@@ -100,13 +100,15 @@ Many people find it difficult to remember and plan for events such as birthdays,
 ##### Event
   | Property        | Type              | Description |
   | --------------- | ----------------- | ------------|
-  | eventID        | String            | Unique id for the user event |
-  | name        | String            | Event name |
-  | date        | DateTime            | Event date |
-  | category           | String              | Grouping of event e.g. birthday |
-  | notifAt           | DateTime            | Date for event notification |
-  | gift      | Boolean            | Whether or not the event requires a gift purchase |
-  | reservation     | Boolean            | Whether or not the event requires a restaurant reservation  |
+  | objectId        | String            | Unique id for the user event |
+  | eventName        | String            | Event name |
+  | author        | Pointer to User            | Event user |
+  | eventDate        | DateTime            | Event date |
+  | selectedCues           | Array              | Categories for suggestions e.g. active life |
+  | searchRadius           | Number            | Distance to search for suggestions |
+  | cuesString      | String            | Selected cues in string format |
+  | address     | String            | Address to search suggestions for |
+  | selectedCueId     | String            | ObjectId of assigned cue |
 
 
 ##### User
@@ -115,19 +117,26 @@ Many people find it difficult to remember and plan for events such as birthdays,
   | username        | String            | Unique login username |
   | password        | String            | Account password |
   | name        | String            | User display name |
-  | events           | Array              | List of all events belonging to the user |
-  | profileImage           | File            | User display profile picture |
-  | location      | String            | User location |
+  | profilePicture           | File            | User display profile picture |
+  | address      | String            | User location |
 
 
-##### Suggestion
+##### Cue
   | Property        | Type              | Description |
   | --------------- | ----------------- | ------------|
-  | product        | String            | Specific service name e.g. bouquet of flowers |
-  | business        | String            | Business name |
-  | category        | String            | Category of business |
-  | location      | String            | Business address |
-
+  | name        | String            | Business name |
+  | distance        | String            | Distance of business from event address |
+  | imageUrl      | String            | Associated URL with business photo |
+  | price      | String            | Pricing range e.g. $$ |
+  | phone      | String            | Associated number with business photo |
+  
+  
+##### Notification
+  | Property        | Type              | Description |
+  | --------------- | ----------------- | ------------|
+  | user        | Pointer            | Associated user with notification |
+  | text        | String            | Notification text |
+  | postDate      | Date            | Date and time to post notification |
 
   
 ### Networking
@@ -135,16 +144,17 @@ Many people find it difficult to remember and plan for events such as birthdays,
 
 - Login Screen
     - (Create/POST) Create a new user object with provided information 
+    - (Read/GET) Get existing user
 - Compose Event
-    - (Update/PUT) Create new event for user
+    - (Create/POST) Create new event for user
 - Home / Calendar Screen
-    - (Read/GET) Events associated with logged in user
+    - (Read/GET) Events associated with logged in user, as well as their details
 - Profile Screen
     - (Read/GET) Query logged in user object
     - (Update/PUT) Update user profile image
 
 #### [OPTIONAL:] Existing API Endpoints
 ##### Yelp API
-- Will be listed here
+= (http://api.yelp.com/v3/businesses/search)
 ##### Google Calender API
-- Will be listed here
+- (https://www.googleapis.com/calendar/v3/calendars/primary/events)
