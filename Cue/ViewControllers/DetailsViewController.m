@@ -44,22 +44,12 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self _checkSelection];
-    [self _postCheckFunctions];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self _checkSelection];
     [self _setUpViews];
-    [self _postCheckFunctions];
-}
-
-- (void) _postCheckFunctions{
-    if(self.suggestionSelected){
-        [self _setUpTableView];
-    } else {
-        [self _dispatchInfo];
-    }
 }
 
 /// Checks if this event has been assigned a cue. If so, displays only this cue rather than all suggestions.
@@ -73,6 +63,7 @@
             if(event[@"selectedCueId"]){
                 if([event[@"selectedCueId"] isEqual: @""]){
                     strongSelf.suggestionSelected = false;
+                    [self _dispatchInfo];
                     return;
                 }
                 PFQuery *eventQuery = [PFQuery queryWithClassName:@"Cue"];
@@ -85,12 +76,13 @@
                         strongSelf.suggestionRating = cue[@"rating"];
                         strongSelf.suggestionDistance = cue[@"distance"];
                         strongSelf.suggestionImageURL = cue[@"imageURL"];
-                        [strongSelf.suggestionsTableView reloadData];
-                        
+                        [strongSelf _setUpTableView]; //new
                     } else{
                         NSLog(@"No cue found");
                     }
                 }];
+            } else {
+                [self _dispatchInfo]; //new
             }
         } else{
             NSLog(@"No event found");
