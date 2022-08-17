@@ -8,7 +8,7 @@
 
 ## Overview
 ### Description
-Many people find it difficult to remember and plan for events such as birthdays, anniversaries, holidays, etc. Cue is a reminder app that auto-suggests gift/restaraunts/activity/etc bookings (aka Cues) for any important date a user enters.
+Cue is a twist on your usual calendar or reminder app. Not only does it notify you of upcoming important events such as birthdays or anniversaries, it also helps you prepare for them with custom cues such as restaurants or activities to reserve. Users can compose new events or import from their Google Calendar. The app then fetches suggestions from Yelp based on the category of the event. Cue ensures that you will never again forget to prep for an important date.
 
 ### App Evaluation
 
